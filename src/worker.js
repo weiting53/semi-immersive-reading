@@ -15,7 +15,7 @@ async function proxy(request) {
   if (hit) return hit;
 
   const r = await fetch(u.href, { headers: { "User-Agent": UA, "Accept-Language": "zh-TW,zh;q=0.9" }, redirect: "follow" });
-  if (!r.ok) return new Response("upstream " + r.status, { status: r.status === 404 ? 404 : 502 });
+  if (!r.ok) return new Response("upstream " + r.status, { status: r.status === 404 ? 404 : r.status === 403 ? 403 : 502 });
   const res = new Response(await r.text(), {
     headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=21600" },
   });

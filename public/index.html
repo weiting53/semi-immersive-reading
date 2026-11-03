@@ -20,9 +20,13 @@
 }
 :root[data-theme="sepia"] { --bg: #f1e7d0; --fg: #3b2f22; --muted: #85745c; --line: #dccdae; --card: #f8f0dd; --accent: #9c3f17; --accent-bg: #e9d4b8; }
 :root[data-theme="dark"] { --bg: #16140f; --fg: #e4ddd0; --muted: #8f8676; --line: #2e2a22; --card: #211e18; --accent: #f0956a; --accent-bg: #3a2519; --known: #7f8a72; }
+:root[data-theme="green"] { --bg: #e3eddc; --fg: #26301f; --muted: #6d7a62; --line: #c8d6bc; --card: #eef4e8; --accent: #3f6b2a; --accent-bg: #cfe0c2; }
+:root[data-theme="black"] { --bg: #000000; --fg: #d6d3cc; --muted: #7d7a73; --line: #1f1f1f; --card: #111111; --accent: #f0956a; --accent-bg: #2a1a12; --known: #7f8a72; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) { --bg: #16140f; --fg: #e4ddd0; --muted: #8f8676; --line: #2e2a22; --card: #211e18; --accent: #f0956a; --accent-bg: #3a2519; --known: #7f8a72; }
 }
+/* 使用者自選：英文字顏色、內文字體、英文字體、行距(由 app.js 設定) */
+:root { --word: var(--accent); --body-font: var(--serif); --en-font: Georgia, "Times New Roman", serif; --en-style: italic; --lh: 1.9; }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html, body { margin: 0; background: var(--bg); color: var(--fg); }
 body { font-family: var(--sans); padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
@@ -43,15 +47,15 @@ header .chap { font-size: 15px; font-weight: 600; }
 
 main { max-width: 680px; margin: 0 auto; padding: 20px 16px 40px; }
 main p {
-  font-family: var(--serif); font-size: var(--fs, 19px); line-height: 1.9;
+  font-family: var(--body-font); font-size: var(--fs, 19px); line-height: var(--lh);
   margin: 0 0 0.9em; text-align: justify; word-break: break-word;
 }
 .w {
-  color: var(--accent); font-family: Georgia, "Times New Roman", serif; font-style: italic;
+  color: var(--word); font-family: var(--en-font); font-style: var(--en-style);
   padding: 0 2px; border-radius: 4px; cursor: pointer;
   text-decoration: underline dotted; text-underline-offset: 4px;
 }
-.w:active, .w.on { background: var(--accent-bg); }
+.w:active, .w.on { background: color-mix(in srgb, var(--word) 20%, transparent); }
 .s {
   font-family: Georgia, "Times New Roman", serif; cursor: pointer;
   border-left: 3px solid var(--accent); padding-left: 10px; display: block;

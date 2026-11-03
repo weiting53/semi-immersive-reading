@@ -111,6 +111,9 @@
   // ---------- 抓章節 ----------
   async function fetchHTML(url) {
     const r = await fetch("api/fetch?url=" + encodeURIComponent(url));
+    if (r.status === 403 && url.includes("xbanxia")) {
+      throw new Error("半夏小說擋掉了雲端抓取，手機版讀不到。可以改用電腦版(server.py,同一個 Wi-Fi),或把書轉成 EPUB 匯入。");
+    }
     if (!r.ok) throw new Error(r.status === 404 ? "網站找不到這一頁" : `抓取失敗(${r.status})`);
     return r.text();
   }
@@ -296,14 +299,14 @@
     $("text").innerHTML = `
       ${err ? `<p class="sub" style="color:var(--accent)">${esc(err)}</p>` : ""}
       <form id="urlForm" style="display:flex;gap:8px;margin-top:12px">
-        <input id="urlIn" type="url" required placeholder="貼 czbooks 或半夏小說網址" value="${last.startsWith("epub") ? "" : esc(last)}"
+        <input id="urlIn" type="url" required placeholder="貼 czbooks 網址" value="${last.startsWith("epub") ? "" : esc(last)}"
           style="flex:1;min-width:0;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:0 12px;font-size:16px">
         <button class="iconbtn" style="height:44px">讀</button>
       </form>
       <label class="iconbtn" style="display:flex;align-items:center;justify-content:center;height:44px;margin-top:10px;cursor:pointer">
         📖 匯入 EPUB<input id="epubIn" type="file" accept=".epub,application/epub+zip" hidden></label>
       <p class="sub" id="epubMsg"></p>
-      <p class="sub">支援 czbooks.net、半夏小說(xbanxia.cc),章節或書本首頁網址都可以；EPUB 只存在這支手機上。簡體自動轉繁體。單字從字表對照，不用 AI。</p>`;
+      <p class="sub">支援 czbooks.net(章節或書本首頁網址都可以)和 EPUB;EPUB 只存在這支手機上。半夏小說擋雲端抓取，請用電腦版。簡體自動轉繁體。單字從字表對照，不用 AI。</p>`;
     $("epubIn").onchange = async (e) => {
       const f = e.target.files[0];
       if (!f) return;
@@ -406,22 +409,80 @@
         </li>`).join("")}</ul>`);
   }
 
+  // 外觀選項：英文字顏色(淺色/深色背景各一組)、內文字體、英文字體、行距
+  const WORD_COLORS = {
+    theme: ["跟主題", null, null],
+    red: ["磚紅", "#b4532a", "#f0956a"],
+    blue: ["藍", "#2b62b8", "#7fb0ff"],
+    green: ["綠", "#2f7a3a", "#7fd08a"],
+    purple: ["紫", "#7a3fb0", "#c39bf0"],
+    pink: ["粉", "#c23b72", "#f59ac0"],
+  };
+  const BODY_FONTS = {
+    serif: ["明體", 'var(--serif)'],
+    sans: ["黑體", 'var(--sans)'],
+    kai: ["文楷", '"LXGW WenKai TC", "Kaiti TC", "STKaiti", var(--serif)'],
+  };
+  const EN_FONTS = {
+    serif: ["襯線斜體", 'Georgia, "Times New Roman", serif', "italic"],
+    serifUp: ["襯線正體", 'Georgia, "Times New Roman", serif', "normal"],
+    sans: ["無襯線", '-apple-system, "Helvetica Neue", Arial, sans-serif', "normal"],
+  };
+  let wordColor = store.get("wordColor", "theme");
+  let bodyFont = store.get("bodyFont", "serif");
+  let enFont = store.get("enFont", "serif");
+  let lh = store.get("lh", 1.9);
+
   function showSettings() {
     const t = theme || "auto";
+    const seg = (key, cur, items) => `<div class="seg">${items.map(([k, label]) =>
+      `<button data-set="${key}" data-val="${k}" class="${String(k) === String(cur) ? "on" : ""}">${label}</button>`).join("")}</div>`;
     openSheet(`
       <h2 style="font-family:var(--sans);font-size:20px">閱讀設定</h2>
       <p class="sub">字級</p>
-      <div class="seg">${[16, 19, 22, 25].map((n) => `<button data-fs="${n}" class="${n === fs ? "on" : ""}">${n}</button>`).join("")}</div>
-      <p class="sub">背景</p>
-      <div class="seg">${[["auto", "自動"], ["light", "白"], ["sepia", "米黃"], ["dark", "夜間"]].map(([k, n]) =>
-        `<button data-theme="${k}" class="${k === t ? "on" : ""}">${n}</button>`).join("")}</div>`);
+      ${seg("fs", fs, [16, 19, 22, 25].map((n) => [n, n]))}
+      <p class="sub">行距</p>
+      ${seg("lh", lh, [[1.6, "緊"], [1.9, "中"], [2.2, "鬆"]])}
+      <p class="sub">背景主題</p>
+      ${seg("theme", t, [["auto", "自動"], ["light", "白"], ["sepia", "米黃"], ["green", "護眼綠"]])}
+      ${seg("theme", t, [["dark", "夜間"], ["black", "純黑"]])}
+      <p class="sub">英文字顏色</p>
+      <div class="seg">${Object.entries(WORD_COLORS).map(([k, [label, light]]) =>
+        `<button data-set="wordColor" data-val="${k}" class="${k === wordColor ? "on" : ""}" style="${light ? `color:${light};font-weight:600` : ""}">${label}</button>`).join("")}</div>
+      <p class="sub">中文字體</p>
+      ${seg("bodyFont", bodyFont, Object.entries(BODY_FONTS).map(([k, [label]]) => [k, label]))}
+      <p class="sub">英文字體</p>
+      ${seg("enFont", enFont, Object.entries(EN_FONTS).map(([k, [label]]) => [k, label]))}
+      <p class="sub" style="font-family:var(--body-font);font-size:var(--fs);line-height:var(--lh)">預覽：她<span class="w">suddenly</span>轉過身，嘴角勾起一抹<span class="w">smirk</span>。</p>`);
+  }
+
+  function isDark() {
+    const t = theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    return t === "dark" || t === "black";
   }
 
   function applyLook() {
-    document.documentElement.style.setProperty("--fs", fs + "px");
+    const root = document.documentElement.style;
+    root.setProperty("--fs", fs + "px");
+    root.setProperty("--lh", lh);
     if (theme) document.documentElement.setAttribute("data-theme", theme);
     else document.documentElement.removeAttribute("data-theme");
+    const wc = WORD_COLORS[wordColor] || WORD_COLORS.theme;
+    if (wc[1]) root.setProperty("--word", isDark() ? wc[2] : wc[1]); else root.removeProperty("--word");
+    root.setProperty("--body-font", (BODY_FONTS[bodyFont] || BODY_FONTS.serif)[1]);
+    const ef = EN_FONTS[enFont] || EN_FONTS.serif;
+    root.setProperty("--en-font", ef[1]);
+    root.setProperty("--en-style", ef[2]);
+    if (bodyFont === "kai" && !document.getElementById("kaiFont")) {  // 文楷：用到才從 Google Fonts 載入
+      const l = document.createElement("link");
+      l.id = "kaiFont"; l.rel = "stylesheet";
+      l.href = "https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap";
+      document.head.appendChild(l);
+    }
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim() || "#faf7f0";
   }
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyLook);
 
   // ---------- 事件 ----------
   $("slider").value = level;
@@ -449,7 +510,7 @@
   });
 
   $("sheet").addEventListener("click", (e) => {
-    const t = e.target.closest("[data-say],[data-known],[data-toggle],[data-fs],[data-theme]");
+    const t = e.target.closest("[data-say],[data-known],[data-toggle],[data-set]");
     if (!t) return;
     if (t.dataset.say) speak(t.dataset.say);
     if (t.dataset.known) { known.add(t.dataset.known); store.set("known", [...known]); closeSheet(); render(); }
@@ -457,8 +518,18 @@
       const k = t.dataset.toggle; known.has(k) ? known.delete(k) : known.add(k);
       store.set("known", [...known]); render(); showWordbook();
     }
-    if (t.dataset.fs) { fs = +t.dataset.fs; store.set("fs", fs); applyLook(); showSettings(); }
-    if (t.dataset.theme) { theme = t.dataset.theme === "auto" ? null : t.dataset.theme; store.set("theme", theme); applyLook(); showSettings(); }
+    if (t.dataset.set) {
+      const v = t.dataset.val;
+      switch (t.dataset.set) {
+        case "fs": fs = +v; store.set("fs", fs); break;
+        case "lh": lh = +v; store.set("lh", lh); break;
+        case "theme": theme = v === "auto" ? null : v; store.set("theme", theme); break;
+        case "wordColor": wordColor = v; store.set("wordColor", v); break;
+        case "bodyFont": bodyFont = v; store.set("bodyFont", v); break;
+        case "enFont": enFont = v; store.set("enFont", v); break;
+      }
+      applyLook(); showSettings();
+    }
   });
 
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
