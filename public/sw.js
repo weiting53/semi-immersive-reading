@@ -1,5 +1,5 @@
 // 離線快取：程式和單字表先用快取(背景更新);抓小說(/api/)一律走網路。
-const VERSION = "eread-v13";
+const VERSION = "eread-v14";
 const SHELL = [
   "./", "index.html", "app.js", "manifest.webmanifest", "sites.json", "data/vocab.json",
   "vendor/jszip.min.js", "vendor/opencc-cn2t.js",

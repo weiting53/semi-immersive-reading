@@ -513,7 +513,9 @@
     try { await sites(); page = await fetchHTML(url); }
     catch (e) { $("browser").hidden = true; document.body.classList.remove("browsing"); browse.stack = []; browse.url = ""; showHome(e.message); return; }
     const doc = new DOMParser().parseFromString(page, "text/html");
-    doc.querySelectorAll("script,noscript,iframe,ins,object,embed").forEach((e) => e.remove());
+    doc.querySelectorAll("script,noscript,iframe,ins,object,embed,meta[http-equiv]").forEach((e) => e.remove());
+    // 原網站的程式碼一律不執行(CSP),點擊由 App 自己接手
+    const csp = doc.createElement("meta"); csp.httpEquiv = "Content-Security-Policy"; csp.content = "script-src 'none'; object-src 'none'; frame-src 'none'"; doc.head.prepend(csp);
     doc.querySelectorAll("*").forEach((e) => [...e.attributes].forEach((at) => { if (/^on/i.test(at.name)) e.removeAttribute(at.name); }));
     const base = doc.createElement("base"); base.href = url; doc.head.prepend(base);
     // 原網站的搜尋視窗靠 JS 開關，這裡用 class 代替
