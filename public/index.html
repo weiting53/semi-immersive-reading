@@ -139,17 +139,20 @@ body.home { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
 .find .site { padding: 7px 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--fg); text-decoration: none; }
 .find .site.off { background: var(--card); color: var(--muted); border: 1px dashed var(--line); font-weight: 400; }
 .hint { font-size: 12px; color: var(--muted); margin: 6px 0 0; }
-.find button.site { font: inherit; font-size: 13px; cursor: pointer; }
-.find.tags { margin-top: 10px; }
-.addbk { font: inherit; font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--word); background: none; color: var(--word); font-weight: 600; cursor: pointer; }
-.addbk.done { border-color: var(--line); color: var(--muted); font-weight: 400; cursor: default; }
-.back { font: inherit; font-size: 14px; border: 0; background: none; color: var(--muted); padding: 4px 0; cursor: pointer; }
-.btns2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 4px; }
-.btns2 .addbk { height: 44px; font-size: 15px; border-radius: 12px; }
-.btns2 .addbk.go { background: var(--word); color: #fff; border-color: var(--word); }
-.intro { font-size: 15px; line-height: 1.8; margin-top: 14px; }
-.intro p { margin: 0 0 4px; text-indent: 0; }
-.more-page { width: 100%; margin-top: 14px; background: none; font-family: inherit; }
+.find button.site { font: inherit; font-size: 14px; cursor: pointer; }
+#browser { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; background: var(--bg); }
+#browser[hidden] { display: none; }
+body.browsing { overflow: hidden; }
+.brbar { display: flex; align-items: center; gap: 8px; padding: calc(6px + env(safe-area-inset-top)) 10px 6px; border-bottom: 1px solid var(--line); background: var(--card); }
+.brbar button { font: inherit; border: 0; background: none; color: var(--word); font-size: 16px; padding: 6px 8px; cursor: pointer; }
+#brBack { font-size: 26px; line-height: 1; padding: 0 10px 4px; }
+#brTitle { flex: 1; min-width: 0; text-align: center; font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#brFrame { flex: 1; width: 100%; border: 0; background: #fff; }
+.fabs { position: absolute; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.fab { font: inherit; font-size: 15px; font-weight: 700; padding: 13px 18px; border-radius: 999px; border: 0; background: var(--word); color: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.25); cursor: pointer; }
+.fab.done { background: var(--card); color: var(--muted); border: 1px solid var(--line); font-weight: 400; }
+.fab.ghost { background: var(--card); color: var(--fg); border: 1px solid var(--line); font-weight: 600; }
+.fab[hidden] { display: none; }
 .add .clip { padding: 0 12px; background: var(--card); border: 1px solid var(--line); color: var(--fg); font-weight: 400; }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .row2 .add.epub { margin-top: 10px; background: none; font-family: inherit; }
@@ -174,6 +177,18 @@ textarea.field { resize: vertical; line-height: 1.6; }
 </div></div>
 
 <div class="scrim" id="scrim"></div>
+<div id="browser" hidden>
+  <div class="brbar">
+    <button type="button" id="brBack" aria-label="上一頁">‹</button>
+    <div id="brTitle"></div>
+    <button type="button" id="brClose">完成</button>
+  </div>
+  <iframe id="brFrame" sandbox="allow-same-origin" title="小說網站"></iframe>
+  <div class="fabs">
+    <button type="button" id="brRead" class="fab ghost" hidden>📖 用英讀讀這章</button>
+    <button type="button" id="brAdd" class="fab" hidden>＋ 加入書庫</button>
+  </div>
+</div>
 <div class="sheet" id="sheet"><div class="inner" id="sheetBody"></div></div>
 
 <script src="vendor/jszip.min.js" defer></script>

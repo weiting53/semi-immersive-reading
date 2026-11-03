@@ -135,6 +135,7 @@
     const k = e.target.k.value.trim();
     if (!k) return;
     store.set("key", k);
+    alert("金鑰已儲存");
     location.reload();
   });
 
@@ -456,17 +457,13 @@
         </div>
       </section>
       ${err ? errHtml(err) : ""}
-      <form id="findForm" class="add search">
-        <input id="findIn" type="search" placeholder="🔍 在小說狂人找書(書名)" enterkeyhint="search">
-        <button>搜尋</button>
-      </form>
-      <div class="find tags">${FIND_TAGS.map((t) => `<button type="button" class="site" data-tag="${esc(t)}">#${esc(t)}</button>`).join("")}</div>
       <div class="find">
         <span>去網站找書 →</span>
         ${SITES.map((x) =>
-          `<a class="site${x.cloudBlocked ? " off" : ""}" href="${esc(x.home || "https://" + x.host + "/")}" target="_blank" rel="noopener">${esc(x.name)} ↗</a>`).join("")}
+          x.cloudBlocked ? `<a class="site off" href="${esc(x.home || "https://" + x.host + "/")}" target="_blank" rel="noopener">${esc(x.name)} ↗</a>`
+            : `<button type="button" class="site" data-browse="${esc(x.home || "https://" + x.host + "/")}">${esc(x.name)}</button>`).join("")}
       </div>
-      <p class="hint">找到想看的書，複製網址(書本首頁或任一章都可以)回來貼上。${SITES.some((x) => x.cloudBlocked)
+      <p class="hint">點網站會在 App 裡打開，看到喜歡的書按右下角「＋ 加入書庫」。也可以貼網址。${SITES.some((x) => x.cloudBlocked)
         ? `灰色的網站(${SITES.filter((x) => x.cloudBlocked).map((x) => esc(x.name)).join("、")})擋雲端抓取，請複製章節文字用「✍️ 貼上文字」。` : ""}</p>
       <form id="urlForm" class="add">
         <input id="urlIn" type="url" required placeholder="貼上小說網址" value="${last.startsWith("epub") ? "" : esc(last)}">
@@ -485,7 +482,6 @@
       try { load(await importEpub(f)); } catch (err) { $("epubMsg").textContent = err.message || "這不是有效的 EPUB 檔"; }
     };
     $("urlForm").onsubmit = (e) => { e.preventDefault(); load($("urlIn").value); };
-    $("findForm").onsubmit = (e) => { e.preventDefault(); const q = $("findIn").value.trim(); if (q) showFind("s/" + q, `「${q}」`); };
     $("btnPaste").onclick = showPaste;
     $("btnClip").onclick = async () => {
       try {
@@ -497,88 +493,79 @@
     renderShelf();
   }
 
-  // ---------- 在 App 裡找書(小說狂人):搜尋/標籤 → 書本頁 → 加入書庫 ----------
-  const FIND_TAGS = ["霸總", "總裁", "古言", "穿越", "重生", "甜寵", "宮鬥", "校園"];
-  const CZ = "https://czbooks.net/";
-  const czId = (href) => ((href || "").match(/\/n\/([^/?#"]+)/) || [])[1];
-  const txt = (el) => (el ? el.textContent.replace(/\s+/g, " ").trim() : "");
-
+  // ---------- 在 App 裡逛小說網站(透過自己的雲端抓原網頁、原樣顯示),右下角浮動按鈕加入書庫 ----------
+  // 不能直接 iframe 原網站(對方禁止嵌入),也不能在 Safari 裡加(主畫面 App 和 Safari 資料分開)
+  const czId = (url) => (((new URL(url)).pathname).match(/^\/n\/([^/?#]+)/) || [])[1];
+  const inShelf = (id) => !!store.get("shelf", {})["czbooks.net:" + id];
   function addToShelf(id, book) {
     const key = "czbooks.net:" + id, s = store.get("shelf", {});
-    if (!s[key]) { s[key] = { book: toTrad([book])[0], title: "", fresh: true, url: CZ + "n/" + id, at: Math.floor(Date.now() / 1000) }; store.set("shelf", s); }
+    if (!s[key]) { s[key] = { book: toTrad([book])[0], title: "", fresh: true, url: "https://czbooks.net/n/" + id, at: Math.floor(Date.now() / 1000) }; store.set("shelf", s); }
   }
-  const inShelf = (id) => !!store.get("shelf", {})["czbooks.net:" + id];
-  const addBtn = (id, book) => inShelf(id)
-    ? `<button type="button" class="addbk done" disabled>✓ 已在書庫</button>`
-    : `<button type="button" class="addbk" data-add="${esc(id)}" data-book="${esc(book)}">＋ 加入書庫</button>`;
+  const browse = { stack: [], url: "", book: "" };
 
-  async function showFind(path, label, page) {
-    chap = null; document.body.classList.add("home");
-    page = page || 1;
-    window.scrollTo(0, 0);
-    $("chapTitle").textContent = "找書";
-    $("text").innerHTML = `<button type="button" class="back" data-home>← 書架</button><h2 class="shelf-h">${esc(label)}</h2><p class="sub">搜尋中…</p>`;
-    let doc;
-    try {
-      await sites();
-      doc = new DOMParser().parseFromString(await fetchHTML(CZ + path + (page > 1 ? "/" + page : "")), "text/html");
-    } catch (e) { $("text").querySelector(".sub").outerHTML = errHtml(e.message); return; }
-    const items = [...doc.querySelectorAll(".novel-item-wrapper")].map((li) => {
-      const eye = li.querySelector(".fa-eye"), a = li.querySelector("a[href*='/n/']");
-      return {
-        id: czId(a && a.getAttribute("href")),
-        title: txt(li.querySelector(".novel-item-title")), author: txt(li.querySelector(".novel-item-author a")),
-        state: txt(li.querySelector(".novel-item-state")), newest: txt(li.querySelector(".novel-item-newest-chapter a")),
-        views: eye ? txt(eye.parentElement) : "",
-      };
-    }).filter((x) => x.id && x.title);
-    const tr = toTrad(items.flatMap((x) => [x.title, x.author, x.newest]));
-    items.forEach((x, i) => { [x.title, x.author, x.newest] = tr.slice(i * 3, i * 3 + 3); });
-    $("text").querySelector(".sub").outerHTML = !items.length ? `<p class="empty">找不到書。換個關鍵字試試。</p>` : `
-      <div class="shelf">${items.map((x) => `
-        <article class="bk" data-book-id="${esc(x.id)}">
-          <div class="cover" style="background:${coverColor(x.title)}">${esc([...x.title][0] || "書")}</div>
-          <div class="info">
-            <div class="name">${esc(x.title)}</div>
-            <div class="where">${esc(x.author)}${x.state ? " · " + esc(x.state) : ""}${x.newest ? " · 最新 " + esc(x.newest) : ""}</div>
-            <div class="chips">${x.views ? `<span class="chip">👁 ${esc(x.views)}</span>` : ""}${addBtn(x.id, x.title)}</div>
-          </div>
-        </article>`).join("")}</div>
-      ${items.length >= 40 ? `<button type="button" class="add epub more-page" data-more="${esc(path)}" data-label="${esc(label)}" data-page="${page + 1}">下一頁 →</button>` : ""}`;
+  async function showBrowse(url, push) {
+    const v = $("browser"), fr = $("brFrame");
+    v.hidden = false; document.body.classList.add("browsing");
+    if (push !== false && browse.url) browse.stack.push(browse.url);
+    browse.url = url; browse.book = "";
+    $("brTitle").textContent = "讀取中…"; updateFab();
+    let page;
+    try { await sites(); page = await fetchHTML(url); }
+    catch (e) { $("browser").hidden = true; document.body.classList.remove("browsing"); browse.stack = []; browse.url = ""; showHome(e.message); return; }
+    const doc = new DOMParser().parseFromString(page, "text/html");
+    doc.querySelectorAll("script,noscript,iframe,ins,object,embed").forEach((e) => e.remove());
+    doc.querySelectorAll("*").forEach((e) => [...e.attributes].forEach((at) => { if (/^on/i.test(at.name)) e.removeAttribute(at.name); }));
+    const base = doc.createElement("base"); base.href = url; doc.head.prepend(base);
+    // 原網站的搜尋視窗靠 JS 開關，這裡用 class 代替
+    const st = doc.createElement("style");
+    st.textContent = "html.sr-open .site-search-dialog,html.sr-open .search-container{display:block!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important}body{padding-bottom:90px!important}";
+    doc.head.append(st);
+    const h = doc.querySelector("h1.title, h1.name");
+    const m = (h ? h.textContent : doc.title).match(/《(.+?)》/);
+    browse.book = m ? m[1].trim() : (h ? h.textContent.trim() : "");
+    $("brTitle").textContent = toTrad([browse.book || doc.title.replace(/\s*\|.*$/, "")])[0];
+    fr.onload = () => {
+      const d = fr.contentDocument; if (!d) return;
+      d.addEventListener("click", (e) => {
+        if (e.target.closest(".site-search-trigger, .search-bar")) { e.preventDefault(); d.documentElement.classList.add("sr-open"); const i = d.querySelector("#search-text"); if (i) i.focus(); return; }
+        if (e.target.closest(".search-close, .site-search-shadow")) { e.preventDefault(); d.documentElement.classList.remove("sr-open"); return; }
+        const kw = e.target.closest(".keywords .item button");
+        if (kw) { showBrowse("https://czbooks.net/s/" + encodeURIComponent(kw.textContent.trim())); return; }
+        const a = e.target.closest("a[href]"); if (!a) return;
+        const href = a.getAttribute("href");
+        if (!href || href.startsWith("#") || href.startsWith("javascript")) { e.preventDefault(); return; }
+        e.preventDefault();
+        let u; try { u = new URL(href, url); } catch (err) { return; }
+        if (siteOf(u.hostname)) showBrowse("https://" + siteOf(u.hostname).host + u.pathname + u.search);
+      });
+      d.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const q = (e.target.querySelector("input[type=search],input[type=text]") || {}).value;
+        if (q && q.trim()) showBrowse("https://czbooks.net/s/" + encodeURIComponent(q.trim()));
+      });
+    };
+    fr.srcdoc = "<!doctype html>" + doc.documentElement.outerHTML;
+    updateFab();
   }
 
-  async function showBookInfo(id) {
-    chap = null; document.body.classList.add("home");
-    window.scrollTo(0, 0);
-    $("text").innerHTML = `<button type="button" class="back" data-home>← 書架</button><p class="sub">讀取中…</p>`;
-    let doc;
-    try { doc = new DOMParser().parseFromString(await fetchHTML(CZ + "n/" + id), "text/html"); }
-    catch (e) { $("text").querySelector(".sub").outerHTML = errHtml(e.message); return; }
-    const desc = doc.querySelector(".novel-detail .description");
-    const lines = desc ? toLines(desc.innerHTML).filter((l) => !/內容簡介[︰:]?$/.test(l)) : [];
-    const cells = [...doc.querySelectorAll(".novel-detail .state td")].map(txt);
-    const st = (k) => { const i = cells.indexOf(k); return i >= 0 ? cells[i + 1] : ""; };
-    const tags = [...doc.querySelectorAll(".hashtag .item a")].map(txt).slice(0, 8);
-    const nCh = doc.querySelectorAll("#chapter-list a[href*='/n/']").length;
-    const [title, author, ...rest] = toTrad([txt(doc.querySelector(".novel-detail h1.title")).replace(/^《|》$/g, ""),
-      txt(doc.querySelector(".novel-detail .author a")), ...lines, ...tags]);
-    const intro = rest.slice(0, lines.length), tg = rest.slice(lines.length);
-    $("chapTitle").textContent = title;
-    $("text").querySelector(".sub").outerHTML = `
-      <section class="bookinfo">
-        <div class="bk" style="cursor:default">
-          <div class="cover" style="background:${coverColor(title)}">${esc([...title][0] || "書")}</div>
-          <div class="info">
-            <div class="name">${esc(title)}</div>
-            <div class="where">${esc(author)} · ${esc(st("連載狀態"))} · ${nCh} 章</div>
-            <div class="where">更新 ${esc(st("更新時間"))} · 👁 ${esc(st("觀看數"))}</div>
-          </div>
-        </div>
-        <div class="btns2">${addBtn(id, title)}<button type="button" class="addbk go" data-open="${esc(CZ + "n/" + id)}">從第一章開始讀</button></div>
-        ${tg.length ? `<div class="find">${tg.map((t) => `<button type="button" class="site" data-tag="${esc(t)}">#${esc(t)}</button>`).join("")}</div>` : ""}
-        <div class="intro">${intro.map((l) => `<p>${esc(l)}</p>`).join("")}</div>
-      </section>`;
+  function updateFab() {
+    const id = browse.url && czId(browse.url), fab = $("brAdd");
+    fab.hidden = !id;
+    if (!id) return;
+    const have = inShelf(id);
+    fab.textContent = have ? "✓ 已在書庫" : "＋ 加入書庫";
+    fab.classList.toggle("done", have);
+    $("brRead").hidden = !/\/n\/[^/]+\/[^/?]+/.test(new URL(browse.url).pathname);
   }
+
+  function closeBrowse() { $("browser").hidden = true; document.body.classList.remove("browsing"); $("brFrame").srcdoc = ""; browse.stack = []; browse.url = ""; showHome(); }
+  $("brBack").onclick = () => { browse.stack.length ? showBrowse(browse.stack.pop(), false) : closeBrowse(); };
+  $("brClose").onclick = closeBrowse;
+  $("brAdd").onclick = () => {
+    const id = czId(browse.url); if (!id || inShelf(id)) return;
+    addToShelf(id, browse.book || id); updateFab();
+  };
+  $("brRead").onclick = () => { const u = browse.url; $("browser").hidden = true; document.body.classList.remove("browsing"); $("brFrame").srcdoc = ""; browse.stack = []; browse.url = ""; load(u); };
 
   // 書封：用書名第一個字 + 依書名算出的顏色
   const COVER_COLORS = ["#b4532a", "#2b62b8", "#2f7a3a", "#7a3fb0", "#c23b72", "#a07a1c", "#1f7a7a", "#5b5b8f"];
@@ -738,6 +725,8 @@
       ${seg("bodyFont", bodyFont, Object.entries(BODY_FONTS).map(([k, [label]]) => [k, label]))}
       <p class="sub">英文字體</p>
       ${seg("enFont", enFont, Object.entries(EN_FONTS).map(([k, [label]]) => [k, label]))}
+      <p class="sub">存取金鑰(抓網路小說用；${store.get("key", "") ? "✓ 已設定" : "尚未設定"})</p>
+      <form class="add keyform" style="margin-top:6px"><input name="k" type="password" autocomplete="off" placeholder="貼上存取金鑰"><button>儲存</button></form>
       <p class="sub" style="font-family:var(--body-font);font-size:var(--fs);line-height:var(--lh)">預覽：她<span class="w">suddenly</span>轉過身，嘴角勾起一抹<span class="w">smirk</span>。</p>`);
   }
 
@@ -789,19 +778,9 @@
       }
       return;
     }
-    const add = e.target.closest("[data-add]");
-    if (add) {
-      addToShelf(add.dataset.add, add.dataset.book);
-      add.outerHTML = `<button type="button" class="addbk done" disabled>✓ 已加入</button>`;
-      return;
-    }
     if (e.target.closest("[data-home]")) { showHome(); return; }
-    const tag = e.target.closest("[data-tag]");
-    if (tag) { showFind("hashtag/" + tag.dataset.tag, "#" + tag.dataset.tag); return; }
-    const more = e.target.closest("[data-more]");
-    if (more) { showFind(more.dataset.more, more.dataset.label, +more.dataset.page); return; }
-    const bi = e.target.closest("[data-book-id]");
-    if (bi) { showBookInfo(bi.dataset.bookId); return; }
+    const br = e.target.closest("[data-browse]");
+    if (br) { browse.stack = []; browse.url = ""; showBrowse(br.dataset.browse); return; }
     const open = e.target.closest("[data-open]");
     if (open) { load(open.dataset.open); return; }
     const go = e.target.closest("[data-go]");
@@ -844,7 +823,6 @@
   if (qs.get("key")) { store.set("key", qs.get("key")); history.replaceState(null, "", location.pathname); alert("已設定存取金鑰，之後可以直接讀網路小說了。"); }
   sites().catch(() => {});
   const startUrl = qs.get("url") || store.get("lastUrl", "");
-  if (qs.get("find")) showFind("s/" + qs.get("find"), `「${qs.get("find")}」`);
-  else if (qs.get("book")) showBookInfo(qs.get("book"));
+  if (qs.get("browse")) { showHome(); showBrowse(qs.get("browse")); }
   else startUrl ? load(startUrl) : showHome();
 })();
