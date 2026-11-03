@@ -1,4 +1,4 @@
-// 英讀書庫 PWA:中文小說夾英文單字。全部在手機瀏覽器裡跑；只有抓網路小說時經過 /api/fetch(Cloudflare Worker)。
+// 半沉浸式英語閱讀 PWA:中文小說夾英文單字。全部在手機瀏覽器裡跑；只有抓網路小說時經過 /api/fetch(Cloudflare Worker)。
 (function () {
   "use strict";
   const LV_NAMES = ["原文", "Lv1 多益必考", "Lv2 多益重要", "Lv3 多益常見", "Lv4 加托福雅思", "Lv5 進階同義字與片語"];
@@ -289,7 +289,7 @@
 
   function showHome(err) {
     chap = null;
-    $("bookTitle").textContent = "英讀書庫";
+    $("bookTitle").textContent = "半沉浸式英語閱讀";
     $("chapTitle").textContent = "貼上網址或匯入 EPUB";
     $("lvStat").textContent = "";
     const last = store.get("lastUrl", "");

@@ -1,6 +1,6 @@
 {
-  "name": "英讀書庫",
-  "short_name": "英讀書庫",
+  "name": "半沉浸式英語閱讀",
+  "short_name": "半沉浸英讀",
   "description": "讀中文小說，順便學多益/托福/雅思英文單字",
   "lang": "zh-Hant",
   "start_url": "./",
