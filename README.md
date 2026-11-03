@@ -6,7 +6,11 @@ Read Chinese novels with some of the words swapped into English. You can still f
 
 > In one line: practise TOEIC / TOEFL / IELTS vocabulary while reading the novels you already want to read.
 
-Live app: <https://semi-immersive-reading.english-reader.workers.dev>. On iPhone, open it in Safari, tap Share, then Add to Home Screen.
+<img src="docs/qr.png" width="140" align="right" alt="QR code">
+
+Try it: <https://semi-immersive-reading.english-reader.workers.dev> (or scan the QR code with your phone camera). On iPhone, open it in Safari, tap Share, then Add to Home Screen.
+
+On this demo instance, EPUB import and pasted text work for everyone. Fetching web novels needs an access key, so the owner's free quota isn't used up. To read web novels yourself, [deploy your own copy](#deploy-your-own-copy) in a few minutes. It's free.
 
 ---
 
@@ -39,7 +43,7 @@ KK [smɝk]
 | Known words | Words marked "I know this" go back to Chinese |
 | Word list | Every word swapped in the current chapter |
 | Bookshelf | Home-screen cards show your current chapter, words left to learn, words known, and a progress bar for EPUBs |
-| Sources | czbooks.net URLs (a chapter or the book's main page) and local EPUB files |
+| Sources | URLs from sites in `public/sites.json` (czbooks.net out of the box), local EPUB files, or **pasted text** from any app (paid platforms included) |
 | Simplified → Traditional | Simplified or mixed text is converted to Taiwan Traditional Chinese automatically |
 | Offline | The app and every chapter you've read are cached on the phone |
 | Appearance | Font size, line height, six themes (including eye-care green and pure black), English word colour, Chinese font (Ming / Hei / WenKai) and English font |
@@ -102,12 +106,38 @@ tools/
   kk.py              CMUdict → KK phonetics
 ```
 
-### Deploy
+### Deploy your own copy
+
+Free on a Cloudflare account. The free plan allows 100,000 chapter fetches a day and never bills you. If the limit is reached, fetching stops until the next day.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/weiting53/semi-immersive-reading)
+
+Or from the command line:
 
 ```bash
-npx wrangler login    # first time only
+git clone https://github.com/weiting53/semi-immersive-reading.git
+cd semi-immersive-reading
+npx wrangler login
 npx wrangler deploy
 ```
+
+Optional: lock web-novel fetching to your own phones.
+
+```bash
+npx wrangler secret put ACCESS_KEY      # type any long random string
+```
+
+Then open `https://<your-worker>.workers.dev/?key=<that string>` once on each phone. You can also turn that link into a QR code and scan it. The key is saved on the phone. EPUB import and pasted text never need the key.
+
+### Adding a site
+
+Add one line to `public/sites.json`. The Worker uses the same file as its allowlist.
+
+```json
+{ "host": "www.example.com", "name": "Example", "parser": "generic" }
+```
+
+The `generic` parser finds the largest block of text plus the 上一章 / 下一章 links, and works on most novel sites. Some sites block requests from cloud servers. If so, mark the site `"cloudBlocked": true` and read it with EPUB or pasted text instead.
 
 ### Adding words or changing the mapping
 

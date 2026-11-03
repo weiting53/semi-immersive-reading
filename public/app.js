@@ -91,15 +91,22 @@
   }
 
   // ---------- 網址 ----------
+  // 支援的網站在 sites.json(Worker 也用同一份當白名單)
+  let SITES = [];
+  async function sites() {
+    if (!SITES.length) SITES = await (await fetch("sites.json")).json();
+    return SITES;
+  }
+  const siteOf = (host) => SITES.find((x) => x.host === host || (x.aliases || []).includes(host));
   function normalize(url) {
     url = url.trim();
     if (url.startsWith("//")) url = "https:" + url;
     if (/^epub:\/\/[0-9a-f]{12}\/\d+$/.test(url)) return url;
     let u;
     try { u = new URL(url); } catch (e) { throw new Error("網址格式不對"); }
-    if (/(^|\.)(xbanxia\.cc|xbanxia\.com|banxia\.cc)$/.test(u.hostname)) return "https://www.xbanxia.cc" + u.pathname;
-    if (/(^|\.)czbooks\.net$/.test(u.hostname)) return "https://czbooks.net" + u.pathname + u.search;
-    throw new Error("目前支援 czbooks.net、半夏小說(xbanxia.cc)和 EPUB");
+    const site = siteOf(u.hostname);
+    if (!site) throw new Error("還不支援這個網站。目前支援:" + SITES.map((x) => x.name).join("、") + ",或匯入 EPUB、貼上文字。");
+    return "https://" + site.host + u.pathname + u.search;
   }
   function bookId(url) {
     const u = new URL(url.replace(/^epub:/, "https:"));
@@ -110,9 +117,11 @@
 
   // ---------- 抓章節 ----------
   async function fetchHTML(url) {
-    const r = await fetch("api/fetch?url=" + encodeURIComponent(url));
-    if (r.status === 403 && url.includes("xbanxia")) {
-      throw new Error("半夏小說擋掉了雲端抓取，手機版讀不到。可以改用電腦版(server.py,同一個 Wi-Fi),或把書轉成 EPUB 匯入。");
+    const r = await fetch("api/fetch?url=" + encodeURIComponent(url), { headers: { "X-Key": store.get("key", "") } });
+    if (r.status === 401) throw new Error("這個網站需要存取金鑰才能抓小說。請用站長給你的設定連結打開一次(EPUB 和貼上文字不需要金鑰)。");
+    const site = siteOf(new URL(url).hostname);
+    if (r.status === 403 && site && site.cloudBlocked) {
+      throw new Error(site.name + "擋掉了雲端抓取，手機版讀不到。可以改用電腦版(server.py,同一個 Wi-Fi),或轉成 EPUB 匯入、貼上文字。");
     }
     if (!r.ok) throw new Error(r.status === 404 ? "網站找不到這一頁" : `抓取失敗(${r.status})`);
     return r.text();
@@ -160,6 +169,47 @@
     return chapterObj(url, bk ? stripTags(bk[1]).trim() : "", t ? stripTags(t[1]).trim() : "", lines, link("prev_url"), link("next_url"));
   }
 
+  // 通用擷取：找文字最多的內文區塊，加上「上一章 / 下一章」連結。新網站加進 sites.json 用 "parser": "generic" 就好
+  function parseGeneric(url, page) {
+    const doc = new DOMParser().parseFromString(page, "text/html");
+    const siteName = (siteOf(new URL(url).hostname) || {}).name || "";
+    // 上一章 / 下一章:rel、id/class 含 prev/next,或連結文字(含外層 li 的文字)
+    const link = (dir) => {
+      const re = dir === "prev" ? /^(上一?章|上一頁|上一页|上章)/ : /^(下一?章|下一頁|下一页|下章)/;
+      const a = [...doc.querySelectorAll("a[href]")].find((x) =>
+        x.rel === dir || new RegExp(`(^|[_-])${dir}`, "i").test(x.id + " " + x.className) ||
+        re.test(x.textContent.trim()) || (x.parentElement && re.test(x.parentElement.textContent.trim())));
+      const href = a && a.getAttribute("href");
+      if (!href || href.startsWith("javascript") || href === "#") return null;
+      try { return normalize(new URL(href.trim(), url).href); } catch (e) { return null; }
+    };
+    const prev = link("prev"), next = link("next");
+
+    // 章名：找內容出現在 <title> 裡的 h1~h3;書名:og:novel:book_name,否則從 <title> 拆
+    const pageTitle = doc.title.trim();
+    const hs = [...doc.querySelectorAll("h1,h2,h3")].map((h) => h.textContent.trim()).filter((t) => t.length > 1 && t !== siteName);
+    const title = hs.find((t) => pageTitle.includes(t)) || hs[0] || pageTitle.split(/\s[-_|]\s|[-_|]/)[0].trim();
+    const meta = (k) => { const m = doc.querySelector(`meta[property="${k}"],meta[name="${k}"]`); return m ? m.content.trim() : ""; };
+    const book = meta("og:novel:book_name") ||
+      pageTitle.split(/\s+[-_|]\s+|[-_|]|\s{2,}/).map((x) => x.replace(title, "").trim()).find((x) => x && x !== siteName && !x.includes(siteName)) || "";
+
+    // 內文：常見的內文容器，找不到就挑「直接文字 + <br>/<p> 最多」的區塊
+    doc.querySelectorAll("script,style,noscript,iframe,ins,form,header,footer,nav").forEach((e) => e.remove());
+    let best = doc.querySelector("#content,#chaptercontent,#chapterContent,#booktxt,#txtnav,#htmlContent,#nr1,#BookText,.read-content,.chapter-content,.content,.txtnav");
+    if (!best) {
+      let bestScore = 0;
+      for (const el of doc.querySelectorAll("div,article,section")) {
+        const own = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join("").trim().length;
+        const score = own + el.querySelectorAll(":scope > br, :scope > p").length * 20;
+        if (score > bestScore) { best = el; bestScore = score; }
+      }
+    }
+    if (!best) throw new Error("找不到章節內文");
+    const html = best.innerHTML.replace(/<!--[\s\S]*?-->/g, "");
+    const lines = toLines(html).filter((l) => /[一-鿿A-Za-z0-9]/.test(l) && l !== title && !(siteName && l.includes(siteName)));
+    return chapterObj(url, book, title, lines, prev, next);
+  }
+
   // 書本首頁 → 第一章
   async function resolveBook(url) {
     const u = new URL(url);
@@ -196,7 +246,8 @@
     const cached = await idbGet("chapters", url);
     if (cached) return cached;
     const page = await fetchHTML(url);
-    const ch = new URL(url).hostname.endsWith("xbanxia.cc") ? parseBanxia(url, page) : parseCzbooks(url, page);
+    const parser = (siteOf(new URL(url).hostname) || {}).parser;
+    const ch = parser === "banxia" ? parseBanxia(url, page) : parser === "czbooks" ? parseCzbooks(url, page) : parseGeneric(url, page);
     await idbPut("chapters", url, ch);
     return ch;
   }
@@ -247,6 +298,44 @@
     for (const c of chapters) for (const en of wordsIn(toTrad(c.lines))) all.add(en);
     store.set("bw:epub-" + id, [...all]);
     return `epub://${id}/1`;
+  }
+
+  // ---------- 貼上文字：任何平台都能用。同一個書名會接成下一章 ----------
+  async function addPaste(book, title, text) {
+    book = book.trim() || "貼上的文字";
+    const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    if (!lines.length) throw new Error("沒有貼上任何文字");
+    const hash = await crypto.subtle.digest("SHA-1", new TextEncoder().encode("paste:" + book));
+    const id = [...new Uint8Array(hash)].map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 12);
+    const lib = (await idbGet("epubs", id)) || { book, file: "", chapters: [] };
+    lib.chapters.push({ title: title.trim() || `第 ${lib.chapters.length + 1} 段`, lines });
+    await idbPut("epubs", id, lib);
+    await vocab();
+    const all = new Set(store.get("bw:epub-" + id, []));
+    for (const en of wordsIn(toTrad(lines))) all.add(en);
+    store.set("bw:epub-" + id, [...all]);
+    return `epub://${id}/${lib.chapters.length}`;
+  }
+
+  function showPaste() {
+    const shelf = store.get("shelf", {});
+    const lastPaste = Object.values(shelf).filter((b) => b.url.startsWith("epub") && b.paste).sort((a, b) => b.at - a.at)[0];
+    openSheet(`
+      <h2 style="font-family:var(--sans);font-size:20px">貼上文字</h2>
+      <p class="sub">從任何 App 或網站複製一章貼進來。書名一樣的會接成下一章。</p>
+      <input id="pBook" class="field" placeholder="書名" value="${lastPaste ? esc(lastPaste.book) : ""}">
+      <input id="pTitle" class="field" placeholder="章名(可留空)">
+      <textarea id="pText" class="field" rows="8" placeholder="把章節文字貼在這裡"></textarea>
+      <p class="sub" id="pMsg"></p>
+      <div class="btns"><button class="primary" id="pGo">開始讀</button></div>`);
+    $("pGo").onclick = async () => {
+      try {
+        const url = await addPaste($("pBook").value, $("pTitle").value, $("pText").value);
+        closeSheet();
+        await load(url);
+        const id = bookId(url); const s2 = store.get("shelf", {}); if (s2[id]) { s2[id].paste = true; store.set("shelf", s2); }
+      } catch (err) { $("pMsg").textContent = err.message; }
+    };
   }
 
   // ---------- 書架與每本書的單字統計(存在這支手機) ----------
@@ -314,6 +403,7 @@
     const first = !chap || chap.url !== url;
     if (first) $("text").innerHTML = `<p class="sub" style="text-align:center">讀取中…</p>`;
     try {
+      await sites();
       url = await resolveBook(normalize(url));
       const [ch] = await Promise.all([getChapter(url), vocab()]);
       ch.words = localVocab(ch.lines);
@@ -357,7 +447,10 @@
         <input id="urlIn" type="url" required placeholder="貼 czbooks 章節或書本網址" value="${last.startsWith("epub") ? "" : esc(last)}">
         <button>開始讀</button>
       </form>
-      <label class="add epub">📖 匯入 EPUB<input id="epubIn" type="file" accept=".epub,application/epub+zip" hidden></label>
+      <div class="row2">
+        <label class="add epub">📖 匯入 EPUB<input id="epubIn" type="file" accept=".epub,application/epub+zip" hidden></label>
+        <button class="add epub" id="btnPaste" type="button">✍️ 貼上文字</button>
+      </div>
       <p class="sub" id="epubMsg"></p>`;
     $("epubIn").onchange = async (e) => {
       const f = e.target.files[0];
@@ -366,6 +459,7 @@
       try { load(await importEpub(f)); } catch (err) { $("epubMsg").textContent = err.message || "這不是有效的 EPUB 檔"; }
     };
     $("urlForm").onsubmit = (e) => { e.preventDefault(); load($("urlIn").value); };
+    $("btnPaste").onclick = showPaste;
     renderShelf();
   }
 
@@ -404,7 +498,7 @@
           <button class="more" data-remove="${esc(b.id)}" aria-label="移除">×</button>
         </article>`;
       }).join("")}</div>
-      <p class="foot">支援 czbooks.net 和 EPUB(只存在這支手機)。半夏小說擋雲端抓取，請用電腦版。簡體自動轉繁體；單字從多益/托福/雅思字表對照，不用 AI。</p>`);
+      <p class="foot">網址支援:${SITES.filter((x) => !x.cloudBlocked).map((x) => esc(x.name)).join("、") || "czbooks.net"}。其他平台可以匯入 EPUB 或貼上文字(都只存在這支手機)。簡體自動轉繁體；單字從多益/托福/雅思字表對照，不用 AI。</p>`);
   }
 
   function render() {
@@ -616,6 +710,9 @@
     navigator.serviceWorker.addEventListener("controllerchange", () => { if (hadController) location.reload(); });
   }
   applyLook();
-  const startUrl = new URLSearchParams(location.search).get("url") || store.get("lastUrl", "");
+  const qs = new URLSearchParams(location.search);
+  if (qs.get("key")) { store.set("key", qs.get("key")); history.replaceState(null, "", location.pathname); alert("已設定存取金鑰，之後可以直接讀網路小說了。"); }
+  sites().catch(() => {});
+  const startUrl = qs.get("url") || store.get("lastUrl", "");
   startUrl ? load(startUrl) : showHome();
 })();

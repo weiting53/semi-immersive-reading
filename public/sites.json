@@ -1,0 +1,4 @@
+[
+  { "host": "czbooks.net", "name": "小說狂人", "parser": "czbooks" },
+  { "host": "www.xbanxia.cc", "name": "半夏小說", "parser": "banxia", "aliases": ["xbanxia.cc", "xbanxia.com", "www.xbanxia.com", "banxia.cc", "www.banxia.cc"], "cloudBlocked": true }
+]

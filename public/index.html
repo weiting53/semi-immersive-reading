@@ -135,6 +135,10 @@ body.home { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
 .chip { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); color: var(--muted); }
 .chip.hot { background: color-mix(in srgb, var(--word) 14%, transparent); border-color: transparent; color: var(--word); font-weight: 600; }
 .more { position: absolute; top: 6px; right: 6px; width: 28px; height: 28px; border: 0; background: none; color: var(--muted); font-size: 18px; cursor: pointer; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.row2 .add.epub { margin-top: 10px; background: none; font-family: inherit; }
+.field { width: 100%; margin-top: 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); padding: 10px 12px; font-size: 16px; font-family: inherit; }
+textarea.field { resize: vertical; line-height: 1.6; }
 .empty, .foot { color: var(--muted); font-size: 13px; line-height: 1.6; margin-top: 20px; }
 </style>
 </head>

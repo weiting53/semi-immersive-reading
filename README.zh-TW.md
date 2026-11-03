@@ -6,7 +6,11 @@
 
 > 一句話：用你本來就想看的小說，練多益 / 托福 / 雅思單字。
 
-網址:<https://semi-immersive-reading.english-reader.workers.dev>(iPhone 用 Safari 打開 → 分享 → 加入主畫面)
+<img src="docs/qr.png" width="140" align="right" alt="QR code">
+
+試用:<https://semi-immersive-reading.english-reader.workers.dev>,或用手機相機掃右邊的 QR code。iPhone 用 Safari 打開，按分享 → 加入主畫面。
+
+這個示範站上，每個人都能用 EPUB 匯入和貼上文字。抓網路小說需要存取金鑰，避免用掉站長的免費額度。想自己讀網路小說，可以[部署一份自己的](#部署自己的一份),幾分鐘就好，也是免費的。
 
 ---
 
@@ -39,7 +43,7 @@ KK [smɝk]
 | 已熟 | 標「已熟」的字改回中文，不再換 |
 | 生字本 | 本章換了哪些字，一次看完 |
 | 書架 | 首頁書架卡片：讀到哪一章、可學單字數、已熟數、EPUB 閱讀進度條 |
-| 來源 | czbooks.net 網址(章節或書本首頁)、本機 EPUB |
+| 來源 | `public/sites.json` 裡的網站網址(預設 czbooks.net)、本機 EPUB、**貼上文字**(任何 App、付費平台也行) |
 | 簡轉繁 | 簡體 / 簡繁混用自動轉台灣繁體 |
 | 離線 | 讀過的章節和整個 App 都快取在手機，沒網路也能看 |
 | 外觀 | 字級 4 段、背景 白 / 米黃 / 夜間 / 跟系統 |
@@ -99,12 +103,38 @@ tools/
   kk.py              CMUdict → KK 音標
 ```
 
-### 部署
+### 部署自己的一份
+
+只要一個 Cloudflare 帳號就能免費部署。免費方案每天可以抓 10 萬次章節，不會被收費；超過的話，當天就暫停抓取，隔天恢復。
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/weiting53/semi-immersive-reading)
+
+或用指令:
 
 ```bash
-npx wrangler login    # 第一次
+git clone https://github.com/weiting53/semi-immersive-reading.git
+cd semi-immersive-reading
+npx wrangler login
 npx wrangler deploy
 ```
+
+選用：只讓自己的手機能抓網路小說。
+
+```bash
+npx wrangler secret put ACCESS_KEY      # 輸入一串夠長的隨機字
+```
+
+接著在每支手機上打開一次 `https://<你的 worker>.workers.dev/?key=<那串字>`,也可以把這個連結做成 QR code 用相機掃，金鑰就會存在手機上。EPUB 和貼上文字永遠不需要金鑰。
+
+### 加新網站
+
+在 `public/sites.json` 加一行就好，Worker 會用同一份清單當白名單。
+
+```json
+{ "host": "www.example.com", "name": "範例站", "parser": "generic" }
+```
+
+`generic` 會自動找文字最多的區塊，以及「上一章 / 下一章」連結，大部分小說站都能用。如果網站擋雲端抓取，就標 `"cloudBlocked": true`,改用 EPUB 或貼上文字讀。
 
 ### 加新詞 / 改對照
 
