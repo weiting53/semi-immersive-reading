@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="英讀書庫">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#faf7f0">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<title>英讀書庫</title>
+<style>
+:root {
+  --bg: #faf7f0; --fg: #2b2620; --muted: #8a8174; --line: #e6dfd2;
+  --card: #ffffff; --accent: #b4532a; --accent-bg: #f6e6dc; --known: #9aa48c;
+  --serif: "Songti TC", "Noto Serif TC", "PMingLiU", serif;
+  --sans: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+:root[data-theme="sepia"] { --bg: #f1e7d0; --fg: #3b2f22; --muted: #85745c; --line: #dccdae; --card: #f8f0dd; --accent: #9c3f17; --accent-bg: #e9d4b8; }
+:root[data-theme="dark"] { --bg: #16140f; --fg: #e4ddd0; --muted: #8f8676; --line: #2e2a22; --card: #211e18; --accent: #f0956a; --accent-bg: #3a2519; --known: #7f8a72; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) { --bg: #16140f; --fg: #e4ddd0; --muted: #8f8676; --line: #2e2a22; --card: #211e18; --accent: #f0956a; --accent-bg: #3a2519; --known: #7f8a72; }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; background: var(--bg); color: var(--fg); }
+body { font-family: var(--sans); padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+
+header {
+  position: sticky; top: 0; z-index: 5; background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+header .t { flex: 1; min-width: 0; }
+header .book { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+header .chap { font-size: 15px; font-weight: 600; }
+.iconbtn {
+  border: 1px solid var(--line); background: var(--card); color: var(--fg);
+  border-radius: 10px; height: 36px; min-width: 36px; padding: 0 10px; font-size: 14px; cursor: pointer;
+}
+
+main { max-width: 680px; margin: 0 auto; padding: 20px 16px 40px; }
+main p {
+  font-family: var(--serif); font-size: var(--fs, 19px); line-height: 1.9;
+  margin: 0 0 0.9em; text-align: justify; word-break: break-word;
+}
+.w {
+  color: var(--accent); font-family: Georgia, "Times New Roman", serif; font-style: italic;
+  padding: 0 2px; border-radius: 4px; cursor: pointer;
+  text-decoration: underline dotted; text-underline-offset: 4px;
+}
+.w:active, .w.on { background: var(--accent-bg); }
+.s {
+  font-family: Georgia, "Times New Roman", serif; cursor: pointer;
+  border-left: 3px solid var(--accent); padding-left: 10px; display: block;
+}
+.s .orig { display: none; font-family: var(--serif); color: var(--muted); font-size: 0.85em; margin-top: 4px; }
+.s.show .orig { display: block; }
+.src { font-size: 12px; color: var(--muted); text-align: center; margin-top: 32px; word-break: break-all; }
+.src a { color: var(--muted); }
+
+.dock {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 6;
+  background: var(--card); border-top: 1px solid var(--line);
+  padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+}
+.dock .row { max-width: 680px; margin: 0 auto; }
+.dock .lab { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.dock .lab b { color: var(--fg); }
+input[type=range] { width: 100%; accent-color: var(--accent); height: 28px; }
+.ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); padding: 0 2px; }
+
+.scrim { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 9; display: none; }
+.sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--card);
+  border-radius: 16px 16px 0 0; padding: 18px 20px calc(20px + env(safe-area-inset-bottom));
+  transform: translateY(105%); transition: transform .22s ease; max-height: 75vh; overflow-y: auto;
+  box-shadow: 0 -8px 30px rgba(0,0,0,.15);
+}
+.sheet.open { transform: none; }
+.sheet .inner { max-width: 640px; margin: 0 auto; }
+.sheet h2 { margin: 0; font-family: Georgia, serif; font-size: 28px; }
+.sheet .ipa { color: var(--muted); font-size: 15px; margin: 2px 0 12px; }
+.sheet .kv { font-size: 15px; line-height: 1.7; }
+.sheet .kv span { color: var(--muted); display: inline-block; width: 4.5em; }
+.sheet .kv .col { font-family: Georgia, serif; font-style: italic; cursor: pointer; text-decoration: underline dotted; }
+.sheet .btns { display: flex; gap: 10px; margin-top: 16px; }
+.sheet .btns button { flex: 1; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 15px; cursor: pointer; }
+.sheet .btns button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.list { margin: 8px 0 0; padding: 0; list-style: none; }
+.list li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.list .en { font-family: Georgia, serif; font-size: 17px; cursor: pointer; }
+[data-open] { cursor: pointer; }
+.list .zh { color: var(--muted); font-size: 13px; flex: 1; }
+.list li.k .en { color: var(--known); text-decoration: line-through; }
+.list button { border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 8px; padding: 4px 10px; font-size: 13px; }
+.seg { display: flex; gap: 8px; margin: 10px 0 16px; }
+.seg button { flex: 1; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 15px; }
+.seg button.on { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.sub { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+</style>
+</head>
+<body>
+<header>
+  <div class="t"><div class="book" id="bookTitle"></div><div class="chap" id="chapTitle"></div></div>
+  <button class="iconbtn" id="btnWords" aria-label="生字本">生字本</button>
+  <button class="iconbtn" id="btnAa" aria-label="閱讀設定">Aa</button>
+</header>
+
+<main id="text"></main>
+
+<div class="dock"><div class="row">
+  <div class="lab"><span>英文密度 <b id="lvName"></b></span><span id="lvStat"></span></div>
+  <input type="range" id="slider" min="0" max="5" step="1" aria-label="英文密度">
+  <div class="ticks"><span>原文</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+</div></div>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet"><div class="inner" id="sheetBody"></div></div>
+
+<script src="vendor/jszip.min.js" defer></script>
+<script src="vendor/opencc-cn2t.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>

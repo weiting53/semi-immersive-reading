@@ -1,0 +1,9 @@
+node_modules/
+.wrangler/
+.dev.vars
+__pycache__/
+*.pyc
+# 原始資料與小說內容不進 repo
+src-data/
+cache/
+*.epub
