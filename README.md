@@ -1,131 +1,136 @@
-# 半沉浸式英語閱讀
+# Semi-Immersive English Reading (半沉浸式英語閱讀)
 
-讀中文小說的時候，把一部分詞換成英文。劇情照樣看得懂，英文單字在上下文裡一次次出現，不知不覺就記住了。
+**English** | [繁體中文](README.zh-TW.md)
 
-> 一句話：用你本來就想看的小說，練多益 / 托福 / 雅思單字。
+Read Chinese novels with some of the words swapped into English. You can still follow the story, and you see the same English words again and again in context until they stick.
 
-網址:<https://semi-immersive-reading.english-reader.workers.dev>(iPhone 用 Safari 打開 → 分享 → 加入主畫面)
+> In one line: practise TOEIC / TOEFL / IELTS vocabulary while reading the novels you already want to read.
+
+Live app: <https://semi-immersive-reading.english-reader.workers.dev>. On iPhone, open it in Safari, tap Share, then Add to Home Screen.
 
 ---
 
-## 看起來像這樣
+## What it looks like
 
 > 她**suddenly** **turn around**,臉上帶著一抹 **smirk**。
 > 「你在 **kid** 我嗎？」他 **frown**,語氣裡滿是 **sarcasm**。
 
-點任何一個英文字，會跳出單字卡:
+Tap any English word to open its word card:
 
 ```
 smirk
 KK [smɝk]
-諧音  斯莫克 → 斯莫克得意假笑
-中文  得意的笑、假笑
-原文  笑容
-等級  Lv5 · 進階
-同義  grin Lv4、beam Lv5
-[🔊 再聽一次]  [✓ 已熟，不再換]
+諧音  斯莫克 → 斯莫克得意假笑      (Chinese sound-alike mnemonic)
+中文  得意的笑、假笑                (meaning)
+原文  笑容                          (the original Chinese word)
+等級  Lv5 · 進階                    (level)
+同義  grin Lv4、beam Lv5            (synonyms)
+[🔊 Play again]  [✓ I know this]
 ```
 
-## 功能
+## Features
 
-| 功能 | 說明 |
+| Feature | Details |
 |---|---|
-| 英文密度 0–5 | 底部滑桿。0 = 原文；1–3 = 多益 5★/4★/3★;4 = 加托福雅思；5 = 進階同義字與片語 |
-| 同義字輪替 | 同一個中文詞每次出現換一個英文，例如「笑容」→ smirk / beam / grin,難的先出現 |
-| 片語 | give up、out of the blue、roll one's eyes、take a deep breath… |
-| 單字卡 | KK 音標、諧音記憶、中文、等級、同義字，點了會唸出來 |
-| 已熟 | 標「已熟」的字改回中文，不再換 |
-| 生字本 | 本章換了哪些字，一次看完 |
-| 書架 | 自動記住每本書讀到哪一章 |
-| 來源 | czbooks.net 網址(章節或書本首頁)、本機 EPUB |
-| 簡轉繁 | 簡體 / 簡繁混用自動轉台灣繁體 |
-| 離線 | 讀過的章節和整個 App 都快取在手機，沒網路也能看 |
-| 外觀 | 字級 4 段、背景 白 / 米黃 / 夜間 / 跟系統 |
+| English density 0–5 | Bottom slider. 0 = original text. 1–3 = TOEIC 5★ / 4★ / 3★. 4 = adds TOEFL and IELTS. 5 = advanced synonyms and phrases |
+| Rotating synonyms | Each time the same Chinese word appears it uses a different English word, e.g. 笑容 → smirk / beam / grin. Harder words come first |
+| Phrases | give up, out of the blue, roll one's eyes, take a deep breath… |
+| Word card | KK phonetics, mnemonic, meaning, level and synonyms. The word is read aloud when you tap it |
+| Known words | Words marked "I know this" go back to Chinese |
+| Word list | Every word swapped in the current chapter |
+| Bookshelf | Home-screen cards show your current chapter, words left to learn, words known, and a progress bar for EPUBs |
+| Sources | czbooks.net URLs (a chapter or the book's main page) and local EPUB files |
+| Simplified → Traditional | Simplified or mixed text is converted to Taiwan Traditional Chinese automatically |
+| Offline | The app and every chapter you've read are cached on the phone |
+| Appearance | Font size, line height, six themes (including eye-care green and pure black), English word colour, Chinese font (Ming / Hei / WenKai) and English font |
 
-全部在手機上跑：不用 AI、不用帳號、不花錢。閱讀紀錄只存在自己的手機。
+Everything runs on your phone. There's no AI, no account and no cost, and your reading history never leaves the device.
 
-## 單字從哪裡來
+## Where the words come from
 
-約 1 萬個單字、1,400 個片語、1 萬多個中文詞的對照：
+The app maps about 10,000 words, 1,400 phrases and 10,000+ Chinese terms:
 
-- **多益**:9,537 字的多益字表(繁中釋義、星級)
-- **托福 / 雅思 / GRE**:ECDICT 英漢字典的考試標記，只收「中文是它的主要意思」的配對，避免換錯
-- **小說常用詞**(人工整理，約 600 個):情緒、動作、身體、古言(侍衛、太子、嫁妝、聖旨…)
-- **商業 / 自然科學 / 電腦**(人工整理，約 300 個)
-- **KK 音標**:由 CMU 美式發音字典轉換
-- **諧音記憶**(人工整理，約 700 個)
+- **TOEIC**: a 9,537-word list with Traditional Chinese meanings and star ratings
+- **TOEFL / IELTS / GRE**: exam tags from the ECDICT dictionary. A pair is only kept when the Chinese word is the English word's main meaning, so fewer words get swapped wrongly
+- **Common novel words** (about 600, hand-curated): emotions, actions, the body, and historical-romance terms such as 侍衛, 太子, 嫁妝, 聖旨
+- **Business, natural science and computing** (about 300, hand-curated)
+- **KK phonetics**: converted from the CMU American English pronouncing dictionary
+- **Sound-alike mnemonics** (about 700, hand-curated)
 
-會刻意跳過：太簡單的字(time、speak)、數字、冷僻字，以及「有更自然簡單說法」的詞(身體 → body,不會換成 bodily)。
+Some words are skipped on purpose:
+- Words that are too easy (time, speak)
+- Numbers and rare words
+- Chinese words that have a more natural simple English word (身體 stays body and never becomes bodily)
 
-## 已知限制
+## Known limitations
 
-- **半夏小說手機版讀不到**:半夏擋掉雲端伺服器的抓取。要讀半夏，可以用電腦版(見下方)或轉成 EPUB 匯入。
-- **詞性不一定對**:對照表不知道句子文法，偶爾會出現「他 discovery 了」。看到換錯的就加進 `data/exclude_terms.json`。
-- **動詞不變化時態**:「點了根菸」會顯示 lit a cigarette,但大部分動詞以原形出現。
-- **資料不跨裝置同步**:書架、已熟、EPUB 都存在各自的手機瀏覽器裡。
+- **Banxia (半夏小說) doesn't work in the phone app.** The site blocks fetches from cloud servers. Use the desktop version below, or convert the book to EPUB and import it.
+- **Part of speech can be wrong.** The mapping doesn't parse grammar, so you'll sometimes see "他 discovery 了". Add words that get swapped wrongly to `data/exclude_terms.json`.
+- **Verbs aren't conjugated.** Most verbs appear in their base form.
+- **No sync between devices.** The bookshelf, known words and EPUBs are stored in each phone's browser.
 
 ---
 
-## 開發
+## Development
 
-### 架構
-
-```
-手機瀏覽器(PWA)                         Cloudflare Worker
-├─ 單字對照(data/vocab.json)            ├─ 提供 public/ 靜態檔
-├─ EPUB 解析(JSZip)                    └─ /api/fetch:代抓 czbooks.net 頁面
-├─ 簡轉繁(opencc-js)                       (只准 czbooks / 半夏，其他網站一律 403)
-├─ 章節快取、EPUB(IndexedDB)
-└─ 書架、已熟、設定(localStorage)
-```
-
-為什麼需要 Worker:瀏覽器不准網頁直接抓別的網站(CORS),所以抓網路小說要有人代抓。Worker 只轉送頁面，不存任何東西(Cloudflare 會快取 6 小時)。
-
-### 目錄
+### Architecture
 
 ```
-public/            PWA:index.html、app.js、sw.js、manifest、icons/、vendor/、data/vocab.json
+Phone browser (PWA)                          Cloudflare Worker
+├─ word mapping (data/vocab.json)            ├─ serves the static files in public/
+├─ EPUB parsing (JSZip)                      └─ /api/fetch: fetches czbooks.net pages for the app
+├─ Simplified → Traditional (opencc-js)         (allows only czbooks and Banxia; every other site gets 403)
+├─ chapter cache and EPUBs (IndexedDB)
+└─ bookshelf, known words, settings (localStorage)
+```
+
+The Worker exists because browsers don't let a web page fetch other sites directly (CORS). It only passes pages through and stores nothing itself. Cloudflare caches each page for 6 hours.
+
+### Layout
+
+```
+public/            the PWA: index.html, app.js, sw.js, manifest, icons/, vendor/, data/vocab.json
 src/worker.js      Cloudflare Worker
-wrangler.jsonc     Worker 設定
-data/              人工整理的資料
-  novel_extra.json   小說常用詞(中文 → 英文候選)
-  domain_extra.json  商業 / 科學 / 電腦
-  mnemonic_*.json    諧音記憶
-  exclude_terms.json 不換的中文詞
+wrangler.jsonc     Worker config
+data/              hand-curated data
+  novel_extra.json   common novel words (Chinese → English candidates)
+  domain_extra.json  business / science / computing
+  mnemonic_*.json    sound-alike mnemonics
+  exclude_terms.json Chinese words never to swap
 tools/
-  build_vocab.py     產生 public/data/vocab.json
-  kk.py              CMUdict → KK 音標
+  build_vocab.py     builds public/data/vocab.json
+  kk.py              CMUdict → KK phonetics
 ```
 
-### 部署
+### Deploy
 
 ```bash
-npx wrangler login    # 第一次
+npx wrangler login    # first time only
 npx wrangler deploy
 ```
 
-### 加新詞 / 改對照
+### Adding words or changing the mapping
 
-1. 改 `data/` 底下的 JSON。格式:`"中文詞": [["英文", 等級, "中文意思"], ...]`,等級 1–5。
-2. 把原始資料下載到 repo 外的資料夾(太大，不進 repo):
-   - `toeic.json`:[LEE-WHITE/toeic-vocab-tw](https://huggingface.co/datasets/LEE-WHITE/toeic-vocab-tw) 的 `data/toeic_vocabulary.json`
-   - `ecdict.csv`:[skywind3000/ECDICT](https://github.com/skywind3000/ECDICT)
-   - `cmudict.dict`:[cmusphinx/cmudict](https://github.com/cmusphinx/cmudict)
-3. 重建並部署:
+1. Edit the JSON files under `data/`. Each entry looks like `"中文詞": [["english", level, "中文意思"], ...]`, with level from 1 to 5.
+2. Download the source data into a folder outside the repo. The files are too large to commit.
+   - `toeic.json`: `data/toeic_vocabulary.json` from [LEE-WHITE/toeic-vocab-tw](https://huggingface.co/datasets/LEE-WHITE/toeic-vocab-tw)
+   - `ecdict.csv`: from [skywind3000/ECDICT](https://github.com/skywind3000/ECDICT)
+   - `cmudict.dict`: from [cmusphinx/cmudict](https://github.com/cmusphinx/cmudict)
+3. Rebuild and deploy:
    ```bash
    pip install opencc-python-reimplemented
-   python tools/build_vocab.py --src <原始資料資料夾>
-   # public/sw.js 的 VERSION +1(手機才會更新)
+   python tools/build_vocab.py --src <source-data-folder>
+   # bump VERSION in public/sw.js so phones pick up the update
    npx wrangler deploy
    ```
 
-### 電腦版
+### Desktop version
 
-另有一個 Python 本機版(`server.py`,不在這個 repo),手機跟電腦在同一個 Wi-Fi 時可以用，支援半夏小說。
+There is also a local Python version (`server.py`, not in this repo). It supports Banxia and works when your phone and computer are on the same Wi-Fi.
 
-## 授權與聲明
+## Licences and notice
 
-- 本 repo 不含任何小說內容。讀到的章節只快取在自己的手機上，僅供個人學習，請勿散布。
-- 多益字表:LEE-WHITE/toeic-vocab-tw(CC BY 4.0)
-- ECDICT(MIT)、CMUdict(BSD-2-Clause)、[JSZip](https://stuk.github.io/jszip/)(MIT)、[opencc-js](https://github.com/nk2028/opencc-js)(MIT)
-- `data/` 裡的詞表與諧音為本專案人工整理
+- This repo contains no novel text. The chapters you read are cached only on your own phone, for personal study. Please don't redistribute them.
+- TOEIC word list: LEE-WHITE/toeic-vocab-tw (CC BY 4.0)
+- ECDICT (MIT), CMUdict (BSD-2-Clause), [JSZip](https://stuk.github.io/jszip/) (MIT), [opencc-js](https://github.com/nk2028/opencc-js) (MIT)
+- The word lists and mnemonics in `data/` were curated by hand for this project.

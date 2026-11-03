@@ -104,6 +104,38 @@ input[type=range] { width: 100%; accent-color: var(--accent); height: 28px; }
 .seg button { flex: 1; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 15px; }
 .seg button.on { border-color: var(--accent); color: var(--accent); font-weight: 600; }
 .sub { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+
+/* ---- 首頁 ---- */
+body.home .dock, body.home #btnWords, body.home header .t > div { display: none; }
+body.home { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+.hero { padding: 8px 0 4px; }
+.hero h1 { margin: 0; font-family: var(--body-font); font-size: 26px; letter-spacing: .02em; }
+.hero p { margin: 6px 0 14px; color: var(--muted); font-size: 14px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stats div { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 6px; text-align: center; }
+.stats b { display: block; font-size: 22px; font-family: Georgia, serif; color: var(--word); }
+.stats span { font-size: 12px; color: var(--muted); }
+.err { color: var(--accent); font-size: 14px; background: var(--accent-bg); padding: 10px 12px; border-radius: 10px; }
+.add { display: flex; gap: 8px; margin-top: 14px; }
+.add input { flex: 1; min-width: 0; height: 46px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); color: var(--fg); padding: 0 12px; font-size: 16px; }
+.add button { height: 46px; padding: 0 16px; border-radius: 12px; border: 0; background: var(--word); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; }
+.add.epub { justify-content: center; align-items: center; height: 46px; border-radius: 12px; border: 1px dashed var(--line); color: var(--fg); font-size: 15px; cursor: pointer; margin-top: 10px; }
+.shelf-h { font-size: 16px; margin: 26px 0 10px; }
+.shelf { display: grid; gap: 10px; }
+.bk { position: relative; display: flex; gap: 12px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; cursor: pointer; }
+.bk:active { transform: scale(.99); }
+.cover { flex: none; width: 56px; height: 76px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-family: var(--body-font); font-size: 26px; box-shadow: inset -6px 0 0 rgba(0,0,0,.12); }
+.info { flex: 1; min-width: 0; padding-right: 22px; }
+.info .name { font-weight: 700; font-size: 16px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.info .where { font-size: 12px; color: var(--muted); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar { height: 4px; background: var(--line); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--word); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); color: var(--muted); }
+.chip.hot { background: color-mix(in srgb, var(--word) 14%, transparent); border-color: transparent; color: var(--word); font-weight: 600; }
+.more { position: absolute; top: 6px; right: 6px; width: 28px; height: 28px; border: 0; background: none; color: var(--muted); font-size: 18px; cursor: pointer; }
+.empty, .foot { color: var(--muted); font-size: 13px; line-height: 1.6; margin-top: 20px; }
 </style>
 </head>
 <body>
