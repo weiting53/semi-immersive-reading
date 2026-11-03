@@ -421,8 +421,9 @@
     prefetch(chap.next);
   }
 
-  function showHome(err) {
+  async function showHome(err) {
     chap = null;
+    await sites().catch(() => {});
     document.body.classList.add("home");
     $("bookTitle").textContent = "半沉浸式英語閱讀";
     $("chapTitle").textContent = "貼上網址或匯入 EPUB";
@@ -443,8 +444,16 @@
         </div>
       </section>
       ${err ? `<p class="err">${esc(err)}</p>` : ""}
+      <div class="find">
+        <span>去網站找書 →</span>
+        ${SITES.map((x) =>
+          `<a class="site${x.cloudBlocked ? " off" : ""}" href="${esc(x.home || "https://" + x.host + "/")}" target="_blank" rel="noopener">${esc(x.name)} ↗</a>`).join("")}
+      </div>
+      <p class="hint">找到想看的書，複製網址(書本首頁或任一章都可以)回來貼上。${SITES.some((x) => x.cloudBlocked)
+        ? `灰色的網站(${SITES.filter((x) => x.cloudBlocked).map((x) => esc(x.name)).join("、")})擋雲端抓取，請複製章節文字用「✍️ 貼上文字」。` : ""}</p>
       <form id="urlForm" class="add">
-        <input id="urlIn" type="url" required placeholder="貼 czbooks 章節或書本網址" value="${last.startsWith("epub") ? "" : esc(last)}">
+        <input id="urlIn" type="url" required placeholder="貼上小說網址" value="${last.startsWith("epub") ? "" : esc(last)}">
+        <button type="button" class="clip" id="btnClip" aria-label="從剪貼簿貼上">📋</button>
         <button>開始讀</button>
       </form>
       <div class="row2">
@@ -460,6 +469,13 @@
     };
     $("urlForm").onsubmit = (e) => { e.preventDefault(); load($("urlIn").value); };
     $("btnPaste").onclick = showPaste;
+    $("btnClip").onclick = async () => {
+      try {
+        const t = (await navigator.clipboard.readText()).trim();
+        const m = t.match(/https?:\/\/\S+/);
+        if (m) { $("urlIn").value = m[0]; load(m[0]); } else { $("urlIn").value = t; $("urlIn").focus(); }
+      } catch (e) { $("urlIn").focus(); }
+    };
     renderShelf();
   }
 
@@ -471,7 +487,7 @@
     const books = Object.entries(store.get("shelf", {})).map(([id, b]) => ({ id, ...b })).sort((a, b) => b.at - a.at);
     const ago = (t) => { const d = (Date.now() / 1000 - t) / 86400; return d < 1 ? "今天" : d < 2 ? "昨天" : `${Math.floor(d)} 天前`; };
     if (!books.length) {
-      $("text").insertAdjacentHTML("beforeend", `<p class="empty">書架還是空的。貼一個 czbooks 網址，或匯入一本 EPUB 開始吧。</p>`);
+      $("text").insertAdjacentHTML("beforeend", `<p class="empty">書架還是空的。從上面的網站挑一本書，或匯入 EPUB、貼上文字開始吧。</p>`);
       return;
     }
     $("text").insertAdjacentHTML("beforeend", `

@@ -16,7 +16,15 @@ async function proxy(request) {
   const hit = await cache.match(key);
   if (hit) return hit;
 
-  const r = await fetch(u.href, { headers: { "User-Agent": UA, "Accept-Language": "zh-TW,zh;q=0.9" }, redirect: "follow" });
+  // 轉址只跟到白名單內的網站，避免被轉去別的地方而變成任意代理
+  let r, hops = 0;
+  for (;;) {
+    r = await fetch(u.href, { headers: { "User-Agent": UA, "Accept-Language": "zh-TW,zh;q=0.9" }, redirect: "manual" });
+    const loc = r.status >= 300 && r.status < 400 && r.headers.get("location");
+    if (!loc) break;
+    u = new URL(loc, u);
+    if (u.protocol !== "https:" || !ALLOWED.has(u.hostname) || ++hops > 5) return new Response("redirect not allowed", { status: 403 });
+  }
   if (!r.ok) return new Response("upstream " + r.status, { status: r.status === 404 ? 404 : r.status === 403 ? 403 : 502 });
   // 有些站是 GBK/Big5 編碼：照 Content-Type 或 <meta charset> 解碼成 UTF-8
   const buf = await r.arrayBuffer();
