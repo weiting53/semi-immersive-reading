@@ -57,6 +57,7 @@ KK [smɝk]
 | Word card | KK phonetics, mnemonic, meaning, level and synonyms. The word is read aloud when you tap it |
 | Known words | Words marked "I know this" go back to Chinese |
 | Word list | Every word swapped in the current chapter |
+| Find books in the app | Search czbooks by title or tap a tag (#霸總, #古言…), open a book's page with its blurb, and tap **+ Add to library**. No copying URLs (needs the access key or your own copy) |
 | Bookshelf | Home-screen cards show your current chapter, words left to learn, words known, and a progress bar for EPUBs |
 | Sources | URLs from sites in `public/sites.json` (czbooks.net out of the box), local EPUB files, or **pasted text** from any app (paid platforms included) |
 | Simplified → Traditional | Simplified or mixed text is converted to Taiwan Traditional Chinese automatically |
