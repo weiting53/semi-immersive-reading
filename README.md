@@ -8,9 +8,24 @@ Read Chinese novels with some of the words swapped into English. You can still f
 
 <img src="docs/qr.png" width="140" align="right" alt="QR code">
 
-Try it: <https://semi-immersive-reading.english-reader.workers.dev> (or scan the QR code with your phone camera). On iPhone, open it in Safari, tap Share, then Add to Home Screen.
+## Install (pick one)
 
-On this demo instance, EPUB import and pasted text work for everyone. Fetching web novels needs an access key, so the owner's free quota isn't used up. To read web novels yourself, [deploy your own copy](#deploy-your-own-copy) in a few minutes. It's free.
+**A. EPUB and pasted text only: 30 seconds, no accounts**
+
+1. Scan the QR code with your phone camera, or open <https://semi-immersive-reading.english-reader.workers.dev>.
+2. Add it to your home screen. On iPhone, tap Share → Add to Home Screen in Safari. On Android, tap ⋮ → Add to Home screen in Chrome.
+3. Open it from the home screen, then import an EPUB or paste a chapter.
+
+**B. Also open novel URLs directly: about 5 minutes, with free GitHub and Cloudflare accounts**
+
+Web novels are fetched through the cloud, so everyone runs their own free copy and nobody shares a quota.
+
+1. Click this button: [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/weiting53/semi-immersive-reading)
+2. Sign in to (or sign up for) Cloudflare, then allow it to connect to GitHub. Sign up for GitHub too if you don't have an account.
+3. Click Deploy and wait 1–2 minutes. You'll get a `https://….workers.dev` URL.
+4. Open that URL on your phone and add it to your home screen. You can now paste novel URLs.
+
+You can also add an access key so nobody else can fetch novels through your URL. See [Deploy your own copy](#deploy-your-own-copy) below.
 
 ---
 

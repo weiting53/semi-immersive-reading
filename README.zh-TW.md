@@ -8,9 +8,24 @@
 
 <img src="docs/qr.png" width="140" align="right" alt="QR code">
 
-試用:<https://semi-immersive-reading.english-reader.workers.dev>,或用手機相機掃右邊的 QR code。iPhone 用 Safari 打開，按分享 → 加入主畫面。
+## 安裝(挑一種)
 
-這個示範站上，每個人都能用 EPUB 匯入和貼上文字。抓網路小說需要存取金鑰，避免用掉站長的免費額度。想自己讀網路小說，可以[部署一份自己的](#部署自己的一份),幾分鐘就好，也是免費的。
+**A. 只讀 EPUB / 貼上文字:30 秒，不用任何帳號**
+
+1. 用手機相機掃右邊的 QR code,或打開 <https://semi-immersive-reading.english-reader.workers.dev>
+2. iPhone 按 Safari 的分享 → 加入主畫面;Android 按 Chrome 的 ⋮ → 加到主畫面
+3. 從主畫面打開，匯入 EPUB 或貼上章節文字就能讀
+
+**B. 也想直接貼小說網址：約 5 分鐘，需要免費的 GitHub 和 Cloudflare 帳號**
+
+網路小說要透過雲端代抓，所以每個人用自己的免費雲端，額度互不影響。
+
+1. 點這個按鈕 → [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/weiting53/semi-immersive-reading)
+2. 依畫面登入或註冊 Cloudflare,按同意連接 GitHub(沒有帳號就順手註冊)
+3. 按 Deploy,等 1–2 分鐘，畫面會給你一個 `https://….workers.dev` 網址
+4. 手機打開那個網址，加入主畫面，就能貼網址讀小說了
+
+不想讓別人用你的網址抓小說的話，可以另外設存取金鑰，做法在下面的[部署自己的一份](#部署自己的一份)。
 
 ---
 
