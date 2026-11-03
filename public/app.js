@@ -118,7 +118,7 @@
   // ---------- 抓章節 ----------
   async function fetchHTML(url) {
     const r = await fetch("api/fetch?url=" + encodeURIComponent(url), { headers: { "X-Key": store.get("key", "") } });
-    if (r.status === 401) throw new Error("這個網站需要存取金鑰才能抓小說。請用站長給你的設定連結打開一次(EPUB 和貼上文字不需要金鑰)。");
+    if (r.status === 401) throw new Error("這個網站需要存取金鑰才能抓小說。請在下面貼上金鑰(EPUB 和貼上文字不需要金鑰)。");
     const site = siteOf(new URL(url).hostname);
     if (r.status === 403 && site && site.cloudBlocked) {
       throw new Error(site.name + "擋掉了雲端抓取，手機版讀不到。可以改用電腦版(server.py,同一個 Wi-Fi),或轉成 EPUB 匯入、貼上文字。");
@@ -126,6 +126,18 @@
     if (!r.ok) throw new Error(r.status === 404 ? "網站找不到這一頁" : `抓取失敗(${r.status})`);
     return r.text();
   }
+  // 401 時直接在畫面上輸入金鑰(主畫面 App 和 Safari 的資料分開，Safari 開過 ?key= 也不會帶過來)
+  const errHtml = (msg) => `<p class="err">${esc(msg)}</p>` + (/金鑰/.test(msg) ? `
+    <form class="add keyform"><input name="k" type="password" autocomplete="off" placeholder="貼上存取金鑰"><button>儲存</button></form>` : "");
+  document.addEventListener("submit", (e) => {
+    if (!e.target.classList.contains("keyform")) return;
+    e.preventDefault();
+    const k = e.target.k.value.trim();
+    if (!k) return;
+    store.set("key", k);
+    location.reload();
+  });
+
   function stripTags(s) {
     const t = s.replace(/<br\s*\/?>/gi, "\n").replace(/<\/(p|div|h[1-6]|li|tr)\s*>/gi, "\n").replace(/<[^>]+>/g, "");
     const ta = document.createElement("textarea");
@@ -443,7 +455,7 @@
           <div><b>${known.size.toLocaleString()}</b><span>已熟</span></div>
         </div>
       </section>
-      ${err ? `<p class="err">${esc(err)}</p>` : ""}
+      ${err ? errHtml(err) : ""}
       <form id="findForm" class="add search">
         <input id="findIn" type="search" placeholder="🔍 在小說狂人找書(書名)" enterkeyhint="search">
         <button>搜尋</button>
@@ -510,7 +522,7 @@
     try {
       await sites();
       doc = new DOMParser().parseFromString(await fetchHTML(CZ + path + (page > 1 ? "/" + page : "")), "text/html");
-    } catch (e) { $("text").querySelector(".sub").outerHTML = `<p class="err">${esc(e.message)}</p>`; return; }
+    } catch (e) { $("text").querySelector(".sub").outerHTML = errHtml(e.message); return; }
     const items = [...doc.querySelectorAll(".novel-item-wrapper")].map((li) => {
       const eye = li.querySelector(".fa-eye"), a = li.querySelector("a[href*='/n/']");
       return {
@@ -541,7 +553,7 @@
     $("text").innerHTML = `<button type="button" class="back" data-home>← 書架</button><p class="sub">讀取中…</p>`;
     let doc;
     try { doc = new DOMParser().parseFromString(await fetchHTML(CZ + "n/" + id), "text/html"); }
-    catch (e) { $("text").querySelector(".sub").outerHTML = `<p class="err">${esc(e.message)}</p>`; return; }
+    catch (e) { $("text").querySelector(".sub").outerHTML = errHtml(e.message); return; }
     const desc = doc.querySelector(".novel-detail .description");
     const lines = desc ? toLines(desc.innerHTML).filter((l) => !/內容簡介[︰:]?$/.test(l)) : [];
     const cells = [...doc.querySelectorAll(".novel-detail .state td")].map(txt);
