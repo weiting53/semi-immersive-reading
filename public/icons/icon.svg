@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- B:閱讀器裡英文字的樣子：襯線斜體 a + 點狀底線 -->
+  <rect width="512" height="512" fill="#b4532a"/>
+  <text x="256" y="318" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="300" fill="#faf7f0">a</text>
+  <g fill="#faf7f0" opacity=".85"><circle cx="186" cy="364" r="7"/><circle cx="221" cy="364" r="7"/><circle cx="256" cy="364" r="7"/><circle cx="291" cy="364" r="7"/><circle cx="326" cy="364" r="7"/></g>
+</svg>
