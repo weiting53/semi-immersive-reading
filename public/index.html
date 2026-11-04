@@ -104,9 +104,30 @@ input[type=range] { width: 100%; accent-color: var(--accent); height: 28px; }
 .seg button { flex: 1; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 15px; }
 .seg button.on { border-color: var(--accent); color: var(--accent); font-weight: 600; }
 .sub { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+/* 單字卡：搭配詞、同義字小表格 */
+.mini-h { font-size: 13px; color: var(--muted); margin: 12px 0 4px; }
+.mini { width: 100%; border-collapse: collapse; font-size: 14px; }
+.mini td { padding: 5px 6px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.4; }
+.mini td.col { font-family: Georgia, serif; font-style: italic; cursor: pointer; color: var(--word); padding-left: 0; width: 45%; }
+.mini td.lv { color: var(--muted); font-size: 12px; white-space: nowrap; text-align: right; padding-right: 0; }
+/* 目錄 */
+.toc-top { position: sticky; top: -18px; z-index: 1; background: var(--card); margin: -18px 0 0; padding: 18px 0 6px; border-bottom: 1px solid var(--line); }
+.toc-h { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.toc-tools { margin-top: 10px; }
+.toc-tools input { height: 40px; font-size: 16px; }
+.toc-tools .clip { height: 40px; }
+.toc-jump { display: flex; gap: 6px; margin: 8px 0 4px; }
+.toc-jump button { flex: 1; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 13px; cursor: pointer; }
+.toc { list-style: none; margin: 0; padding: 0; }
+.toc li { display: flex; gap: 10px; padding: 10px 2px; border-bottom: 1px solid var(--line); cursor: pointer; font-size: 15px; }
+.toc li[hidden] { display: none; }
+.toc li .n { flex: none; width: 3em; color: var(--muted); font-size: 12px; text-align: right; padding-top: 2px; }
+.toc li .t { flex: 1; min-width: 0; }
+.toc li.read .t { color: var(--muted); }
+.toc li.cur, .toc li.cur .n { color: var(--word); font-weight: 700; }
 
 /* ---- 首頁 ---- */
-body.home .dock, body.home #btnWords, body.home header .t > div { display: none; }
+body.home .dock, body.home #btnWords, body.home #btnToc, body.home header .t > div { display: none; }
 body.home { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
 .hero { padding: 8px 0 4px; }
 .hero h1 { margin: 0; font-family: var(--body-font); font-size: 26px; letter-spacing: .02em; }
@@ -164,6 +185,7 @@ textarea.field { resize: vertical; line-height: 1.6; }
 <body>
 <header>
   <div class="t"><div class="book" id="bookTitle"></div><div class="chap" id="chapTitle"></div></div>
+  <button class="iconbtn" id="btnToc" aria-label="目錄">目錄</button>
   <button class="iconbtn" id="btnWords" aria-label="生字本">生字本</button>
   <button class="iconbtn" id="btnAa" aria-label="閱讀設定">Aa</button>
 </header>

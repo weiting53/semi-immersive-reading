@@ -1,0 +1,8566 @@
+{
+"account": [
+[
+"open an account",
+"開戶"
+],
+[
+"take into account",
+"考慮到"
+],
+[
+"account for",
+"說明；佔⋯比例"
+]
+],
+"advance": [
+[
+"in advance",
+"預先"
+],
+[
+"advance notice",
+"事先通知"
+],
+[
+"advance in one's career",
+"事業晉升"
+]
+],
+"advantage": [
+[
+"take advantage of",
+"利用"
+],
+[
+"competitive advantage",
+"競爭優勢"
+],
+[
+"have an advantage over",
+"勝過"
+]
+],
+"advertisement": [
+[
+"place an advertisement",
+"刊登廣告"
+],
+[
+"run an advertisement",
+"播出廣告"
+],
+[
+"a job advertisement",
+"徵人廣告"
+]
+],
+"agent": [
+[
+"travel agent",
+"旅行社業務員"
+],
+[
+"real estate agent",
+"房仲"
+],
+[
+"sales agent",
+"業務代表"
+]
+],
+"agreement": [
+[
+"reach an agreement",
+"達成協議"
+],
+[
+"sign an agreement",
+"簽署協議"
+],
+[
+"in agreement with",
+"與⋯一致"
+]
+],
+"airline": [
+[
+"airline ticket",
+"機票"
+],
+[
+"budget airline",
+"廉價航空"
+],
+[
+"airline industry",
+"航空業"
+]
+],
+"airport": [
+[
+"airport shuttle",
+"機場接駁車"
+],
+[
+"arrive at the airport",
+"抵達機場"
+],
+[
+"airport terminal",
+"機場航廈"
+]
+],
+"announcement": [
+[
+"make an announcement",
+"發布公告"
+],
+[
+"public announcement",
+"公開宣布"
+],
+[
+"an announcement about",
+"關於⋯的公告"
+]
+],
+"application": [
+[
+"submit an application",
+"提交申請"
+],
+[
+"application form",
+"申請表"
+],
+[
+"job application",
+"求職申請"
+]
+],
+"appointment": [
+[
+"make an appointment",
+"預約"
+],
+[
+"cancel an appointment",
+"取消預約"
+],
+[
+"by appointment",
+"需預約"
+]
+],
+"appreciate": [
+[
+"really appreciate",
+"非常感激"
+],
+[
+"appreciate your help",
+"感謝你的幫忙"
+],
+[
+"greatly appreciated",
+"十分感謝"
+]
+],
+"assistance": [
+[
+"financial assistance",
+"財務援助"
+],
+[
+"provide assistance",
+"提供協助"
+],
+[
+"need assistance",
+"需要協助"
+]
+],
+"bill": [
+[
+"pay a bill",
+"付帳單"
+],
+[
+"electric bill",
+"電費單"
+],
+[
+"split the bill",
+"分攤帳單"
+]
+],
+"boss": [
+[
+"my boss",
+"我的老闆"
+],
+[
+"report to the boss",
+"向上司報告"
+],
+[
+"be your own boss",
+"自己當老闆"
+]
+],
+"brand": [
+[
+"brand name",
+"品牌名稱"
+],
+[
+"brand loyalty",
+"品牌忠誠度"
+],
+[
+"well-known brand",
+"知名品牌"
+]
+],
+"budget": [
+[
+"stay within budget",
+"不超出預算"
+],
+[
+"tight budget",
+"預算吃緊"
+],
+[
+"budget cut",
+"預算削減"
+]
+],
+"busy": [
+[
+"busy schedule",
+"行程滿檔"
+],
+[
+"busy season",
+"旺季"
+],
+[
+"be busy with",
+"忙於"
+]
+],
+"canceled": [
+[
+"canceled flight",
+"被取消的航班"
+],
+[
+"canceled meeting",
+"取消的會議"
+],
+[
+"be canceled due to",
+"因⋯而取消"
+]
+],
+"ceo": [
+[
+"CEO of the company",
+"公司執行長"
+],
+[
+"appoint a CEO",
+"任命執行長"
+],
+[
+"former CEO",
+"前執行長"
+]
+],
+"chart": [
+[
+"sales chart",
+"銷售圖表"
+],
+[
+"pie chart",
+"圓餅圖"
+],
+[
+"refer to the chart",
+"參照圖表"
+]
+],
+"client": [
+[
+"meet with a client",
+"與客戶會面"
+],
+[
+"potential client",
+"潛在客戶"
+],
+[
+"client base",
+"客戶群"
+]
+],
+"colleague": [
+[
+"a colleague of mine",
+"我的一位同事"
+],
+[
+"fellow colleague",
+"同事"
+],
+[
+"consult a colleague",
+"請教同事"
+]
+],
+"commercial": [
+[
+"TV commercial",
+"電視廣告"
+],
+[
+"commercial building",
+"商業大樓"
+],
+[
+"commercial success",
+"商業上的成功"
+]
+],
+"competition": [
+[
+"stiff competition",
+"激烈競爭"
+],
+[
+"win a competition",
+"贏得比賽"
+],
+[
+"in competition with",
+"與⋯競爭"
+]
+],
+"complaint": [
+[
+"file a complaint",
+"提出投訴"
+],
+[
+"customer complaint",
+"客戶投訴"
+],
+[
+"a complaint about",
+"對⋯的抱怨"
+]
+],
+"complete": [
+[
+"complete a form",
+"填寫表格"
+],
+[
+"complete the project",
+"完成專案"
+],
+[
+"complete set",
+"完整一套"
+]
+],
+"completely": [
+[
+"completely different",
+"完全不同"
+],
+[
+"completely satisfied",
+"十分滿意"
+],
+[
+"completely forget",
+"徹底忘記"
+]
+],
+"confirm": [
+[
+"confirm a reservation",
+"確認訂位"
+],
+[
+"confirm receipt",
+"確認收到"
+],
+[
+"confirm that",
+"確認"
+]
+],
+"confirmation": [
+[
+"confirmation email",
+"確認信"
+],
+[
+"written confirmation",
+"書面確認"
+],
+[
+"receive confirmation",
+"收到確認"
+]
+],
+"construction": [
+[
+"under construction",
+"施工中"
+],
+[
+"construction site",
+"工地"
+],
+[
+"construction work",
+"建築工程"
+]
+],
+"consumer": [
+[
+"consumer goods",
+"消費品"
+],
+[
+"consumer demand",
+"消費者需求"
+],
+[
+"consumer confidence",
+"消費者信心"
+]
+],
+"contact": [
+[
+"contact information",
+"聯絡資訊"
+],
+[
+"get in contact with",
+"與⋯聯絡"
+],
+[
+"contact the manager",
+"聯絡經理"
+]
+],
+"contract": [
+[
+"sign a contract",
+"簽約"
+],
+[
+"terminate a contract",
+"終止合約"
+],
+[
+"breach of contract",
+"違約"
+]
+],
+"convenient": [
+[
+"convenient location",
+"便利的地點"
+],
+[
+"at your convenience",
+"在你方便時"
+],
+[
+"convenient for",
+"對⋯方便"
+]
+],
+"conversation": [
+[
+"have a conversation",
+"交談"
+],
+[
+"phone conversation",
+"電話交談"
+],
+[
+"strike up a conversation",
+"開啟話題"
+]
+],
+"corporate": [
+[
+"corporate culture",
+"企業文化"
+],
+[
+"corporate headquarters",
+"公司總部"
+],
+[
+"corporate client",
+"企業客戶"
+]
+],
+"correct": [
+[
+"correct a mistake",
+"改正錯誤"
+],
+[
+"correct answer",
+"正確答案"
+],
+[
+"correct information",
+"正確資訊"
+]
+],
+"credit": [
+[
+"credit card",
+"信用卡"
+],
+[
+"give credit to",
+"把功勞歸於"
+],
+[
+"on credit",
+"賒帳"
+]
+],
+"customer": [
+[
+"loyal customer",
+"忠實顧客"
+],
+[
+"customer service",
+"客戶服務"
+],
+[
+"customer satisfaction",
+"顧客滿意度"
+]
+],
+"damage": [
+[
+"cause damage",
+"造成損害"
+],
+[
+"water damage",
+"水損"
+],
+[
+"damage to",
+"對⋯的損壞"
+]
+],
+"deadline": [
+[
+"meet a deadline",
+"趕上期限"
+],
+[
+"miss the deadline",
+"錯過截止日"
+],
+[
+"extend the deadline",
+"延後截止日"
+]
+],
+"definitely": [
+[
+"definitely recommend",
+"絕對推薦"
+],
+[
+"definitely not",
+"絕對不"
+],
+[
+"will definitely",
+"一定會"
+]
+],
+"delivery": [
+[
+"home delivery",
+"送貨到府"
+],
+[
+"delivery date",
+"送達日期"
+],
+[
+"free delivery",
+"免運費配送"
+]
+],
+"demand": [
+[
+"in demand",
+"有需求；搶手"
+],
+[
+"meet the demand",
+"滿足需求"
+],
+[
+"supply and demand",
+"供需"
+]
+],
+"department": [
+[
+"sales department",
+"業務部"
+],
+[
+"department head",
+"部門主管"
+],
+[
+"human resources department",
+"人資部"
+]
+],
+"digital": [
+[
+"digital camera",
+"數位相機"
+],
+[
+"digital marketing",
+"數位行銷"
+],
+[
+"digital copy",
+"電子檔"
+]
+],
+"discount": [
+[
+"offer a discount",
+"提供折扣"
+],
+[
+"at a discount",
+"以折扣價"
+],
+[
+"discount rate",
+"折扣率"
+]
+],
+"discussion": [
+[
+"hold a discussion",
+"舉行討論"
+],
+[
+"under discussion",
+"討論中"
+],
+[
+"discussion of",
+"關於⋯的討論"
+]
+],
+"due": [
+[
+"due date",
+"到期日"
+],
+[
+"payment is due",
+"款項到期"
+],
+[
+"due to",
+"由於"
+]
+],
+"effective": [
+[
+"effective immediately",
+"即刻生效"
+],
+[
+"effective way",
+"有效方法"
+],
+[
+"cost-effective",
+"符合成本效益"
+]
+],
+"employment": [
+[
+"employment opportunity",
+"工作機會"
+],
+[
+"full-time employment",
+"全職工作"
+],
+[
+"terms of employment",
+"僱用條件"
+]
+],
+"ensure": [
+[
+"ensure safety",
+"確保安全"
+],
+[
+"ensure that",
+"確保"
+],
+[
+"to ensure quality",
+"為確保品質"
+]
+],
+"equipment": [
+[
+"office equipment",
+"辦公設備"
+],
+[
+"safety equipment",
+"安全設備"
+],
+[
+"a piece of equipment",
+"一件設備"
+]
+],
+"estimate": [
+[
+"rough estimate",
+"粗略估計"
+],
+[
+"cost estimate",
+"成本估算"
+],
+[
+"estimate the cost",
+"估算成本"
+]
+],
+"excellent": [
+[
+"excellent service",
+"優質服務"
+],
+[
+"excellent condition",
+"狀況極佳"
+],
+[
+"excellent opportunity",
+"絕佳機會"
+]
+],
+"exchange": [
+[
+"exchange rate",
+"匯率"
+],
+[
+"in exchange for",
+"交換"
+],
+[
+"exchange ideas",
+"交換意見"
+]
+],
+"exclusive": [
+[
+"exclusive offer",
+"獨家優惠"
+],
+[
+"exclusive rights",
+"專屬權利"
+],
+[
+"exclusive of tax",
+"不含稅"
+]
+],
+"expensive": [
+[
+"too expensive",
+"太貴"
+],
+[
+"expensive taste",
+"講究的品味"
+],
+[
+"prove expensive",
+"代價高昂"
+]
+],
+"express": [
+[
+"express concern",
+"表達關切"
+],
+[
+"express gratitude",
+"表達感謝"
+],
+[
+"express delivery",
+"快遞"
+]
+],
+"factory": [
+[
+"factory worker",
+"工廠工人"
+],
+[
+"factory floor",
+"生產現場"
+],
+[
+"run a factory",
+"經營工廠"
+]
+],
+"famous": [
+[
+"world-famous",
+"舉世聞名"
+],
+[
+"famous for",
+"以⋯聞名"
+],
+[
+"famous brand",
+"名牌"
+]
+],
+"feature": [
+[
+"key feature",
+"主要特色"
+],
+[
+"safety feature",
+"安全功能"
+],
+[
+"feature article",
+"專題報導"
+]
+],
+"fee": [
+[
+"admission fee",
+"入場費"
+],
+[
+"membership fee",
+"會員費"
+],
+[
+"waive a fee",
+"免收費用"
+]
+],
+"file": [
+[
+"save a file",
+"儲存檔案"
+],
+[
+"file a report",
+"提交報告"
+],
+[
+"filing cabinet",
+"檔案櫃"
+]
+],
+"finance": [
+[
+"finance department",
+"財務部"
+],
+[
+"personal finance",
+"個人理財"
+],
+[
+"finance a project",
+"為專案提供資金"
+]
+],
+"flight": [
+[
+"book a flight",
+"訂機票"
+],
+[
+"flight attendant",
+"空服員"
+],
+[
+"connecting flight",
+"轉機航班"
+]
+],
+"following": [
+[
+"the following day",
+"隔天"
+],
+[
+"the following",
+"以下"
+],
+[
+"following up",
+"後續跟進"
+]
+],
+"heavy": [
+[
+"heavy traffic",
+"交通擁擠"
+],
+[
+"heavy rain",
+"大雨"
+],
+[
+"heavy workload",
+"沉重工作量"
+]
+],
+"hire": [
+[
+"hire a consultant",
+"聘請顧問"
+],
+[
+"newly hired",
+"新進"
+],
+[
+"hire staff",
+"僱用員工"
+]
+],
+"hotel": [
+[
+"hotel reservation",
+"飯店訂房"
+],
+[
+"check in at the hotel",
+"辦理飯店入住"
+],
+[
+"stay at a hotel",
+"住飯店"
+]
+],
+"immediately": [
+[
+"effective immediately",
+"立即生效"
+],
+[
+"immediately after",
+"緊接在⋯之後"
+],
+[
+"respond immediately",
+"立即回應"
+]
+],
+"inspection": [
+[
+"safety inspection",
+"安全檢查"
+],
+[
+"pass an inspection",
+"通過檢查"
+],
+[
+"inspection report",
+"檢驗報告"
+]
+],
+"insurance": [
+[
+"health insurance",
+"健保"
+],
+[
+"insurance policy",
+"保單"
+],
+[
+"insurance coverage",
+"保險保障"
+]
+],
+"invest": [
+[
+"invest in",
+"投資於"
+],
+[
+"invest money",
+"投入資金"
+],
+[
+"invest heavily",
+"大量投資"
+]
+],
+"investment": [
+[
+"return on investment",
+"投資報酬"
+],
+[
+"make an investment",
+"進行投資"
+],
+[
+"foreign investment",
+"外資"
+]
+],
+"invoice": [
+[
+"issue an invoice",
+"開立發票"
+],
+[
+"send an invoice",
+"寄送請款單"
+],
+[
+"invoice number",
+"發票號碼"
+]
+],
+"leadership": [
+[
+"leadership skills",
+"領導技巧"
+],
+[
+"leadership role",
+"領導角色"
+],
+[
+"strong leadership",
+"強力領導"
+]
+],
+"mark": [
+[
+"mark down",
+"降價；記下"
+],
+[
+"mark the occasion",
+"紀念這個時刻"
+],
+[
+"full marks",
+"滿分"
+]
+],
+"menu": [
+[
+"menu item",
+"菜單品項"
+],
+[
+"on the menu",
+"菜單上"
+],
+[
+"set menu",
+"套餐"
+]
+],
+"mistake": [
+[
+"make a mistake",
+"犯錯"
+],
+[
+"by mistake",
+"不小心"
+],
+[
+"common mistake",
+"常見錯誤"
+]
+],
+"modern": [
+[
+"modern technology",
+"現代科技"
+],
+[
+"modern art",
+"現代藝術"
+],
+[
+"modern facilities",
+"現代化設施"
+]
+],
+"monthly": [
+[
+"monthly report",
+"月報"
+],
+[
+"monthly fee",
+"月費"
+],
+[
+"monthly meeting",
+"月會"
+]
+],
+"opening": [
+[
+"grand opening",
+"盛大開幕"
+],
+[
+"job opening",
+"職缺"
+],
+[
+"opening hours",
+"營業時間"
+]
+],
+"option": [
+[
+"have no option",
+"別無選擇"
+],
+[
+"best option",
+"最佳選擇"
+],
+[
+"weigh the options",
+"衡量選項"
+]
+],
+"partner": [
+[
+"business partner",
+"事業夥伴"
+],
+[
+"partner with",
+"與⋯合作"
+],
+[
+"senior partner",
+"資深合夥人"
+]
+],
+"percentage": [
+[
+"a percentage of",
+"⋯的百分比"
+],
+[
+"high percentage",
+"高比例"
+],
+[
+"percentage increase",
+"增加百分比"
+]
+],
+"perfect": [
+[
+"perfect condition",
+"完好狀態"
+],
+[
+"perfect timing",
+"完美時機"
+],
+[
+"perfect for",
+"最適合"
+]
+],
+"positive": [
+[
+"positive feedback",
+"正面回饋"
+],
+[
+"positive attitude",
+"正面態度"
+],
+[
+"test positive",
+"檢測呈陽性"
+]
+],
+"potential": [
+[
+"potential customer",
+"潛在顧客"
+],
+[
+"realize one's potential",
+"發揮潛力"
+],
+[
+"have the potential to",
+"有潛力"
+]
+],
+"presentation": [
+[
+"give a presentation",
+"做簡報"
+],
+[
+"presentation skills",
+"簡報技巧"
+],
+[
+"slide presentation",
+"投影片簡報"
+]
+],
+"previous": [
+[
+"previous experience",
+"過往經驗"
+],
+[
+"previous employer",
+"前雇主"
+],
+[
+"on the previous page",
+"在前一頁"
+]
+],
+"priority": [
+[
+"top priority",
+"首要之務"
+],
+[
+"give priority to",
+"優先考慮"
+],
+[
+"set priorities",
+"排定優先順序"
+]
+],
+"profit": [
+[
+"make a profit",
+"獲利"
+],
+[
+"net profit",
+"淨利"
+],
+[
+"profit margin",
+"利潤率"
+]
+],
+"promotion": [
+[
+"get a promotion",
+"獲得升遷"
+],
+[
+"sales promotion",
+"促銷活動"
+],
+[
+"promotion to manager",
+"升任經理"
+]
+],
+"proposal": [
+[
+"submit a proposal",
+"提交提案"
+],
+[
+"accept a proposal",
+"接受提案"
+],
+[
+"business proposal",
+"商業提案"
+]
+],
+"purchase": [
+[
+"make a purchase",
+"購買"
+],
+[
+"proof of purchase",
+"購買證明"
+],
+[
+"purchase order",
+"採購單"
+]
+],
+"purpose": [
+[
+"for the purpose of",
+"為了"
+],
+[
+"on purpose",
+"故意"
+],
+[
+"main purpose",
+"主要目的"
+]
+],
+"refer": [
+[
+"refer to",
+"參考；提及"
+],
+[
+"refer a client",
+"介紹客戶"
+],
+[
+"refer to the manual",
+"參閱手冊"
+]
+],
+"refund": [
+[
+"full refund",
+"全額退款"
+],
+[
+"request a refund",
+"申請退款"
+],
+[
+"refund policy",
+"退款政策"
+]
+],
+"release": [
+[
+"release a statement",
+"發布聲明"
+],
+[
+"press release",
+"新聞稿"
+],
+[
+"new release",
+"新發行"
+]
+],
+"request": [
+[
+"upon request",
+"經要求"
+],
+[
+"make a request",
+"提出要求"
+],
+[
+"request for",
+"對⋯的要求"
+]
+],
+"reservation": [
+[
+"make a reservation",
+"訂位"
+],
+[
+"confirm a reservation",
+"確認預訂"
+],
+[
+"have reservations about",
+"對⋯有疑慮"
+]
+],
+"responsibility": [
+[
+"take responsibility",
+"負起責任"
+],
+[
+"job responsibilities",
+"工作職責"
+],
+[
+"sense of responsibility",
+"責任感"
+]
+],
+"responsible": [
+[
+"be responsible for",
+"負責"
+],
+[
+"hold someone responsible",
+"要某人負責"
+],
+[
+"responsible for",
+"對⋯負責"
+]
+],
+"restaurant": [
+[
+"book a restaurant",
+"訂餐廳"
+],
+[
+"restaurant review",
+"餐廳評論"
+],
+[
+"fast-food restaurant",
+"速食餐廳"
+]
+],
+"retail": [
+[
+"retail price",
+"零售價"
+],
+[
+"retail store",
+"零售店"
+],
+[
+"retail industry",
+"零售業"
+]
+],
+"retirement": [
+[
+"retirement plan",
+"退休計畫"
+],
+[
+"early retirement",
+"提早退休"
+],
+[
+"retirement age",
+"退休年齡"
+]
+],
+"review": [
+[
+"performance review",
+"績效考核"
+],
+[
+"review the document",
+"審閱文件"
+],
+[
+"under review",
+"審查中"
+]
+],
+"safety": [
+[
+"safety regulations",
+"安全規定"
+],
+[
+"safety measures",
+"安全措施"
+],
+[
+"for safety reasons",
+"基於安全理由"
+]
+],
+"salary": [
+[
+"annual salary",
+"年薪"
+],
+[
+"salary increase",
+"加薪"
+],
+[
+"competitive salary",
+"具競爭力的薪資"
+]
+],
+"sale": [
+[
+"on sale",
+"特價中"
+],
+[
+"for sale",
+"待售"
+],
+[
+"sale price",
+"特價"
+]
+],
+"sales": [
+[
+"sales figures",
+"銷售數字"
+],
+[
+"sales representative",
+"業務代表"
+],
+[
+"sales target",
+"銷售目標"
+]
+],
+"satisfaction": [
+[
+"customer satisfaction",
+"顧客滿意度"
+],
+[
+"job satisfaction",
+"工作滿意度"
+],
+[
+"to one's satisfaction",
+"令人滿意地"
+]
+],
+"scale": [
+[
+"large-scale",
+"大規模"
+],
+[
+"on a small scale",
+"小規模地"
+],
+[
+"scale back",
+"縮減規模"
+]
+],
+"schedule": [
+[
+"ahead of schedule",
+"提前"
+],
+[
+"behind schedule",
+"進度落後"
+],
+[
+"on schedule",
+"按時"
+]
+],
+"secretary": [
+[
+"executive secretary",
+"行政秘書"
+],
+[
+"personal secretary",
+"私人秘書"
+],
+[
+"secretary of state",
+"國務卿"
+]
+],
+"senior": [
+[
+"senior manager",
+"資深經理"
+],
+[
+"senior citizen",
+"年長者"
+],
+[
+"senior staff",
+"資深員工"
+]
+],
+"sheet": [
+[
+"time sheet",
+"工時表"
+],
+[
+"sheet of paper",
+"一張紙"
+],
+[
+"balance sheet",
+"資產負債表"
+]
+],
+"shipping": [
+[
+"shipping cost",
+"運費"
+],
+[
+"free shipping",
+"免運費"
+],
+[
+"shipping address",
+"收件地址"
+]
+],
+"software": [
+[
+"install software",
+"安裝軟體"
+],
+[
+"software update",
+"軟體更新"
+],
+[
+"software developer",
+"軟體開發者"
+]
+],
+"solution": [
+[
+"provide a solution",
+"提供解決方案"
+],
+[
+"find a solution",
+"找到解法"
+],
+[
+"software solution",
+"軟體解決方案"
+]
+],
+"speaker": [
+[
+"guest speaker",
+"客座講者"
+],
+[
+"keynote speaker",
+"主講人"
+],
+[
+"native speaker",
+"母語人士"
+]
+],
+"speech": [
+[
+"give a speech",
+"發表演說"
+],
+[
+"opening speech",
+"開幕致詞"
+],
+[
+"freedom of speech",
+"言論自由"
+]
+],
+"submit": [
+[
+"submit an application",
+"提交申請"
+],
+[
+"submit a report",
+"提交報告"
+],
+[
+"submit by",
+"在⋯前提交"
+]
+],
+"subscription": [
+[
+"annual subscription",
+"年度訂閱"
+],
+[
+"cancel a subscription",
+"取消訂閱"
+],
+[
+"subscription fee",
+"訂閱費"
+]
+],
+"successful": [
+[
+"successful candidate",
+"錄取者"
+],
+[
+"highly successful",
+"非常成功"
+],
+[
+"successful in",
+"在⋯方面成功"
+]
+],
+"sum": [
+[
+"a large sum of money",
+"一大筆錢"
+],
+[
+"lump sum",
+"一次付清的金額"
+],
+[
+"sum up",
+"總結"
+]
+],
+"superior": [
+[
+"superior quality",
+"優異品質"
+],
+[
+"superior to",
+"優於"
+],
+[
+"report to a superior",
+"向上級報告"
+]
+],
+"survey": [
+[
+"conduct a survey",
+"進行調查"
+],
+[
+"customer survey",
+"顧客調查"
+],
+[
+"survey results",
+"調查結果"
+]
+],
+"total": [
+[
+"total amount",
+"總額"
+],
+[
+"in total",
+"總共"
+],
+[
+"total cost",
+"總成本"
+]
+],
+"transition": [
+[
+"smooth transition",
+"順利過渡"
+],
+[
+"transition period",
+"過渡期"
+],
+[
+"transition to",
+"轉變為"
+]
+],
+"update": [
+[
+"update the system",
+"更新系統"
+],
+[
+"latest update",
+"最新消息"
+],
+[
+"keep someone updated",
+"讓某人掌握最新情況"
+]
+],
+"welcome": [
+[
+"warm welcome",
+"熱烈歡迎"
+],
+[
+"welcome speech",
+"歡迎詞"
+],
+[
+"welcome to",
+"歡迎來到"
+]
+],
+"abroad": [
+[
+"study abroad",
+"出國留學"
+],
+[
+"travel abroad",
+"出國旅行"
+],
+[
+"live abroad",
+"住在國外"
+]
+],
+"absence": [
+[
+"in the absence of",
+"缺少⋯時"
+],
+[
+"leave of absence",
+"請假"
+],
+[
+"absence from work",
+"缺勤"
+]
+],
+"absolute": [
+[
+"absolute power",
+"絕對權力"
+],
+[
+"absolute minimum",
+"絕對最低限度"
+],
+[
+"absolute truth",
+"絕對真理"
+]
+],
+"academic": [
+[
+"academic year",
+"學年"
+],
+[
+"academic performance",
+"學業表現"
+],
+[
+"academic degree",
+"學位"
+]
+],
+"accelerate": [
+[
+"accelerate growth",
+"加速成長"
+],
+[
+"accelerate the process",
+"加快進度"
+],
+[
+"accelerate rapidly",
+"迅速加快"
+]
+],
+"access": [
+[
+"access to",
+"取得；使用權"
+],
+[
+"gain access",
+"取得權限"
+],
+[
+"internet access",
+"網路連線"
+]
+],
+"accessibility": [
+[
+"improve accessibility",
+"提升無障礙程度"
+],
+[
+"wheelchair accessibility",
+"輪椅可通行"
+],
+[
+"accessibility of",
+"⋯的可及性"
+]
+],
+"accessible": [
+[
+"easily accessible",
+"容易取得"
+],
+[
+"accessible to",
+"可供⋯使用"
+],
+[
+"wheelchair accessible",
+"無障礙"
+]
+],
+"accident": [
+[
+"car accident",
+"車禍"
+],
+[
+"by accident",
+"意外地"
+],
+[
+"accident report",
+"事故報告"
+]
+],
+"accommodate": [
+[
+"accommodate guests",
+"容納賓客"
+],
+[
+"accommodate a request",
+"配合要求"
+],
+[
+"accommodate needs",
+"滿足需求"
+]
+],
+"accommodation": [
+[
+"hotel accommodation",
+"飯店住宿"
+],
+[
+"book accommodation",
+"預訂住宿"
+],
+[
+"accommodation costs",
+"住宿費"
+]
+],
+"accordingly": [
+[
+"act accordingly",
+"相應行動"
+],
+[
+"adjust accordingly",
+"相應調整"
+],
+[
+"plan accordingly",
+"相應規劃"
+]
+],
+"accountability": [
+[
+"accountability for",
+"對⋯的責任"
+],
+[
+"ensure accountability",
+"確保問責"
+],
+[
+"lack of accountability",
+"缺乏問責"
+]
+],
+"accountable": [
+[
+"be held accountable",
+"被追究責任"
+],
+[
+"accountable for",
+"對⋯負責"
+],
+[
+"accountable to",
+"向⋯負責"
+]
+],
+"accountant": [
+[
+"certified public accountant",
+"會計師"
+],
+[
+"chief accountant",
+"會計主任"
+],
+[
+"hire an accountant",
+"聘請會計"
+]
+],
+"accuracy": [
+[
+"ensure accuracy",
+"確保準確"
+],
+[
+"accuracy of the data",
+"資料準確性"
+],
+[
+"with accuracy",
+"精準地"
+]
+],
+"accurately": [
+[
+"accurately reflect",
+"準確反映"
+],
+[
+"accurately predict",
+"準確預測"
+],
+[
+"describe accurately",
+"精確描述"
+]
+],
+"achieve": [
+[
+"achieve a goal",
+"達成目標"
+],
+[
+"achieve success",
+"獲得成功"
+],
+[
+"achieve results",
+"取得成果"
+]
+],
+"achievement": [
+[
+"sense of achievement",
+"成就感"
+],
+[
+"outstanding achievement",
+"傑出成就"
+],
+[
+"academic achievement",
+"學業成就"
+]
+],
+"achiever": [
+[
+"high achiever",
+"高成就者"
+],
+[
+"top achiever",
+"頂尖表現者"
+]
+],
+"acquire": [
+[
+"acquire skills",
+"習得技能"
+],
+[
+"acquire a company",
+"收購公司"
+],
+[
+"acquire knowledge",
+"獲取知識"
+]
+],
+"acquisition": [
+[
+"acquisition of",
+"收購"
+],
+[
+"language acquisition",
+"語言習得"
+],
+[
+"mergers and acquisitions",
+"併購"
+]
+],
+"acting": [
+[
+"acting career",
+"演藝事業"
+],
+[
+"acting skills",
+"演技"
+],
+[
+"acting manager",
+"代理經理"
+]
+],
+"activate": [
+[
+"activate an account",
+"啟用帳戶"
+],
+[
+"activate a card",
+"開卡"
+],
+[
+"activate the alarm",
+"啟動警報"
+]
+],
+"active": [
+[
+"active member",
+"活躍成員"
+],
+[
+"remain active",
+"保持活躍"
+],
+[
+"active role",
+"積極角色"
+]
+],
+"actor": [
+[
+"leading actor",
+"男主角"
+],
+[
+"supporting actor",
+"男配角"
+],
+[
+"famous actor",
+"知名演員"
+]
+],
+"actual": [
+[
+"actual cost",
+"實際成本"
+],
+[
+"in actual fact",
+"事實上"
+],
+[
+"actual figures",
+"實際數字"
+]
+],
+"adaptability": [
+[
+"adaptability to change",
+"適應變化的能力"
+],
+[
+"show adaptability",
+"展現適應力"
+],
+[
+"high adaptability",
+"高適應性"
+]
+],
+"addition": [
+[
+"in addition to",
+"除此之外"
+],
+[
+"a new addition",
+"新成員"
+],
+[
+"addition of",
+"增加"
+]
+],
+"additional": [
+[
+"additional charge",
+"額外費用"
+],
+[
+"additional information",
+"進一步資訊"
+],
+[
+"additional cost",
+"額外成本"
+]
+],
+"additionally": [
+[
+"additionally required",
+"另外要求"
+],
+[
+"additionally available",
+"另外提供"
+]
+],
+"address": [
+[
+"home address",
+"住家地址"
+],
+[
+"address the issue",
+"處理問題"
+],
+[
+"email address",
+"電子郵件地址"
+]
+],
+"adjust": [
+[
+"adjust the schedule",
+"調整時程"
+],
+[
+"adjust to",
+"適應"
+],
+[
+"adjust accordingly",
+"相應調整"
+]
+],
+"administrative": [
+[
+"administrative staff",
+"行政人員"
+],
+[
+"administrative work",
+"行政工作"
+],
+[
+"administrative costs",
+"行政成本"
+]
+],
+"administrator": [
+[
+"system administrator",
+"系統管理員"
+],
+[
+"hospital administrator",
+"醫院行政主管"
+],
+[
+"school administrator",
+"學校行政人員"
+]
+],
+"admission": [
+[
+"admission fee",
+"入場費"
+],
+[
+"free admission",
+"免費入場"
+],
+[
+"college admission",
+"大學入學許可"
+]
+],
+"adventure": [
+[
+"sense of adventure",
+"冒險精神"
+],
+[
+"go on an adventure",
+"去冒險"
+],
+[
+"adventure story",
+"冒險故事"
+]
+],
+"advertise": [
+[
+"advertise a product",
+"宣傳產品"
+],
+[
+"advertise a job",
+"刊登職缺"
+],
+[
+"advertise online",
+"網路廣告"
+]
+],
+"advice": [
+[
+"give advice",
+"給建議"
+],
+[
+"seek advice",
+"尋求建議"
+],
+[
+"take someone's advice",
+"聽從某人建議"
+]
+],
+"affiliate": [
+[
+"affiliate company",
+"關係企業"
+],
+[
+"affiliate program",
+"聯盟行銷計畫"
+],
+[
+"affiliate with",
+"與⋯有關聯"
+]
+],
+"afford": [
+[
+"can afford",
+"負擔得起"
+],
+[
+"afford to buy",
+"買得起"
+],
+[
+"cannot afford to lose",
+"輸不起"
+]
+],
+"affordability": [
+[
+"housing affordability",
+"居住負擔能力"
+],
+[
+"improve affordability",
+"提升可負擔性"
+],
+[
+"affordability of",
+"⋯的可負擔性"
+]
+],
+"afterward": [
+[
+"shortly afterward",
+"不久之後"
+],
+[
+"soon afterward",
+"隨後"
+],
+[
+"immediately afterward",
+"隨即"
+]
+],
+"agenda": [
+[
+"on the agenda",
+"議程上"
+],
+[
+"set the agenda",
+"擬定議程"
+],
+[
+"hidden agenda",
+"隱藏意圖"
+]
+],
+"ahead": [
+[
+"ahead of schedule",
+"提前"
+],
+[
+"plan ahead",
+"提前規劃"
+],
+[
+"go ahead",
+"請便；繼續"
+]
+],
+"airfare": [
+[
+"round-trip airfare",
+"來回機票費"
+],
+[
+"discounted airfare",
+"折扣機票"
+],
+[
+"airfare and lodging",
+"機票與住宿"
+]
+],
+"alien": [
+[
+"alien species",
+"外來物種"
+],
+[
+"alien to",
+"與⋯格格不入"
+],
+[
+"feel alien",
+"感到格格不入"
+]
+],
+"allocate": [
+[
+"allocate resources",
+"分配資源"
+],
+[
+"allocate funds",
+"撥款"
+],
+[
+"allocate time",
+"分配時間"
+]
+],
+"allocation": [
+[
+"resource allocation",
+"資源分配"
+],
+[
+"budget allocation",
+"預算分配"
+],
+[
+"allocation of funds",
+"資金分配"
+]
+],
+"alternate": [
+[
+"alternate route",
+"替代路線"
+],
+[
+"on alternate days",
+"隔天"
+],
+[
+"alternate between",
+"在⋯之間輪替"
+]
+],
+"amendment": [
+[
+"make an amendment",
+"修正"
+],
+[
+"constitutional amendment",
+"憲法修正案"
+],
+[
+"amendment to the contract",
+"合約修訂"
+]
+],
+"amusement": [
+[
+"amusement park",
+"遊樂園"
+],
+[
+"to one's amusement",
+"令某人覺得好笑"
+],
+[
+"source of amusement",
+"娛樂來源"
+]
+],
+"analyst": [
+[
+"financial analyst",
+"財務分析師"
+],
+[
+"data analyst",
+"資料分析師"
+],
+[
+"market analyst",
+"市場分析師"
+]
+],
+"analyze": [
+[
+"analyze data",
+"分析資料"
+],
+[
+"analyze the results",
+"分析結果"
+],
+[
+"carefully analyze",
+"仔細分析"
+]
+],
+"ancient": [
+[
+"ancient history",
+"古代史"
+],
+[
+"ancient civilization",
+"古文明"
+],
+[
+"ancient ruins",
+"古代遺跡"
+]
+],
+"anniversary": [
+[
+"wedding anniversary",
+"結婚紀念日"
+],
+[
+"mark the anniversary",
+"紀念週年"
+],
+[
+"10th anniversary",
+"十週年"
+]
+],
+"announce": [
+[
+"announce a plan",
+"宣布計畫"
+],
+[
+"officially announce",
+"正式宣布"
+],
+[
+"announce the winner",
+"公布得主"
+]
+],
+"annual": [
+[
+"annual report",
+"年報"
+],
+[
+"annual meeting",
+"年會"
+],
+[
+"annual leave",
+"年假"
+]
+],
+"anticipate": [
+[
+"anticipate problems",
+"預期問題"
+],
+[
+"anticipated delay",
+"預期的延誤"
+],
+[
+"eagerly anticipate",
+"殷切期待"
+]
+],
+"anyway": [
+[
+"thanks anyway",
+"還是謝謝你"
+],
+[
+"do it anyway",
+"還是照做"
+]
+],
+"apartment": [
+[
+"rent an apartment",
+"租公寓"
+],
+[
+"apartment building",
+"公寓大樓"
+],
+[
+"studio apartment",
+"套房"
+]
+],
+"apologize": [
+[
+"apologize for",
+"為⋯道歉"
+],
+[
+"sincerely apologize",
+"誠摯道歉"
+],
+[
+"apologize to",
+"向⋯道歉"
+]
+],
+"appeal": [
+[
+"appeal to",
+"吸引；訴諸"
+],
+[
+"sex appeal",
+"性吸引力"
+],
+[
+"appeal a decision",
+"對決定提出上訴"
+]
+],
+"appearance": [
+[
+"physical appearance",
+"外貌"
+],
+[
+"make an appearance",
+"現身"
+],
+[
+"judge by appearances",
+"以貌取人"
+]
+],
+"appliance": [
+[
+"household appliance",
+"家用電器"
+],
+[
+"kitchen appliance",
+"廚房電器"
+],
+[
+"appliance store",
+"家電行"
+]
+],
+"applicant": [
+[
+"job applicant",
+"求職者"
+],
+[
+"qualified applicant",
+"合格申請人"
+],
+[
+"applicant for",
+"⋯的申請人"
+]
+],
+"appraisal": [
+[
+"performance appraisal",
+"績效評估"
+],
+[
+"property appraisal",
+"房產估價"
+],
+[
+"annual appraisal",
+"年度考核"
+]
+],
+"appropriate": [
+[
+"appropriate action",
+"適當行動"
+],
+[
+"appropriate for",
+"適合"
+],
+[
+"appropriate attire",
+"合宜服裝"
+]
+],
+"approval": [
+[
+"seek approval",
+"尋求批准"
+],
+[
+"final approval",
+"最終批准"
+],
+[
+"subject to approval",
+"須經核准"
+]
+],
+"approve": [
+[
+"approve a budget",
+"核准預算"
+],
+[
+"approve of",
+"贊成"
+],
+[
+"officially approved",
+"正式核准"
+]
+],
+"approximately": [
+[
+"approximately 50 percent",
+"約百分之五十"
+],
+[
+"approximately two hours",
+"大約兩小時"
+],
+[
+"cost approximately",
+"費用約為"
+]
+],
+"aptitude": [
+[
+"aptitude test",
+"性向測驗"
+],
+[
+"natural aptitude",
+"天賦"
+],
+[
+"aptitude for",
+"在⋯方面的天分"
+]
+],
+"arbitration": [
+[
+"go to arbitration",
+"提交仲裁"
+],
+[
+"arbitration panel",
+"仲裁小組"
+],
+[
+"binding arbitration",
+"有約束力的仲裁"
+]
+],
+"architecture": [
+[
+"modern architecture",
+"現代建築"
+],
+[
+"computer architecture",
+"電腦架構"
+],
+[
+"architecture firm",
+"建築事務所"
+]
+],
+"arrange": [
+[
+"arrange a meeting",
+"安排會議"
+],
+[
+"arrange for",
+"安排"
+],
+[
+"arrange flowers",
+"插花"
+]
+],
+"arrival": [
+[
+"time of arrival",
+"抵達時間"
+],
+[
+"upon arrival",
+"抵達後"
+],
+[
+"arrival date",
+"到達日期"
+]
+],
+"artwork": [
+[
+"original artwork",
+"原創作品"
+],
+[
+"display artwork",
+"展示藝術品"
+],
+[
+"artwork on the wall",
+"牆上的畫作"
+]
+],
+"aside": [
+[
+"set aside",
+"留出；撥出"
+],
+[
+"aside from",
+"除了"
+],
+[
+"put aside",
+"擱置"
+]
+],
+"assembly": [
+[
+"assembly line",
+"生產線"
+],
+[
+"general assembly",
+"大會"
+],
+[
+"assembly instructions",
+"組裝說明"
+]
+],
+"assert": [
+[
+"assert authority",
+"行使權威"
+],
+[
+"assert oneself",
+"堅持己見"
+],
+[
+"assert that",
+"主張"
+]
+],
+"assess": [
+[
+"assess the risk",
+"評估風險"
+],
+[
+"assess the damage",
+"評估損失"
+],
+[
+"carefully assess",
+"仔細評估"
+]
+],
+"assessment": [
+[
+"risk assessment",
+"風險評估"
+],
+[
+"needs assessment",
+"需求評估"
+],
+[
+"performance assessment",
+"績效評量"
+]
+],
+"asset": [
+[
+"valuable asset",
+"寶貴資產"
+],
+[
+"fixed assets",
+"固定資產"
+],
+[
+"asset management",
+"資產管理"
+]
+],
+"assignment": [
+[
+"complete an assignment",
+"完成作業"
+],
+[
+"overseas assignment",
+"海外派任"
+],
+[
+"on assignment",
+"出差任務中"
+]
+],
+"assimilate": [
+[
+"assimilate into",
+"融入"
+],
+[
+"assimilate information",
+"吸收資訊"
+],
+[
+"assimilate new ideas",
+"吸收新觀念"
+]
+],
+"assist": [
+[
+"assist with",
+"協助"
+],
+[
+"assist customers",
+"協助顧客"
+],
+[
+"assist in",
+"協助進行"
+]
+],
+"assistant": [
+[
+"personal assistant",
+"個人助理"
+],
+[
+"assistant manager",
+"副理"
+],
+[
+"teaching assistant",
+"助教"
+]
+],
+"association": [
+[
+"trade association",
+"同業公會"
+],
+[
+"in association with",
+"與⋯合作"
+],
+[
+"association with",
+"與⋯的關聯"
+]
+],
+"assume": [
+[
+"assume responsibility",
+"承擔責任"
+],
+[
+"assume that",
+"假設"
+],
+[
+"assume control",
+"接管"
+]
+],
+"assure": [
+[
+"assure someone",
+"向某人保證"
+],
+[
+"rest assured",
+"請放心"
+],
+[
+"assure quality",
+"確保品質"
+]
+],
+"astute": [
+[
+"astute observer",
+"敏銳的觀察者"
+],
+[
+"astute businessman",
+"精明的商人"
+],
+[
+"astute judgment",
+"精準判斷"
+]
+],
+"athlete": [
+[
+"professional athlete",
+"職業運動員"
+],
+[
+"Olympic athlete",
+"奧運選手"
+],
+[
+"elite athlete",
+"頂尖運動員"
+]
+],
+"atmosphere": [
+[
+"friendly atmosphere",
+"友善的氣氛"
+],
+[
+"relaxed atmosphere",
+"輕鬆的氛圍"
+],
+[
+"earth's atmosphere",
+"地球大氣層"
+]
+],
+"attachment": [
+[
+"email attachment",
+"電子郵件附件"
+],
+[
+"open an attachment",
+"開啟附件"
+],
+[
+"see the attachment",
+"見附件"
+]
+],
+"attempt": [
+[
+"make an attempt",
+"嘗試"
+],
+[
+"attempt to",
+"試圖"
+],
+[
+"first attempt",
+"第一次嘗試"
+]
+],
+"attend": [
+[
+"attend a meeting",
+"出席會議"
+],
+[
+"attend a conference",
+"參加研討會"
+],
+[
+"attend to",
+"處理"
+]
+],
+"attendant": [
+[
+"flight attendant",
+"空服員"
+],
+[
+"parking attendant",
+"停車場管理員"
+],
+[
+"service attendant",
+"服務人員"
+]
+],
+"attire": [
+[
+"business attire",
+"商務服裝"
+],
+[
+"formal attire",
+"正式服裝"
+],
+[
+"casual attire",
+"休閒服裝"
+]
+],
+"attitude": [
+[
+"positive attitude",
+"正面態度"
+],
+[
+"attitude toward",
+"對⋯的態度"
+],
+[
+"change one's attitude",
+"改變態度"
+]
+],
+"attorney": [
+[
+"defense attorney",
+"辯護律師"
+],
+[
+"attorney general",
+"檢察總長"
+],
+[
+"hire an attorney",
+"聘請律師"
+]
+],
+"attract": [
+[
+"attract customers",
+"吸引顧客"
+],
+[
+"attract attention",
+"引人注意"
+],
+[
+"attract investment",
+"吸引投資"
+]
+],
+"auction": [
+[
+"online auction",
+"網路拍賣"
+],
+[
+"at auction",
+"拍賣會上"
+],
+[
+"auction house",
+"拍賣行"
+]
+],
+"audience": [
+[
+"target audience",
+"目標受眾"
+],
+[
+"live audience",
+"現場觀眾"
+],
+[
+"audience member",
+"觀眾"
+]
+],
+"audio": [
+[
+"audio recording",
+"錄音"
+],
+[
+"audio equipment",
+"音響設備"
+],
+[
+"audio file",
+"音訊檔"
+]
+],
+"audit": [
+[
+"conduct an audit",
+"進行稽核"
+],
+[
+"financial audit",
+"財務審計"
+],
+[
+"internal audit",
+"內部稽核"
+]
+],
+"audition": [
+[
+"audition for",
+"試鏡"
+],
+[
+"pass an audition",
+"通過試鏡"
+],
+[
+"open audition",
+"公開試鏡"
+]
+],
+"authentic": [
+[
+"authentic cuisine",
+"道地料理"
+],
+[
+"authentic signature",
+"真跡簽名"
+],
+[
+"authentic experience",
+"真實體驗"
+]
+],
+"authorization": [
+[
+"written authorization",
+"書面授權"
+],
+[
+"without authorization",
+"未經授權"
+],
+[
+"require authorization",
+"需要授權"
+]
+],
+"authorize": [
+[
+"authorize payment",
+"授權付款"
+],
+[
+"authorized personnel",
+"授權人員"
+],
+[
+"officially authorize",
+"正式授權"
+]
+],
+"auto": [
+[
+"auto parts",
+"汽車零件"
+],
+[
+"auto industry",
+"汽車業"
+],
+[
+"auto insurance",
+"汽車保險"
+]
+],
+"automate": [
+[
+"automate the process",
+"自動化流程"
+],
+[
+"automate tasks",
+"自動執行工作"
+],
+[
+"fully automate",
+"完全自動化"
+]
+],
+"automatic": [
+[
+"automatic renewal",
+"自動續約"
+],
+[
+"automatic payment",
+"自動扣款"
+],
+[
+"fully automatic",
+"全自動"
+]
+],
+"automatically": [
+[
+"automatically renew",
+"自動續約"
+],
+[
+"be automatically updated",
+"自動更新"
+],
+[
+"automatically generated",
+"自動產生"
+]
+],
+"availability": [
+[
+"check availability",
+"確認供應情況"
+],
+[
+"subject to availability",
+"視供應情況而定"
+],
+[
+"room availability",
+"房間空檔"
+]
+],
+"average": [
+[
+"on average",
+"平均而言"
+],
+[
+"above average",
+"高於平均"
+],
+[
+"average cost",
+"平均成本"
+]
+],
+"award": [
+[
+"win an award",
+"得獎"
+],
+[
+"award ceremony",
+"頒獎典禮"
+],
+[
+"award-winning",
+"屢獲殊榮的"
+]
+],
+"aware": [
+[
+"be aware of",
+"意識到"
+],
+[
+"become aware",
+"察覺到"
+],
+[
+"fully aware",
+"充分了解"
+]
+],
+"awareness": [
+[
+"raise awareness",
+"提高意識"
+],
+[
+"public awareness",
+"大眾意識"
+],
+[
+"brand awareness",
+"品牌知名度"
+]
+],
+"background": [
+[
+"educational background",
+"教育背景"
+],
+[
+"background check",
+"背景調查"
+],
+[
+"background noise",
+"背景噪音"
+]
+],
+"backup": [
+[
+"backup copy",
+"備份"
+],
+[
+"backup plan",
+"備案"
+],
+[
+"back up files",
+"備份檔案"
+]
+],
+"baggage": [
+[
+"baggage claim",
+"行李提領處"
+],
+[
+"carry-on baggage",
+"隨身行李"
+],
+[
+"excess baggage",
+"超重行李"
+]
+],
+"balance": [
+[
+"bank balance",
+"帳戶餘額"
+],
+[
+"work-life balance",
+"工作與生活平衡"
+],
+[
+"balance the budget",
+"平衡預算"
+]
+],
+"banker": [
+[
+"investment banker",
+"投資銀行家"
+],
+[
+"central banker",
+"央行官員"
+]
+],
+"banking": [
+[
+"online banking",
+"網路銀行"
+],
+[
+"banking services",
+"銀行服務"
+],
+[
+"investment banking",
+"投資銀行業務"
+]
+],
+"bankrupt": [
+[
+"go bankrupt",
+"破產"
+],
+[
+"declare bankrupt",
+"宣告破產"
+],
+[
+"bankrupt company",
+"破產公司"
+]
+],
+"banning": [
+[
+"banning smoking",
+"禁菸"
+],
+[
+"the banning of",
+"對⋯的禁止"
+]
+],
+"banquet": [
+[
+"banquet hall",
+"宴會廳"
+],
+[
+"wedding banquet",
+"婚宴"
+],
+[
+"attend a banquet",
+"參加宴會"
+]
+],
+"barely": [
+[
+"barely enough",
+"勉強足夠"
+],
+[
+"barely noticeable",
+"幾乎不明顯"
+],
+[
+"barely made it",
+"勉強趕上"
+]
+],
+"basement": [
+[
+"basement level",
+"地下樓層"
+],
+[
+"in the basement",
+"在地下室"
+],
+[
+"basement parking",
+"地下停車場"
+]
+],
+"basic": [
+[
+"basic salary",
+"底薪"
+],
+[
+"basic skills",
+"基本技能"
+],
+[
+"basic needs",
+"基本需求"
+]
+],
+"basis": [
+[
+"on a regular basis",
+"定期地"
+],
+[
+"on a daily basis",
+"每天"
+],
+[
+"basis for",
+"⋯的依據"
+]
+],
+"battery": [
+[
+"battery life",
+"電池續航力"
+],
+[
+"battery charger",
+"充電器"
+],
+[
+"low battery",
+"電量不足"
+]
+],
+"beauty": [
+[
+"natural beauty",
+"自然美"
+],
+[
+"beauty salon",
+"美容院"
+],
+[
+"beauty of",
+"⋯之美"
+]
+],
+"belief": [
+[
+"firm belief",
+"堅定信念"
+],
+[
+"religious belief",
+"宗教信仰"
+],
+[
+"belief in",
+"對⋯的信念"
+]
+],
+"belong": [
+[
+"belong to",
+"屬於"
+],
+[
+"belong together",
+"很相配"
+],
+[
+"belong here",
+"屬於這裡"
+]
+],
+"benchmark": [
+[
+"industry benchmark",
+"業界基準"
+],
+[
+"set a benchmark",
+"設立標竿"
+],
+[
+"benchmark against",
+"與⋯比較"
+]
+],
+"beneficial": [
+[
+"mutually beneficial",
+"互利的"
+],
+[
+"beneficial to",
+"對⋯有益"
+],
+[
+"highly beneficial",
+"極為有益"
+]
+],
+"besides": [
+[
+"besides this",
+"除此之外"
+],
+[
+"besides the fact that",
+"除了⋯之外"
+]
+],
+"beverage": [
+[
+"alcoholic beverage",
+"含酒精飲料"
+],
+[
+"food and beverage",
+"餐飲"
+],
+[
+"hot beverage",
+"熱飲"
+]
+],
+"billing": [
+[
+"billing address",
+"帳單地址"
+],
+[
+"billing department",
+"帳務部門"
+],
+[
+"billing cycle",
+"計費週期"
+]
+],
+"blame": [
+[
+"blame someone for",
+"為⋯責怪某人"
+],
+[
+"take the blame",
+"承擔責任"
+],
+[
+"shift the blame",
+"推卸責任"
+]
+],
+"blend": [
+[
+"blend in",
+"融入"
+],
+[
+"blend of",
+"⋯的混合"
+],
+[
+"blend together",
+"混合"
+]
+],
+"block": [
+[
+"block access",
+"封鎖存取"
+],
+[
+"city block",
+"街區"
+],
+[
+"block the road",
+"擋住道路"
+]
+],
+"blog": [
+[
+"blog post",
+"部落格文章"
+],
+[
+"write a blog",
+"寫部落格"
+],
+[
+"travel blog",
+"旅遊部落格"
+]
+],
+"bloom": [
+[
+"in full bloom",
+"盛開"
+],
+[
+"come into bloom",
+"開花"
+],
+[
+"bloom in spring",
+"春天綻放"
+]
+],
+"blueprint": [
+[
+"blueprint for",
+"⋯的藍圖"
+],
+[
+"architectural blueprint",
+"建築藍圖"
+],
+[
+"follow a blueprint",
+"依照藍圖"
+]
+],
+"boardroom": [
+[
+"boardroom meeting",
+"董事會議"
+],
+[
+"in the boardroom",
+"在董事會議室"
+],
+[
+"boardroom table",
+"董事會議桌"
+]
+],
+"bond": [
+[
+"government bond",
+"政府公債"
+],
+[
+"strong bond",
+"緊密連結"
+],
+[
+"bond with",
+"與⋯建立情感"
+]
+],
+"bonus": [
+[
+"year-end bonus",
+"年終獎金"
+],
+[
+"performance bonus",
+"績效獎金"
+],
+[
+"bonus pay",
+"額外獎金"
+]
+],
+"booking": [
+[
+"make a booking",
+"訂位；預約"
+],
+[
+"booking confirmation",
+"預訂確認"
+],
+[
+"advance booking",
+"提前預訂"
+]
+],
+"bookkeeper": [
+[
+"hire a bookkeeper",
+"聘請記帳員"
+],
+[
+"part-time bookkeeper",
+"兼職記帳員"
+]
+],
+"booth": [
+[
+"exhibition booth",
+"展覽攤位"
+],
+[
+"phone booth",
+"電話亭"
+],
+[
+"set up a booth",
+"設攤位"
+]
+],
+"boycott": [
+[
+"boycott a product",
+"抵制產品"
+],
+[
+"call for a boycott",
+"呼籲抵制"
+],
+[
+"consumer boycott",
+"消費者抵制"
+]
+],
+"branch": [
+[
+"branch office",
+"分公司"
+],
+[
+"local branch",
+"當地分行"
+],
+[
+"branch out",
+"拓展業務"
+]
+],
+"breach": [
+[
+"breach of contract",
+"違約"
+],
+[
+"security breach",
+"資安漏洞"
+],
+[
+"breach of trust",
+"背信"
+]
+],
+"breakfast": [
+[
+"continental breakfast",
+"歐陸式早餐"
+],
+[
+"breakfast buffet",
+"自助早餐"
+],
+[
+"have breakfast",
+"吃早餐"
+]
+],
+"breakthrough": [
+[
+"major breakthrough",
+"重大突破"
+],
+[
+"scientific breakthrough",
+"科學突破"
+],
+[
+"make a breakthrough",
+"取得突破"
+]
+],
+"brief": [
+[
+"brief summary",
+"簡短摘要"
+],
+[
+"in brief",
+"簡言之"
+],
+[
+"brief meeting",
+"簡短會議"
+]
+],
+"bright": [
+[
+"bright future",
+"光明前景"
+],
+[
+"bright idea",
+"好點子"
+],
+[
+"bright light",
+"明亮的光"
+]
+],
+"brochure": [
+[
+"travel brochure",
+"旅遊簡介"
+],
+[
+"product brochure",
+"產品型錄"
+],
+[
+"pick up a brochure",
+"拿一份簡介"
+]
+],
+"broker": [
+[
+"real estate broker",
+"房屋仲介"
+],
+[
+"insurance broker",
+"保險經紀人"
+],
+[
+"stock broker",
+"股票經紀人"
+]
+],
+"brokerage": [
+[
+"brokerage firm",
+"經紀公司"
+],
+[
+"brokerage fee",
+"經紀費"
+],
+[
+"online brokerage",
+"網路券商"
+]
+],
+"brunch": [
+[
+"Sunday brunch",
+"週日早午餐"
+],
+[
+"have brunch",
+"吃早午餐"
+],
+[
+"brunch menu",
+"早午餐菜單"
+]
+],
+"bureaucracy": [
+[
+"government bureaucracy",
+"政府官僚體系"
+],
+[
+"cut through bureaucracy",
+"打破官僚作風"
+]
+],
+"burn": [
+[
+"burn calories",
+"燃燒卡路里"
+],
+[
+"burn out",
+"精疲力竭"
+],
+[
+"burn through money",
+"燒錢"
+]
+],
+"cable": [
+[
+"cable car",
+"纜車"
+],
+[
+"power cable",
+"電源線"
+],
+[
+"cable television",
+"有線電視"
+]
+],
+"calculate": [
+[
+"calculate the cost",
+"計算成本"
+],
+[
+"calculate the risk",
+"估算風險"
+],
+[
+"carefully calculate",
+"仔細計算"
+]
+],
+"calculation": [
+[
+"make a calculation",
+"計算"
+],
+[
+"rough calculation",
+"粗略計算"
+],
+[
+"calculation error",
+"計算錯誤"
+]
+],
+"calendar": [
+[
+"calendar year",
+"曆年"
+],
+[
+"check the calendar",
+"查看行事曆"
+],
+[
+"mark the calendar",
+"在行事曆上標記"
+]
+],
+"cancel": [
+[
+"cancel a meeting",
+"取消會議"
+],
+[
+"cancel a reservation",
+"取消訂位"
+],
+[
+"cancel an order",
+"取消訂單"
+]
+],
+"cancellation": [
+[
+"cancellation fee",
+"取消費"
+],
+[
+"cancellation policy",
+"取消政策"
+],
+[
+"flight cancellation",
+"航班取消"
+]
+],
+"capability": [
+[
+"production capability",
+"生產能力"
+],
+[
+"beyond one's capability",
+"超出能力"
+],
+[
+"technical capability",
+"技術能力"
+]
+],
+"capable": [
+[
+"capable of",
+"有能力做"
+],
+[
+"highly capable",
+"能力很強"
+],
+[
+"perfectly capable",
+"完全有能力"
+]
+],
+"capital": [
+[
+"capital investment",
+"資本投資"
+],
+[
+"venture capital",
+"創業投資"
+],
+[
+"raise capital",
+"籌措資金"
+]
+],
+"carefully": [
+[
+"read carefully",
+"仔細閱讀"
+],
+[
+"carefully handle",
+"小心處理"
+],
+[
+"carefully consider",
+"審慎考慮"
+]
+],
+"cargo": [
+[
+"cargo ship",
+"貨輪"
+],
+[
+"air cargo",
+"空運貨物"
+],
+[
+"cargo hold",
+"貨艙"
+]
+],
+"cash": [
+[
+"pay in cash",
+"付現"
+],
+[
+"cash flow",
+"現金流"
+],
+[
+"cash register",
+"收銀機"
+]
+],
+"cashier": [
+[
+"cashier's desk",
+"收銀台"
+],
+[
+"work as a cashier",
+"擔任收銀員"
+],
+[
+"pay the cashier",
+"付錢給收銀員"
+]
+],
+"casual": [
+[
+"casual dress",
+"休閒服裝"
+],
+[
+"casual conversation",
+"閒聊"
+],
+[
+"casual Friday",
+"週五便服日"
+]
+],
+"celebrate": [
+[
+"celebrate a birthday",
+"慶生"
+],
+[
+"celebrate the anniversary",
+"慶祝週年"
+],
+[
+"celebrate success",
+"慶祝成功"
+]
+],
+"centerpiece": [
+[
+"table centerpiece",
+"餐桌中央擺飾"
+],
+[
+"serve as a centerpiece",
+"成為焦點"
+],
+[
+"floral centerpiece",
+"花藝擺飾"
+]
+],
+"ceremony": [
+[
+"award ceremony",
+"頒獎典禮"
+],
+[
+"opening ceremony",
+"開幕典禮"
+],
+[
+"wedding ceremony",
+"婚禮儀式"
+]
+],
+"certificate": [
+[
+"birth certificate",
+"出生證明"
+],
+[
+"gift certificate",
+"禮券"
+],
+[
+"obtain a certificate",
+"取得證書"
+]
+],
+"certify": [
+[
+"certify that",
+"證明"
+],
+[
+"certified copy",
+"認證副本"
+],
+[
+"be certified as",
+"被認證為"
+]
+],
+"chairperson": [
+[
+"appoint a chairperson",
+"任命主席"
+],
+[
+"chairperson of the committee",
+"委員會主席"
+],
+[
+"act as chairperson",
+"擔任主席"
+]
+],
+"chamber": [
+[
+"chamber of commerce",
+"商會"
+],
+[
+"council chamber",
+"議事廳"
+],
+[
+"echo chamber",
+"同溫層"
+]
+],
+"characteristic": [
+[
+"distinctive characteristic",
+"獨特特徵"
+],
+[
+"key characteristic",
+"主要特性"
+],
+[
+"characteristic of",
+"⋯的特色"
+]
+],
+"charging": [
+[
+"charging station",
+"充電站"
+],
+[
+"charging cable",
+"充電線"
+],
+[
+"charging fee",
+"收費"
+]
+],
+"charity": [
+[
+"charity event",
+"慈善活動"
+],
+[
+"donate to charity",
+"捐給慈善機構"
+],
+[
+"charity organization",
+"慈善組織"
+]
+],
+"cheap": [
+[
+"cheap price",
+"低價"
+],
+[
+"dirt cheap",
+"便宜得要命"
+],
+[
+"cheap labor",
+"廉價勞工"
+]
+],
+"checkout": [
+[
+"checkout counter",
+"結帳櫃檯"
+],
+[
+"online checkout",
+"線上結帳"
+],
+[
+"checkout time",
+"退房時間"
+]
+],
+"chef": [
+[
+"head chef",
+"主廚"
+],
+[
+"executive chef",
+"行政主廚"
+],
+[
+"celebrity chef",
+"名廚"
+]
+],
+"clarify": [
+[
+"clarify a point",
+"釐清一點"
+],
+[
+"clarify the situation",
+"澄清情況"
+],
+[
+"clarify the rules",
+"說明規則"
+]
+],
+"classic": [
+[
+"classic example",
+"典型例子"
+],
+[
+"classic car",
+"經典老車"
+],
+[
+"timeless classic",
+"不朽經典"
+]
+],
+"clause": [
+[
+"contract clause",
+"合約條款"
+],
+[
+"escape clause",
+"免責條款"
+],
+[
+"include a clause",
+"納入條款"
+]
+],
+"cleanliness": [
+[
+"standard of cleanliness",
+"清潔標準"
+],
+[
+"personal cleanliness",
+"個人整潔"
+],
+[
+"maintain cleanliness",
+"維持整潔"
+]
+],
+"clerk": [
+[
+"office clerk",
+"辦公室職員"
+],
+[
+"hotel clerk",
+"飯店櫃檯人員"
+],
+[
+"sales clerk",
+"店員"
+]
+],
+"click": [
+[
+"click on",
+"點擊"
+],
+[
+"double click",
+"按兩下"
+],
+[
+"click here",
+"點此處"
+]
+],
+"clientele": [
+[
+"regular clientele",
+"常客"
+],
+[
+"exclusive clientele",
+"高級客群"
+],
+[
+"build a clientele",
+"建立客群"
+]
+],
+"clinic": [
+[
+"dental clinic",
+"牙科診所"
+],
+[
+"outpatient clinic",
+"門診部"
+],
+[
+"visit a clinic",
+"到診所就診"
+]
+],
+"closely": [
+[
+"closely related",
+"密切相關"
+],
+[
+"closely monitor",
+"密切監控"
+],
+[
+"work closely with",
+"與⋯密切合作"
+]
+],
+"club": [
+[
+"fitness club",
+"健身俱樂部"
+],
+[
+"join a club",
+"加入社團"
+],
+[
+"club member",
+"社員"
+]
+],
+"code": [
+[
+"dress code",
+"服裝規定"
+],
+[
+"code of conduct",
+"行為準則"
+],
+[
+"enter the code",
+"輸入代碼"
+]
+],
+"coffee": [
+[
+"coffee break",
+"咖啡時間"
+],
+[
+"cup of coffee",
+"一杯咖啡"
+],
+[
+"coffee machine",
+"咖啡機"
+]
+],
+"coherent": [
+[
+"coherent plan",
+"連貫的計畫"
+],
+[
+"coherent argument",
+"條理分明的論點"
+],
+[
+"logically coherent",
+"邏輯連貫"
+]
+],
+"collaborate": [
+[
+"collaborate with",
+"與⋯合作"
+],
+[
+"collaborate on",
+"合作進行"
+],
+[
+"closely collaborate",
+"密切合作"
+]
+],
+"collaboration": [
+[
+"in collaboration with",
+"與⋯合作"
+],
+[
+"close collaboration",
+"密切合作"
+],
+[
+"team collaboration",
+"團隊合作"
+]
+],
+"collateral": [
+[
+"put up collateral",
+"提供擔保品"
+],
+[
+"loan collateral",
+"貸款抵押品"
+],
+[
+"collateral damage",
+"附帶損害"
+]
+],
+"collection": [
+[
+"art collection",
+"藝術收藏"
+],
+[
+"data collection",
+"資料蒐集"
+],
+[
+"garbage collection",
+"垃圾收集"
+]
+],
+"commensurate": [
+[
+"commensurate with",
+"與⋯相稱"
+],
+[
+"salary commensurate with experience",
+"薪資依經驗而定"
+],
+[
+"commensurate pay",
+"相稱的薪酬"
+]
+],
+"comment": [
+[
+"leave a comment",
+"留言"
+],
+[
+"make a comment",
+"發表意見"
+],
+[
+"no comment",
+"無可奉告"
+]
+],
+"commerce": [
+[
+"e-commerce",
+"電子商務"
+],
+[
+"chamber of commerce",
+"商會"
+],
+[
+"international commerce",
+"國際貿易"
+]
+],
+"commission": [
+[
+"earn a commission",
+"賺取佣金"
+],
+[
+"commission rate",
+"佣金比率"
+],
+[
+"on commission",
+"按佣金計酬"
+]
+],
+"commit": [
+[
+"commit to",
+"致力於"
+],
+[
+"commit a crime",
+"犯罪"
+],
+[
+"commit oneself",
+"全心投入"
+]
+],
+"committee": [
+[
+"form a committee",
+"成立委員會"
+],
+[
+"committee member",
+"委員"
+],
+[
+"serve on a committee",
+"擔任委員"
+]
+],
+"communicate": [
+[
+"communicate with",
+"與⋯溝通"
+],
+[
+"communicate clearly",
+"清楚溝通"
+],
+[
+"communicate effectively",
+"有效溝通"
+]
+],
+"compatible": [
+[
+"compatible with",
+"與⋯相容"
+],
+[
+"fully compatible",
+"完全相容"
+],
+[
+"be compatible",
+"合得來"
+]
+],
+"compete": [
+[
+"compete with",
+"與⋯競爭"
+],
+[
+"compete for",
+"爭取"
+],
+[
+"compete against",
+"與⋯對抗"
+]
+],
+"competency": [
+[
+"core competency",
+"核心能力"
+],
+[
+"language competency",
+"語言能力"
+],
+[
+"competency test",
+"能力測驗"
+]
+],
+"competent": [
+[
+"competent staff",
+"稱職的員工"
+],
+[
+"highly competent",
+"能力很強"
+],
+[
+"competent in",
+"勝任於"
+]
+],
+"competitiveness": [
+[
+"global competitiveness",
+"全球競爭力"
+],
+[
+"maintain competitiveness",
+"維持競爭力"
+],
+[
+"improve competitiveness",
+"提升競爭力"
+]
+],
+"competitor": [
+[
+"main competitor",
+"主要競爭對手"
+],
+[
+"outperform competitors",
+"勝過競爭對手"
+],
+[
+"direct competitor",
+"直接競爭對手"
+]
+],
+"complain": [
+[
+"complain about",
+"抱怨"
+],
+[
+"complain to",
+"向⋯投訴"
+],
+[
+"constantly complain",
+"不斷抱怨"
+]
+],
+"completion": [
+[
+"completion date",
+"完成日期"
+],
+[
+"upon completion",
+"完成時"
+],
+[
+"near completion",
+"接近完工"
+]
+],
+"complex": [
+[
+"complex issue",
+"複雜的問題"
+],
+[
+"apartment complex",
+"公寓社區"
+],
+[
+"highly complex",
+"極為複雜"
+]
+],
+"compliance": [
+[
+"in compliance with",
+"符合"
+],
+[
+"ensure compliance",
+"確保合規"
+],
+[
+"compliance with regulations",
+"遵守法規"
+]
+],
+"comply": [
+[
+"comply with",
+"遵守"
+],
+[
+"fail to comply",
+"未遵守"
+],
+[
+"comply with regulations",
+"遵守規定"
+]
+],
+"comprehend": [
+[
+"fully comprehend",
+"充分理解"
+],
+[
+"difficult to comprehend",
+"難以理解"
+],
+[
+"comprehend the meaning",
+"理解意思"
+]
+],
+"comprehensive": [
+[
+"comprehensive review",
+"全面檢討"
+],
+[
+"comprehensive insurance",
+"全險"
+],
+[
+"comprehensive guide",
+"完整指南"
+]
+],
+"compromise": [
+[
+"reach a compromise",
+"達成妥協"
+],
+[
+"compromise on",
+"在⋯上讓步"
+],
+[
+"compromise solution",
+"折衷方案"
+]
+],
+"concierge": [
+[
+"hotel concierge",
+"飯店禮賓員"
+],
+[
+"concierge service",
+"禮賓服務"
+],
+[
+"ask the concierge",
+"詢問禮賓員"
+]
+],
+"confidence": [
+[
+"have confidence in",
+"對⋯有信心"
+],
+[
+"lack confidence",
+"缺乏信心"
+],
+[
+"gain confidence",
+"獲得信心"
+]
+],
+"confidential": [
+[
+"strictly confidential",
+"絕對機密"
+],
+[
+"confidential information",
+"機密資訊"
+],
+[
+"confidential document",
+"機密文件"
+]
+],
+"confidentiality": [
+[
+"maintain confidentiality",
+"維持保密"
+],
+[
+"confidentiality agreement",
+"保密協議"
+],
+[
+"breach of confidentiality",
+"違反保密"
+]
+],
+"congestion": [
+[
+"traffic congestion",
+"交通擁塞"
+],
+[
+"ease congestion",
+"緩解擁塞"
+],
+[
+"network congestion",
+"網路壅塞"
+]
+],
+"connect": [
+[
+"connect to",
+"連接到"
+],
+[
+"connect with",
+"與⋯建立連結"
+],
+[
+"connect to the internet",
+"連上網路"
+]
+],
+"connection": [
+[
+"internet connection",
+"網路連線"
+],
+[
+"connection to",
+"與⋯的關聯"
+],
+[
+"in connection with",
+"與⋯有關"
+]
+],
+"conquer": [
+[
+"conquer fear",
+"克服恐懼"
+],
+[
+"conquer the market",
+"攻佔市場"
+],
+[
+"conquer a country",
+"征服國家"
+]
+],
+"consecutive": [
+[
+"consecutive days",
+"連續幾天"
+],
+[
+"third consecutive year",
+"連續第三年"
+],
+[
+"consecutive months",
+"連續數月"
+]
+],
+"consensus": [
+[
+"reach a consensus",
+"達成共識"
+],
+[
+"general consensus",
+"普遍共識"
+],
+[
+"consensus on",
+"對⋯的共識"
+]
+],
+"considerable": [
+[
+"considerable amount",
+"相當大量"
+],
+[
+"considerable effort",
+"相當大的努力"
+],
+[
+"considerable difference",
+"顯著差異"
+]
+],
+"consideration": [
+[
+"take into consideration",
+"納入考慮"
+],
+[
+"under consideration",
+"考慮中"
+],
+[
+"for your consideration",
+"供您參考"
+]
+],
+"consistency": [
+[
+"ensure consistency",
+"確保一致性"
+],
+[
+"lack of consistency",
+"缺乏一致性"
+],
+[
+"consistency in quality",
+"品質一致"
+]
+],
+"consistent": [
+[
+"consistent with",
+"與⋯一致"
+],
+[
+"consistent quality",
+"穩定的品質"
+],
+[
+"remain consistent",
+"保持一致"
+]
+],
+"consistently": [
+[
+"consistently high",
+"一直很高"
+],
+[
+"consistently deliver",
+"始終如一地交付"
+],
+[
+"consistently perform",
+"穩定表現"
+]
+],
+"consolidate": [
+[
+"consolidate operations",
+"整合營運"
+],
+[
+"consolidate debt",
+"整合債務"
+],
+[
+"consolidate power",
+"鞏固權力"
+]
+],
+"consolidation": [
+[
+"debt consolidation",
+"債務整合"
+],
+[
+"industry consolidation",
+"產業整合"
+],
+[
+"consolidation of",
+"⋯的整合"
+]
+],
+"constant": [
+[
+"constant change",
+"不斷的變化"
+],
+[
+"constant pressure",
+"持續的壓力"
+],
+[
+"remain constant",
+"保持不變"
+]
+],
+"constraint": [
+[
+"budget constraint",
+"預算限制"
+],
+[
+"time constraint",
+"時間限制"
+],
+[
+"under constraints",
+"受限制下"
+]
+],
+"construct": [
+[
+"construct a building",
+"建造大樓"
+],
+[
+"construct an argument",
+"建構論點"
+],
+[
+"newly constructed",
+"新建的"
+]
+],
+"constructive": [
+[
+"constructive criticism",
+"建設性批評"
+],
+[
+"constructive feedback",
+"建設性意見"
+],
+[
+"constructive discussion",
+"有建設性的討論"
+]
+],
+"consult": [
+[
+"consult a doctor",
+"諮詢醫師"
+],
+[
+"consult with",
+"與⋯商議"
+],
+[
+"consult the manual",
+"查閱手冊"
+]
+],
+"consultant": [
+[
+"management consultant",
+"管理顧問"
+],
+[
+"hire a consultant",
+"聘請顧問"
+],
+[
+"consultant fee",
+"顧問費"
+]
+],
+"consume": [
+[
+"consume energy",
+"消耗能源"
+],
+[
+"consume time",
+"耗費時間"
+],
+[
+"consume alcohol",
+"飲酒"
+]
+],
+"consumption": [
+[
+"energy consumption",
+"能源消耗"
+],
+[
+"fuel consumption",
+"油耗"
+],
+[
+"for consumption",
+"供食用"
+]
+],
+"contemporary": [
+[
+"contemporary art",
+"當代藝術"
+],
+[
+"contemporary style",
+"現代風格"
+],
+[
+"contemporary society",
+"當代社會"
+]
+],
+"content": [
+[
+"table of contents",
+"目錄"
+],
+[
+"website content",
+"網站內容"
+],
+[
+"content with",
+"滿足於"
+]
+],
+"contest": [
+[
+"enter a contest",
+"參加比賽"
+],
+[
+"win a contest",
+"贏得比賽"
+],
+[
+"photo contest",
+"攝影比賽"
+]
+],
+"contractor": [
+[
+"general contractor",
+"總承包商"
+],
+[
+"independent contractor",
+"獨立承包人"
+],
+[
+"hire a contractor",
+"聘請承包商"
+]
+],
+"contribute": [
+[
+"contribute to",
+"促成；貢獻"
+],
+[
+"contribute money",
+"捐款"
+],
+[
+"contribute ideas",
+"提出想法"
+]
+],
+"convene": [
+[
+"convene a meeting",
+"召開會議"
+],
+[
+"convene a panel",
+"召集小組"
+],
+[
+"convene annually",
+"每年召開"
+]
+],
+"convenience": [
+[
+"for your convenience",
+"為了方便您"
+],
+[
+"at your convenience",
+"在您方便時"
+],
+[
+"convenience store",
+"便利商店"
+]
+],
+"convention": [
+[
+"annual convention",
+"年度大會"
+],
+[
+"social convention",
+"社會慣例"
+],
+[
+"convention center",
+"會議中心"
+]
+],
+"conversion": [
+[
+"conversion rate",
+"轉換率"
+],
+[
+"currency conversion",
+"貨幣兌換"
+],
+[
+"conversion of",
+"⋯的轉換"
+]
+],
+"convey": [
+[
+"convey a message",
+"傳達訊息"
+],
+[
+"convey meaning",
+"傳達意思"
+],
+[
+"convey gratitude",
+"表達謝意"
+]
+],
+"convince": [
+[
+"convince someone to",
+"說服某人"
+],
+[
+"be convinced that",
+"深信"
+],
+[
+"fully convinced",
+"完全信服"
+]
+],
+"cool": [
+[
+"keep cool",
+"保持冷靜"
+],
+[
+"cool down",
+"冷靜下來"
+],
+[
+"cool idea",
+"很酷的點子"
+]
+],
+"cooperation": [
+[
+"in cooperation with",
+"與⋯合作"
+],
+[
+"close cooperation",
+"密切合作"
+],
+[
+"thank you for your cooperation",
+"感謝您的配合"
+]
+],
+"coordination": [
+[
+"coordination between",
+"⋯之間的協調"
+],
+[
+"lack of coordination",
+"缺乏協調"
+],
+[
+"hand-eye coordination",
+"手眼協調"
+]
+],
+"coordinator": [
+[
+"event coordinator",
+"活動統籌"
+],
+[
+"project coordinator",
+"專案協調員"
+],
+[
+"program coordinator",
+"計畫協調員"
+]
+],
+"copy": [
+[
+"make a copy",
+"影印；複製"
+],
+[
+"copy machine",
+"影印機"
+],
+[
+"hard copy",
+"紙本"
+]
+],
+"copyright": [
+[
+"copyright law",
+"著作權法"
+],
+[
+"copyright infringement",
+"侵犯版權"
+],
+[
+"protected by copyright",
+"受版權保護"
+]
+],
+"correlation": [
+[
+"strong correlation",
+"強烈相關"
+],
+[
+"correlation between",
+"⋯之間的關聯"
+],
+[
+"positive correlation",
+"正相關"
+]
+],
+"correspondence": [
+[
+"business correspondence",
+"商業書信"
+],
+[
+"correspondence with",
+"與⋯的書信往來"
+],
+[
+"email correspondence",
+"電子郵件往來"
+]
+],
+"costly": [
+[
+"costly mistake",
+"代價高昂的錯誤"
+],
+[
+"costly repairs",
+"昂貴的維修"
+],
+[
+"prove costly",
+"事後證明代價高"
+]
+],
+"council": [
+[
+"city council",
+"市議會"
+],
+[
+"student council",
+"學生會"
+],
+[
+"council meeting",
+"議會會議"
+]
+],
+"count": [
+[
+"count on",
+"依靠"
+],
+[
+"head count",
+"人數統計"
+],
+[
+"count the cost",
+"計算代價"
+]
+],
+"counter": [
+[
+"service counter",
+"服務櫃檯"
+],
+[
+"counter an argument",
+"反駁論點"
+],
+[
+"over the counter",
+"非處方的"
+]
+],
+"coupon": [
+[
+"redeem a coupon",
+"兌換優惠券"
+],
+[
+"discount coupon",
+"折價券"
+],
+[
+"coupon code",
+"優惠碼"
+]
+],
+"coverage": [
+[
+"insurance coverage",
+"保險範圍"
+],
+[
+"media coverage",
+"媒體報導"
+],
+[
+"network coverage",
+"訊號涵蓋範圍"
+]
+],
+"credential": [
+[
+"professional credentials",
+"專業資格"
+],
+[
+"verify credentials",
+"驗證資格"
+],
+[
+"login credentials",
+"登入憑證"
+]
+],
+"credible": [
+[
+"credible source",
+"可靠的消息來源"
+],
+[
+"credible evidence",
+"可信的證據"
+],
+[
+"highly credible",
+"高度可信"
+]
+],
+"creditor": [
+[
+"major creditor",
+"主要債權人"
+],
+[
+"pay off creditors",
+"還清債權人"
+],
+[
+"creditor and debtor",
+"債權人與債務人"
+]
+],
+"crew": [
+[
+"flight crew",
+"機組人員"
+],
+[
+"film crew",
+"劇組人員"
+],
+[
+"construction crew",
+"施工團隊"
+]
+],
+"crisis": [
+[
+"financial crisis",
+"金融危機"
+],
+[
+"crisis management",
+"危機處理"
+],
+[
+"in crisis",
+"陷入危機"
+]
+],
+"critic": [
+[
+"film critic",
+"影評人"
+],
+[
+"harsh critic",
+"嚴厲的批評者"
+],
+[
+"critic of",
+"⋯的批評者"
+]
+],
+"crucial": [
+[
+"crucial role",
+"關鍵角色"
+],
+[
+"crucial to",
+"對⋯至關重要"
+],
+[
+"crucial decision",
+"關鍵決定"
+]
+],
+"cuisine": [
+[
+"local cuisine",
+"當地料理"
+],
+[
+"Italian cuisine",
+"義大利菜"
+],
+[
+"authentic cuisine",
+"道地料理"
+]
+],
+"currency": [
+[
+"foreign currency",
+"外幣"
+],
+[
+"local currency",
+"當地貨幣"
+],
+[
+"currency exchange",
+"外幣兌換"
+]
+],
+"currently": [
+[
+"currently available",
+"目前可用"
+],
+[
+"currently working on",
+"目前正在處理"
+],
+[
+"currently unavailable",
+"目前無法提供"
+]
+],
+"custom": [
+[
+"custom-made",
+"訂製的"
+],
+[
+"local custom",
+"當地習俗"
+],
+[
+"customs officer",
+"海關人員"
+]
+],
+"customize": [
+[
+"customize a product",
+"客製化產品"
+],
+[
+"fully customizable",
+"可完全客製"
+],
+[
+"customize settings",
+"自訂設定"
+]
+],
+"cutting": [
+[
+"cutting costs",
+"削減成本"
+],
+[
+"cutting edge",
+"尖端"
+],
+[
+"price cutting",
+"降價"
+]
+],
+"daily": [
+[
+"daily routine",
+"日常作息"
+],
+[
+"daily newspaper",
+"日報"
+],
+[
+"on a daily basis",
+"每天"
+]
+],
+"daisy": [
+[
+"a field of daisies",
+"一片雛菊花田"
+],
+[
+"fresh as a daisy",
+"精神飽滿"
+],
+[
+"daisy chain",
+"雛菊花環"
+]
+],
+"dangerous": [
+[
+"dangerous situation",
+"危險情況"
+],
+[
+"highly dangerous",
+"極度危險"
+],
+[
+"dangerous to",
+"對⋯有危險"
+]
+],
+"date": [
+[
+"due date",
+"到期日"
+],
+[
+"expiration date",
+"有效期限"
+],
+[
+"up to date",
+"最新的"
+]
+],
+"debit": [
+[
+"debit card",
+"簽帳金融卡"
+],
+[
+"direct debit",
+"自動扣款"
+],
+[
+"debit an account",
+"從帳戶扣款"
+]
+],
+"decisive": [
+[
+"decisive action",
+"果斷的行動"
+],
+[
+"decisive moment",
+"決定性時刻"
+],
+[
+"decisive victory",
+"決定性勝利"
+]
+],
+"declare": [
+[
+"declare bankruptcy",
+"宣告破產"
+],
+[
+"declare a state of emergency",
+"宣布進入緊急狀態"
+],
+[
+"declare income",
+"申報收入"
+]
+],
+"decline": [
+[
+"decline an offer",
+"婉拒提議"
+],
+[
+"decline in sales",
+"銷售下滑"
+],
+[
+"sharp decline",
+"急劇下降"
+]
+],
+"decrease": [
+[
+"decrease in",
+"⋯的減少"
+],
+[
+"gradual decrease",
+"逐漸減少"
+],
+[
+"decrease by",
+"減少了"
+]
+],
+"dedication": [
+[
+"dedication to",
+"對⋯的投入"
+],
+[
+"show dedication",
+"展現奉獻"
+],
+[
+"years of dedication",
+"多年的付出"
+]
+],
+"deduct": [
+[
+"deduct from",
+"從⋯扣除"
+],
+[
+"tax deductible",
+"可抵稅"
+],
+[
+"deduct expenses",
+"扣除費用"
+]
+],
+"deeply": [
+[
+"deeply concerned",
+"深感憂慮"
+],
+[
+"deeply appreciate",
+"深表感謝"
+],
+[
+"deeply rooted",
+"根深蒂固"
+]
+],
+"defeat": [
+[
+"admit defeat",
+"認輸"
+],
+[
+"suffer a defeat",
+"遭受挫敗"
+],
+[
+"defeat the enemy",
+"擊敗敵人"
+]
+],
+"defective": [
+[
+"defective product",
+"瑕疵品"
+],
+[
+"defective part",
+"故障零件"
+],
+[
+"replace defective items",
+"更換瑕疵品"
+]
+],
+"delay": [
+[
+"flight delay",
+"航班延誤"
+],
+[
+"without delay",
+"立即"
+],
+[
+"delay payment",
+"延遲付款"
+]
+],
+"delegation": [
+[
+"trade delegation",
+"貿易代表團"
+],
+[
+"delegation of authority",
+"授權"
+],
+[
+"head of the delegation",
+"代表團團長"
+]
+],
+"delicious": [
+[
+"delicious meal",
+"美味餐點"
+],
+[
+"taste delicious",
+"嚐起來很美味"
+],
+[
+"delicious food",
+"美食"
+]
+],
+"deliver": [
+[
+"deliver a speech",
+"發表演說"
+],
+[
+"deliver goods",
+"送貨"
+],
+[
+"deliver results",
+"交出成果"
+]
+],
+"demonstrate": [
+[
+"demonstrate a product",
+"示範產品"
+],
+[
+"clearly demonstrate",
+"清楚顯示"
+],
+[
+"demonstrate the ability to",
+"展現能力"
+]
+],
+"demonstration": [
+[
+"product demonstration",
+"產品示範"
+],
+[
+"live demonstration",
+"現場示範"
+],
+[
+"give a demonstration",
+"做示範"
+]
+],
+"demote": [
+[
+"demote an employee",
+"降級員工"
+],
+[
+"be demoted to",
+"被降為"
+],
+[
+"demote someone",
+"降某人的職"
+]
+],
+"demotion": [
+[
+"face demotion",
+"面臨降職"
+],
+[
+"demotion to",
+"降為"
+],
+[
+"suffer a demotion",
+"遭到降職"
+]
+],
+"dental": [
+[
+"dental care",
+"牙齒保健"
+],
+[
+"dental insurance",
+"牙科保險"
+],
+[
+"dental clinic",
+"牙科診所"
+]
+],
+"departure": [
+[
+"departure time",
+"出發時間"
+],
+[
+"departure gate",
+"登機門"
+],
+[
+"point of departure",
+"出發點"
+]
+],
+"depend": [
+[
+"depend on",
+"取決於；依賴"
+],
+[
+"depending on",
+"視⋯而定"
+],
+[
+"it depends",
+"看情況"
+]
+],
+"deploy": [
+[
+"deploy troops",
+"部署軍隊"
+],
+[
+"deploy resources",
+"調配資源"
+],
+[
+"deploy software",
+"部署軟體"
+]
+],
+"depreciate": [
+[
+"depreciate in value",
+"貶值"
+],
+[
+"depreciate over time",
+"隨時間折舊"
+],
+[
+"currency depreciates",
+"貨幣貶值"
+]
+],
+"depreciation": [
+[
+"depreciation of assets",
+"資產折舊"
+],
+[
+"depreciation expense",
+"折舊費用"
+],
+[
+"accumulated depreciation",
+"累計折舊"
+]
+],
+"description": [
+[
+"job description",
+"職務說明"
+],
+[
+"product description",
+"產品說明"
+],
+[
+"detailed description",
+"詳細描述"
+]
+],
+"designer": [
+[
+"graphic designer",
+"平面設計師"
+],
+[
+"fashion designer",
+"服裝設計師"
+],
+[
+"interior designer",
+"室內設計師"
+]
+],
+"desk": [
+[
+"front desk",
+"櫃檯"
+],
+[
+"help desk",
+"服務台"
+],
+[
+"desk job",
+"文書工作"
+]
+],
+"desperate": [
+[
+"desperate for",
+"極度渴望"
+],
+[
+"desperate attempt",
+"孤注一擲的嘗試"
+],
+[
+"desperate situation",
+"絕望處境"
+]
+],
+"destination": [
+[
+"travel destination",
+"旅遊目的地"
+],
+[
+"final destination",
+"最終目的地"
+],
+[
+"tourist destination",
+"觀光景點"
+]
+],
+"determination": [
+[
+"show determination",
+"展現決心"
+],
+[
+"grim determination",
+"堅定不移的決心"
+],
+[
+"determination to succeed",
+"成功的決心"
+]
+],
+"developer": [
+[
+"software developer",
+"軟體開發人員"
+],
+[
+"real estate developer",
+"房地產開發商"
+],
+[
+"web developer",
+"網頁開發者"
+]
+],
+"device": [
+[
+"electronic device",
+"電子裝置"
+],
+[
+"mobile device",
+"行動裝置"
+],
+[
+"safety device",
+"安全裝置"
+]
+],
+"diamond": [
+[
+"diamond ring",
+"鑽戒"
+],
+[
+"diamond in the rough",
+"未琢磨的鑽石"
+],
+[
+"diamond mine",
+"鑽石礦"
+]
+],
+"diet": [
+[
+"balanced diet",
+"均衡飲食"
+],
+[
+"go on a diet",
+"節食"
+],
+[
+"healthy diet",
+"健康飲食"
+]
+],
+"differentiation": [
+[
+"product differentiation",
+"產品差異化"
+],
+[
+"differentiation strategy",
+"差異化策略"
+],
+[
+"differentiation between",
+"⋯之間的區別"
+]
+],
+"diligent": [
+[
+"diligent worker",
+"勤奮的員工"
+],
+[
+"diligent effort",
+"努力不懈"
+],
+[
+"diligent in",
+"在⋯上勤勉"
+]
+],
+"dinner": [
+[
+"dinner party",
+"晚宴"
+],
+[
+"have dinner",
+"吃晚餐"
+],
+[
+"dinner reservation",
+"晚餐訂位"
+]
+],
+"diploma": [
+[
+"high school diploma",
+"高中文憑"
+],
+[
+"earn a diploma",
+"取得文憑"
+],
+[
+"diploma ceremony",
+"畢業典禮"
+]
+],
+"diplomat": [
+[
+"career diplomat",
+"職業外交官"
+],
+[
+"foreign diplomat",
+"外國外交官"
+],
+[
+"senior diplomat",
+"資深外交官"
+]
+],
+"diplomatic": [
+[
+"diplomatic relations",
+"外交關係"
+],
+[
+"diplomatic approach",
+"圓滑的做法"
+],
+[
+"diplomatic immunity",
+"外交豁免權"
+]
+],
+"direct": [
+[
+"direct flight",
+"直飛航班"
+],
+[
+"direct contact",
+"直接接觸"
+],
+[
+"direct a project",
+"主導專案"
+]
+],
+"directive": [
+[
+"issue a directive",
+"下達指令"
+],
+[
+"new directive",
+"新指令"
+],
+[
+"follow the directive",
+"遵循指示"
+]
+],
+"directly": [
+[
+"directly responsible",
+"直接負責"
+],
+[
+"contact directly",
+"直接聯絡"
+],
+[
+"report directly to",
+"直接向⋯報告"
+]
+],
+"discrepancy": [
+[
+"a discrepancy between",
+"⋯之間的差異"
+],
+[
+"resolve a discrepancy",
+"解決不一致"
+],
+[
+"significant discrepancy",
+"重大差異"
+]
+],
+"discriminate": [
+[
+"discriminate against",
+"歧視"
+],
+[
+"discriminate between",
+"區分"
+],
+[
+"racially discriminate",
+"種族歧視"
+]
+],
+"dish": [
+[
+"main dish",
+"主菜"
+],
+[
+"side dish",
+"配菜"
+],
+[
+"wash the dishes",
+"洗碗"
+]
+],
+"display": [
+[
+"on display",
+"展示中"
+],
+[
+"display case",
+"展示櫃"
+],
+[
+"display screen",
+"顯示螢幕"
+]
+],
+"disposal": [
+[
+"waste disposal",
+"廢棄物處理"
+],
+[
+"at one's disposal",
+"任某人使用"
+],
+[
+"disposal of",
+"處理"
+]
+],
+"dispute": [
+[
+"settle a dispute",
+"解決爭議"
+],
+[
+"labor dispute",
+"勞資糾紛"
+],
+[
+"dispute over",
+"對⋯的爭執"
+]
+],
+"distance": [
+[
+"long distance",
+"長途"
+],
+[
+"in the distance",
+"在遠處"
+],
+[
+"walking distance",
+"步行距離"
+]
+],
+"distinguish": [
+[
+"distinguish between",
+"區分"
+],
+[
+"distinguish from",
+"與⋯區別"
+],
+[
+"clearly distinguish",
+"清楚區分"
+]
+],
+"distributor": [
+[
+"authorized distributor",
+"授權經銷商"
+],
+[
+"exclusive distributor",
+"獨家經銷商"
+],
+[
+"wholesale distributor",
+"批發經銷商"
+]
+],
+"district": [
+[
+"business district",
+"商業區"
+],
+[
+"school district",
+"學區"
+],
+[
+"shopping district",
+"購物區"
+]
+],
+"diverse": [
+[
+"diverse range of",
+"各式各樣的"
+],
+[
+"culturally diverse",
+"文化多元的"
+],
+[
+"diverse background",
+"多元背景"
+]
+],
+"diversify": [
+[
+"diversify the portfolio",
+"分散投資組合"
+],
+[
+"diversify into",
+"多角化經營至"
+],
+[
+"diversify products",
+"擴展產品種類"
+]
+],
+"dividend": [
+[
+"pay a dividend",
+"發放股息"
+],
+[
+"dividend payment",
+"股息支付"
+],
+[
+"annual dividend",
+"年度股息"
+]
+],
+"division": [
+[
+"sales division",
+"業務部門"
+],
+[
+"division of labor",
+"分工"
+],
+[
+"marketing division",
+"行銷部門"
+]
+],
+"document": [
+[
+"legal document",
+"法律文件"
+],
+[
+"submit a document",
+"提交文件"
+],
+[
+"supporting document",
+"佐證文件"
+]
+],
+"documentary": [
+[
+"documentary film",
+"紀錄片"
+],
+[
+"watch a documentary",
+"看紀錄片"
+],
+[
+"nature documentary",
+"自然紀錄片"
+]
+],
+"domain": [
+[
+"public domain",
+"公共領域"
+],
+[
+"domain name",
+"網域名稱"
+],
+[
+"area of domain",
+"專業領域"
+]
+],
+"domestic": [
+[
+"domestic market",
+"國內市場"
+],
+[
+"domestic flight",
+"國內航班"
+],
+[
+"domestic appliances",
+"家電"
+]
+],
+"dominant": [
+[
+"dominant position",
+"主導地位"
+],
+[
+"dominant role",
+"主導角色"
+],
+[
+"dominant market share",
+"主導市佔率"
+]
+],
+"dominate": [
+[
+"dominate the market",
+"主導市場"
+],
+[
+"dominate the conversation",
+"主導談話"
+],
+[
+"dominate the field",
+"稱霸領域"
+]
+],
+"donate": [
+[
+"donate money",
+"捐錢"
+],
+[
+"donate to charity",
+"捐給慈善機構"
+],
+[
+"donate blood",
+"捐血"
+]
+],
+"double": [
+[
+"double the amount",
+"加倍"
+],
+[
+"double check",
+"再次確認"
+],
+[
+"double room",
+"雙人房"
+]
+],
+"doubt": [
+[
+"without a doubt",
+"毫無疑問"
+],
+[
+"cast doubt on",
+"對⋯產生質疑"
+],
+[
+"no doubt",
+"無疑"
+]
+],
+"download": [
+[
+"download a file",
+"下載檔案"
+],
+[
+"free download",
+"免費下載"
+],
+[
+"download speed",
+"下載速度"
+]
+],
+"downsize": [
+[
+"downsize the company",
+"縮編公司"
+],
+[
+"forced to downsize",
+"被迫裁員"
+],
+[
+"downsize staff",
+"精簡人力"
+]
+],
+"downturn": [
+[
+"economic downturn",
+"經濟衰退"
+],
+[
+"sharp downturn",
+"急遽下滑"
+],
+[
+"downturn in sales",
+"銷售下滑"
+]
+],
+"drastic": [
+[
+"drastic measures",
+"激烈手段"
+],
+[
+"drastic change",
+"劇烈變化"
+],
+[
+"drastic reduction",
+"大幅削減"
+]
+],
+"drastically": [
+[
+"change drastically",
+"劇烈改變"
+],
+[
+"drastically reduce",
+"大幅減少"
+],
+[
+"drastically different",
+"截然不同"
+]
+],
+"drawing": [
+[
+"technical drawing",
+"技術製圖"
+],
+[
+"drawing board",
+"繪圖板"
+],
+[
+"pencil drawing",
+"鉛筆畫"
+]
+],
+"driver": [
+[
+"taxi driver",
+"計程車司機"
+],
+[
+"truck driver",
+"卡車司機"
+],
+[
+"driver's license",
+"駕照"
+]
+],
+"durable": [
+[
+"durable material",
+"耐用材料"
+],
+[
+"highly durable",
+"非常耐用"
+],
+[
+"durable goods",
+"耐久財"
+]
+],
+"economist": [
+[
+"leading economist",
+"頂尖經濟學家"
+],
+[
+"chief economist",
+"首席經濟學家"
+],
+[
+"economist predicts",
+"經濟學家預測"
+]
+],
+"editor": [
+[
+"editor-in-chief",
+"總編輯"
+],
+[
+"newspaper editor",
+"報社編輯"
+],
+[
+"photo editor",
+"圖片編輯"
+]
+],
+"effectively": [
+[
+"work effectively",
+"有效率地工作"
+],
+[
+"effectively manage",
+"有效管理"
+],
+[
+"communicate effectively",
+"有效溝通"
+]
+],
+"effectiveness": [
+[
+"cost effectiveness",
+"成本效益"
+],
+[
+"measure effectiveness",
+"衡量成效"
+],
+[
+"improve effectiveness",
+"提高成效"
+]
+],
+"efficiency": [
+[
+"energy efficiency",
+"能源效率"
+],
+[
+"improve efficiency",
+"提高效率"
+],
+[
+"operational efficiency",
+"營運效率"
+]
+],
+"efficient": [
+[
+"efficient use of",
+"有效運用"
+],
+[
+"highly efficient",
+"非常有效率"
+],
+[
+"energy-efficient",
+"節能的"
+]
+],
+"electric": [
+[
+"electric car",
+"電動車"
+],
+[
+"electric power",
+"電力"
+],
+[
+"electric bill",
+"電費單"
+]
+],
+"electrical": [
+[
+"electrical equipment",
+"電氣設備"
+],
+[
+"electrical engineer",
+"電機工程師"
+],
+[
+"electrical outlet",
+"電源插座"
+]
+],
+"electricity": [
+[
+"generate electricity",
+"發電"
+],
+[
+"electricity bill",
+"電費"
+],
+[
+"electricity supply",
+"電力供應"
+]
+],
+"electronic": [
+[
+"electronic device",
+"電子裝置"
+],
+[
+"electronic mail",
+"電子郵件"
+],
+[
+"electronic payment",
+"電子支付"
+]
+],
+"electronics": [
+[
+"consumer electronics",
+"消費性電子產品"
+],
+[
+"electronics store",
+"電器行"
+],
+[
+"electronics manufacturer",
+"電子產品製造商"
+]
+],
+"elevate": [
+[
+"elevate the standard",
+"提高水準"
+],
+[
+"elevate to",
+"晉升至"
+],
+[
+"elevate awareness",
+"提升意識"
+]
+],
+"elevator": [
+[
+"take the elevator",
+"搭電梯"
+],
+[
+"elevator pitch",
+"電梯簡報"
+],
+[
+"elevator is out of order",
+"電梯故障"
+]
+],
+"eligible": [
+[
+"eligible for",
+"有資格獲得"
+],
+[
+"eligible candidate",
+"合格人選"
+],
+[
+"be eligible to",
+"有資格"
+]
+],
+"eliminate": [
+[
+"eliminate errors",
+"消除錯誤"
+],
+[
+"eliminate waste",
+"杜絕浪費"
+],
+[
+"eliminate the need for",
+"免除對⋯的需求"
+]
+],
+"embargo": [
+[
+"lift an embargo",
+"解除禁運"
+],
+[
+"trade embargo",
+"貿易禁運"
+],
+[
+"impose an embargo",
+"實施禁運"
+]
+],
+"emergency": [
+[
+"emergency exit",
+"緊急出口"
+],
+[
+"in case of emergency",
+"萬一緊急時"
+],
+[
+"emergency room",
+"急診室"
+]
+],
+"eminent": [
+[
+"eminent scholar",
+"傑出學者"
+],
+[
+"eminent scientist",
+"知名科學家"
+],
+[
+"eminent figure",
+"顯赫人物"
+]
+],
+"emphasize": [
+[
+"emphasize the importance",
+"強調重要性"
+],
+[
+"strongly emphasize",
+"極力強調"
+],
+[
+"emphasize that",
+"強調"
+]
+],
+"employ": [
+[
+"employ staff",
+"僱用員工"
+],
+[
+"be employed by",
+"受僱於"
+],
+[
+"employ a strategy",
+"採用策略"
+]
+],
+"employer": [
+[
+"potential employer",
+"潛在雇主"
+],
+[
+"current employer",
+"現任雇主"
+],
+[
+"equal opportunity employer",
+"機會均等雇主"
+]
+],
+"empower": [
+[
+"empower employees",
+"賦權員工"
+],
+[
+"empower women",
+"賦予女性力量"
+],
+[
+"feel empowered",
+"感到有能力"
+]
+],
+"encourage": [
+[
+"encourage someone to",
+"鼓勵某人"
+],
+[
+"strongly encourage",
+"大力鼓勵"
+],
+[
+"encourage growth",
+"促進成長"
+]
+],
+"enforce": [
+[
+"enforce a rule",
+"執行規定"
+],
+[
+"strictly enforce",
+"嚴格執行"
+],
+[
+"enforce the law",
+"執法"
+]
+],
+"engage": [
+[
+"engage in",
+"從事"
+],
+[
+"engage with",
+"與⋯互動"
+],
+[
+"engage customers",
+"吸引顧客參與"
+]
+],
+"engagement": [
+[
+"customer engagement",
+"顧客參與度"
+],
+[
+"employee engagement",
+"員工敬業度"
+],
+[
+"prior engagement",
+"先前的約定"
+]
+],
+"engineer": [
+[
+"software engineer",
+"軟體工程師"
+],
+[
+"civil engineer",
+"土木工程師"
+],
+[
+"chief engineer",
+"總工程師"
+]
+],
+"enhance": [
+[
+"enhance performance",
+"提升效能"
+],
+[
+"enhance the quality",
+"提升品質"
+],
+[
+"greatly enhance",
+"大幅提升"
+]
+],
+"enhancement": [
+[
+"performance enhancement",
+"效能提升"
+],
+[
+"enhancement of",
+"⋯的增強"
+],
+[
+"security enhancement",
+"安全強化"
+]
+],
+"enterprise": [
+[
+"small enterprise",
+"小型企業"
+],
+[
+"private enterprise",
+"民營企業"
+],
+[
+"enterprise software",
+"企業軟體"
+]
+],
+"entirely": [
+[
+"entirely different",
+"完全不同"
+],
+[
+"entirely up to you",
+"全由你決定"
+],
+[
+"not entirely",
+"不完全"
+]
+],
+"entry": [
+[
+"entry fee",
+"入場費"
+],
+[
+"entry level",
+"入門級"
+],
+[
+"data entry",
+"資料輸入"
+]
+],
+"epidemic": [
+[
+"flu epidemic",
+"流感疫情"
+],
+[
+"epidemic outbreak",
+"疫情爆發"
+],
+[
+"prevent an epidemic",
+"防止疫情蔓延"
+]
+],
+"equality": [
+[
+"gender equality",
+"性別平等"
+],
+[
+"equality of opportunity",
+"機會平等"
+],
+[
+"racial equality",
+"種族平等"
+]
+],
+"equity": [
+[
+"private equity",
+"私募股權"
+],
+[
+"home equity",
+"房屋淨值"
+],
+[
+"return on equity",
+"股東權益報酬"
+]
+],
+"equivalent": [
+[
+"equivalent to",
+"相當於"
+],
+[
+"equivalent value",
+"等值"
+],
+[
+"or equivalent",
+"或同等學歷"
+]
+],
+"eradicate": [
+[
+"eradicate poverty",
+"消除貧窮"
+],
+[
+"eradicate disease",
+"根除疾病"
+],
+[
+"completely eradicate",
+"徹底根除"
+]
+],
+"error": [
+[
+"human error",
+"人為疏失"
+],
+[
+"make an error",
+"犯錯"
+],
+[
+"error message",
+"錯誤訊息"
+]
+],
+"escape": [
+[
+"escape from",
+"逃離"
+],
+[
+"narrow escape",
+"死裡逃生"
+],
+[
+"escape route",
+"逃生路線"
+]
+],
+"essential": [
+[
+"essential for",
+"對⋯不可或缺"
+],
+[
+"absolutely essential",
+"絕對必要"
+],
+[
+"essential skills",
+"必備技能"
+]
+],
+"establishment": [
+[
+"food establishment",
+"餐飲業者"
+],
+[
+"establishment of",
+"⋯的設立"
+],
+[
+"medical establishment",
+"醫療機構"
+]
+],
+"estate": [
+[
+"real estate",
+"不動產"
+],
+[
+"estate agent",
+"房仲"
+],
+[
+"housing estate",
+"住宅區"
+]
+],
+"ethical": [
+[
+"ethical standards",
+"道德標準"
+],
+[
+"ethical issue",
+"倫理議題"
+],
+[
+"ethical behavior",
+"合乎道德的行為"
+]
+],
+"evaluate": [
+[
+"evaluate performance",
+"評估績效"
+],
+[
+"carefully evaluate",
+"仔細評估"
+],
+[
+"evaluate the risk",
+"評估風險"
+]
+],
+"evaluation": [
+[
+"performance evaluation",
+"績效評估"
+],
+[
+"course evaluation",
+"課程評鑑"
+],
+[
+"conduct an evaluation",
+"進行評估"
+]
+],
+"eventually": [
+[
+"eventually succeed",
+"最終成功"
+],
+[
+"eventually realize",
+"終於領悟"
+],
+[
+"will eventually",
+"終將"
+]
+],
+"everywhere": [
+[
+"everywhere you go",
+"你所到之處"
+],
+[
+"look everywhere",
+"到處找"
+],
+[
+"almost everywhere",
+"幾乎到處"
+]
+],
+"excellence": [
+[
+"pursue excellence",
+"追求卓越"
+],
+[
+"center of excellence",
+"卓越中心"
+],
+[
+"standard of excellence",
+"卓越標準"
+]
+],
+"except": [
+[
+"except for",
+"除了"
+],
+[
+"except when",
+"除非"
+],
+[
+"with the exception of",
+"除了⋯之外"
+]
+],
+"exception": [
+[
+"make an exception",
+"破例"
+],
+[
+"with the exception of",
+"除了⋯之外"
+],
+[
+"without exception",
+"無一例外"
+]
+],
+"exceptional": [
+[
+"exceptional service",
+"卓越服務"
+],
+[
+"exceptional circumstances",
+"特殊情況"
+],
+[
+"exceptional quality",
+"非凡品質"
+]
+],
+"excerpt": [
+[
+"excerpt from",
+"節錄自"
+],
+[
+"short excerpt",
+"簡短摘錄"
+],
+[
+"read an excerpt",
+"讀一段節錄"
+]
+],
+"excessive": [
+[
+"excessive spending",
+"過度消費"
+],
+[
+"excessive force",
+"過度武力"
+],
+[
+"excessive amount",
+"過量"
+]
+],
+"exclusively": [
+[
+"exclusively for",
+"專供"
+],
+[
+"available exclusively",
+"僅限提供"
+],
+[
+"exclusively available",
+"獨家供應"
+]
+],
+"execute": [
+[
+"execute a plan",
+"執行計畫"
+],
+[
+"execute an order",
+"執行指令"
+],
+[
+"successfully execute",
+"成功執行"
+]
+],
+"exemplary": [
+[
+"exemplary performance",
+"模範表現"
+],
+[
+"exemplary service",
+"典範服務"
+],
+[
+"exemplary behavior",
+"模範行為"
+]
+],
+"exercise": [
+[
+"regular exercise",
+"規律運動"
+],
+[
+"exercise caution",
+"謹慎行事"
+],
+[
+"exercise a right",
+"行使權利"
+]
+],
+"exhibition": [
+[
+"art exhibition",
+"藝術展"
+],
+[
+"hold an exhibition",
+"舉辦展覽"
+],
+[
+"exhibition hall",
+"展覽館"
+]
+],
+"exhibitor": [
+[
+"trade show exhibitor",
+"展覽參展商"
+],
+[
+"exhibitor booth",
+"參展攤位"
+],
+[
+"register as an exhibitor",
+"登記為參展商"
+]
+],
+"expand": [
+[
+"expand business",
+"擴展業務"
+],
+[
+"expand into",
+"拓展至"
+],
+[
+"expand rapidly",
+"迅速擴張"
+]
+],
+"expansion": [
+[
+"business expansion",
+"業務擴張"
+],
+[
+"rapid expansion",
+"快速擴張"
+],
+[
+"expansion plan",
+"擴張計畫"
+]
+],
+"expectation": [
+[
+"meet expectations",
+"符合期望"
+],
+[
+"exceed expectations",
+"超出預期"
+],
+[
+"high expectations",
+"高度期望"
+]
+],
+"expedite": [
+[
+"expedite delivery",
+"加速交貨"
+],
+[
+"expedite the process",
+"加快流程"
+],
+[
+"expedite shipping",
+"加急運送"
+]
+],
+"expenditure": [
+[
+"public expenditure",
+"公共支出"
+],
+[
+"reduce expenditure",
+"減少支出"
+],
+[
+"capital expenditure",
+"資本支出"
+]
+],
+"expense": [
+[
+"business expense",
+"商務費用"
+],
+[
+"at the expense of",
+"以⋯為代價"
+],
+[
+"travel expenses",
+"差旅費"
+]
+],
+"experiment": [
+[
+"conduct an experiment",
+"進行實驗"
+],
+[
+"scientific experiment",
+"科學實驗"
+],
+[
+"experiment with",
+"嘗試"
+]
+],
+"experimental": [
+[
+"experimental design",
+"實驗設計"
+],
+[
+"experimental stage",
+"實驗階段"
+],
+[
+"experimental results",
+"實驗結果"
+]
+],
+"explore": [
+[
+"explore options",
+"探討選項"
+],
+[
+"explore the possibility",
+"探索可能性"
+],
+[
+"explore the city",
+"探索城市"
+]
+],
+"expo": [
+[
+"trade expo",
+"貿易博覽會"
+],
+[
+"attend an expo",
+"參加博覽會"
+],
+[
+"world expo",
+"世界博覽會"
+]
+],
+"export": [
+[
+"export goods",
+"出口商品"
+],
+[
+"export market",
+"出口市場"
+],
+[
+"export to",
+"出口到"
+]
+],
+"extend": [
+[
+"extend a deadline",
+"延長期限"
+],
+[
+"extend an invitation",
+"發出邀請"
+],
+[
+"extend a contract",
+"延長合約"
+]
+],
+"extensive": [
+[
+"extensive experience",
+"豐富經驗"
+],
+[
+"extensive research",
+"廣泛研究"
+],
+[
+"extensive damage",
+"嚴重損害"
+]
+],
+"extra": [
+[
+"extra charge",
+"額外費用"
+],
+[
+"extra effort",
+"額外努力"
+],
+[
+"at no extra cost",
+"不加收費用"
+]
+],
+"extract": [
+[
+"extract information",
+"擷取資訊"
+],
+[
+"extract data",
+"提取資料"
+],
+[
+"extract from",
+"取自"
+]
+],
+"extraordinary": [
+[
+"extraordinary talent",
+"非凡才華"
+],
+[
+"extraordinary measures",
+"特殊措施"
+],
+[
+"nothing extraordinary",
+"沒什麼特別"
+]
+],
+"extreme": [
+[
+"extreme weather",
+"極端天氣"
+],
+[
+"extreme sports",
+"極限運動"
+],
+[
+"in the extreme",
+"極度"
+]
+],
+"extremely": [
+[
+"extremely important",
+"極為重要"
+],
+[
+"extremely difficult",
+"極為困難"
+],
+[
+"extremely useful",
+"非常有用"
+]
+],
+"fabricate": [
+[
+"fabricate evidence",
+"捏造證據"
+],
+[
+"fabricate a story",
+"編造故事"
+],
+[
+"fabricate parts",
+"製造零件"
+]
+],
+"facilitate": [
+[
+"facilitate communication",
+"促進溝通"
+],
+[
+"facilitate the process",
+"使流程順暢"
+],
+[
+"facilitate a discussion",
+"引導討論"
+]
+],
+"facilitator": [
+[
+"workshop facilitator",
+"工作坊引導者"
+],
+[
+"act as a facilitator",
+"擔任引導者"
+],
+[
+"skilled facilitator",
+"經驗豐富的引導者"
+]
+],
+"facility": [
+[
+"sports facility",
+"運動設施"
+],
+[
+"medical facility",
+"醫療機構"
+],
+[
+"manufacturing facility",
+"製造廠"
+]
+],
+"facing": [
+[
+"facing challenges",
+"面臨挑戰"
+],
+[
+"facing the street",
+"面向街道"
+],
+[
+"the problems facing",
+"⋯所面臨的問題"
+]
+],
+"failure": [
+[
+"equipment failure",
+"設備故障"
+],
+[
+"failure to comply",
+"未遵守"
+],
+[
+"power failure",
+"停電"
+]
+],
+"fair": [
+[
+"trade fair",
+"商展"
+],
+[
+"fair price",
+"合理價格"
+],
+[
+"job fair",
+"就業博覽會"
+]
+],
+"false": [
+[
+"false alarm",
+"虛驚一場"
+],
+[
+"false claim",
+"不實聲明"
+],
+[
+"false information",
+"假消息"
+]
+],
+"fame": [
+[
+"rise to fame",
+"一舉成名"
+],
+[
+"fame and fortune",
+"名利"
+],
+[
+"claim to fame",
+"成名之處"
+]
+],
+"familiar": [
+[
+"familiar with",
+"熟悉"
+],
+[
+"familiar face",
+"熟面孔"
+],
+[
+"sound familiar",
+"聽起來耳熟"
+]
+],
+"fantastic": [
+[
+"fantastic opportunity",
+"絕佳機會"
+],
+[
+"fantastic view",
+"絕佳景色"
+],
+[
+"fantastic job",
+"幹得好"
+]
+],
+"fantasy": [
+[
+"fantasy novel",
+"奇幻小說"
+],
+[
+"live in a fantasy",
+"活在幻想中"
+],
+[
+"fantasy world",
+"幻想世界"
+]
+],
+"fashion": [
+[
+"fashion industry",
+"時尚產業"
+],
+[
+"fashion show",
+"時裝秀"
+],
+[
+"out of fashion",
+"過時"
+]
+],
+"faulty": [
+[
+"faulty equipment",
+"故障設備"
+],
+[
+"faulty wiring",
+"線路有問題"
+],
+[
+"faulty design",
+"設計缺陷"
+]
+],
+"favor": [
+[
+"do someone a favor",
+"幫某人一個忙"
+],
+[
+"in favor of",
+"贊成"
+],
+[
+"ask a favor",
+"請求幫忙"
+]
+],
+"feedback": [
+[
+"positive feedback",
+"正面回饋"
+],
+[
+"give feedback",
+"給予意見"
+],
+[
+"customer feedback",
+"顧客意見"
+]
+],
+"female": [
+[
+"female employee",
+"女性員工"
+],
+[
+"female customers",
+"女性顧客"
+],
+[
+"female-dominated",
+"女性為主的"
+]
+],
+"ferry": [
+[
+"ferry terminal",
+"渡輪碼頭"
+],
+[
+"take a ferry",
+"搭渡輪"
+],
+[
+"ferry service",
+"渡輪服務"
+]
+],
+"festival": [
+[
+"music festival",
+"音樂節"
+],
+[
+"film festival",
+"影展"
+],
+[
+"festival season",
+"節慶季"
+]
+],
+"filling": [
+[
+"filling station",
+"加油站"
+],
+[
+"cavity filling",
+"補牙"
+],
+[
+"pie filling",
+"派餡"
+]
+],
+"financing": [
+[
+"secure financing",
+"取得融資"
+],
+[
+"project financing",
+"專案融資"
+],
+[
+"financing arrangement",
+"融資安排"
+]
+],
+"finely": [
+[
+"finely chopped",
+"切成細末"
+],
+[
+"finely tuned",
+"精密調校"
+],
+[
+"finely detailed",
+"細節精緻"
+]
+],
+"finishing": [
+[
+"finishing touches",
+"最後潤飾"
+],
+[
+"finishing line",
+"終點線"
+],
+[
+"finishing school",
+"精修學校"
+]
+],
+"fiscal": [
+[
+"fiscal year",
+"會計年度"
+],
+[
+"fiscal policy",
+"財政政策"
+],
+[
+"fiscal deficit",
+"財政赤字"
+]
+],
+"fitness": [
+[
+"physical fitness",
+"體能"
+],
+[
+"fitness center",
+"健身中心"
+],
+[
+"fitness level",
+"體能水準"
+]
+],
+"flash": [
+[
+"flash flood",
+"暴洪"
+],
+[
+"in a flash",
+"轉眼間"
+],
+[
+"flash drive",
+"隨身碟"
+]
+],
+"flat": [
+[
+"flat rate",
+"統一費率"
+],
+[
+"flat tire",
+"爆胎"
+],
+[
+"rent a flat",
+"租公寓"
+]
+],
+"flavor": [
+[
+"add flavor",
+"增添風味"
+],
+[
+"full of flavor",
+"風味十足"
+],
+[
+"flavor of the month",
+"本月風味"
+]
+],
+"flexible": [
+[
+"flexible schedule",
+"彈性時程"
+],
+[
+"flexible working hours",
+"彈性工時"
+],
+[
+"remain flexible",
+"保持彈性"
+]
+],
+"flow": [
+[
+"cash flow",
+"現金流"
+],
+[
+"traffic flow",
+"車流量"
+],
+[
+"flow of information",
+"資訊流動"
+]
+],
+"fluctuate": [
+[
+"fluctuate widely",
+"大幅波動"
+],
+[
+"prices fluctuate",
+"價格波動"
+],
+[
+"fluctuate between",
+"在⋯之間波動"
+]
+],
+"fluctuation": [
+[
+"price fluctuation",
+"價格波動"
+],
+[
+"currency fluctuation",
+"匯率波動"
+],
+[
+"seasonal fluctuation",
+"季節性波動"
+]
+]
+}

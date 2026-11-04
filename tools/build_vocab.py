@@ -5,6 +5,7 @@
 - ecdict.csv  : skywind3000/ECDICT (MIT),托福/雅思/GRE 標記、音標、字頻
 - cmudict.dict : cmusphinx/cmudict (BSD),美式發音 → 轉 KK 音標
 - data/*_extra.json(專案內):小說常見詞的進階同義字與片語，人工整理
+- data/colloc/*.json(專案內):常用搭配詞 {英文: [[搭配, 中文], ...]},人工整理
 
 一個中文詞可以有多個英文候選(由簡單到難),閱讀器會依密度等級挑、每次出現輪流換。
 用法: python tools/build_vocab.py --src <下載資料夾>
@@ -185,6 +186,9 @@ def main(src: Path) -> None:
     mnem = {}
     for path in sorted((ROOT / "data").glob("mnemonic_*.json")):  # 諧音記憶(人工整理)
         mnem.update(json.loads(path.read_text(encoding="utf-8")))
+    colloc = {}
+    for path in sorted((ROOT / "data" / "colloc").glob("*.json")):  # 常用搭配詞(人工整理)
+        colloc.update(json.loads(path.read_text(encoding="utf-8")))
     cmu = load_cmu(src / "cmudict.dict")
     for en in used:
         words[en]["kk"] = phrase_kk(en, cmu) or ""
@@ -193,7 +197,8 @@ def main(src: Path) -> None:
         "source": "TOEIC: LEE-WHITE/toeic-vocab-tw (CC-BY-4.0); TOEFL/IELTS/GRE + IPA: skywind3000/ECDICT (MIT); "
                   "novel_extra.json: 人工整理",
         "index": index,
-        "words": {en: {k: words[en][k] for k in ("gloss", "ipa", "kk", "mnem", "exams", "level")} for en in used},
+        "words": {en: {**{k: words[en][k] for k in ("gloss", "ipa", "kk", "mnem", "exams", "level")},
+                       **({"co": colloc[en]} if colloc.get(en) else {})} for en in used},
     }
     dest = ROOT / "public" / "data" / "vocab.json"
     dest.write_text(json.dumps(vocab, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

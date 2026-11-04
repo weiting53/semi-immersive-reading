@@ -270,6 +270,111 @@
     idbGet("chapters", url).then((c) => { if (!c) getChapter(url).catch(() => {}); });
   }
 
+  // ---------- 目錄：EPUB/貼上文字直接列；網站從書本首頁抓章節列表，存在 IndexedDB ----------
+  function parseTocCzbooks(page, id) {
+    const seen = new Set(), out = [];
+    for (const m of page.matchAll(new RegExp(`<a href="(//czbooks\\.net/n/${reEsc(id)}/[^"?]+\\?chapterNumber=(\\d+))"[^>]*>([^<]*)</a>`, "g"))) {
+      if (seen.has(m[2])) continue;
+      seen.add(m[2]);
+      out.push({ n: +m[2], t: stripTags(m[3]).trim(), u: "https:" + m[1] });
+    }
+    return out.sort((a, b) => a.n - b.n).map(({ t, u }) => ({ t, u }));
+  }
+  function parseTocBanxia(page, base, id) {
+    const seen = new Set(), out = [];
+    for (const m of page.matchAll(new RegExp(`href="(/books/${id}/\\d+\\.html)"[^>]*>([^<]*)`, "g"))) {
+      if (seen.has(m[1]) || m[2].includes("章節列表")) continue;
+      seen.add(m[1]);
+      out.push({ t: stripTags(m[2]).trim(), u: abs(m[1], base) });
+    }
+    return out;
+  }
+  // 通用：章節頁找「目錄」連結，再把目錄頁上同網站、像章名的連結依序列出
+  async function tocGeneric(url) {
+    const doc = new DOMParser().parseFromString(await fetchHTML(url), "text/html");
+    const a = [...doc.querySelectorAll("a[href]")].find((x) => /^(目錄|目录|章節目錄|章节目录|章節列表|章节列表|返回目錄|返回目录)$/.test(x.textContent.trim()));
+    if (!a) throw new Error("這個網站找不到目錄頁");
+    const tocUrl = normalize(new URL(a.getAttribute("href").trim(), url).href);
+    const d2 = new DOMParser().parseFromString(await fetchHTML(tocUrl), "text/html");
+    const host = new URL(url).hostname, seen = new Set(), out = [];
+    for (const x of d2.querySelectorAll("a[href]")) {
+      const t = x.textContent.trim();
+      if (!/^(第[\d一二三四五六七八九十百千零〇兩两]+[章回節节卷]|\d+[.、 ]|序|楔子|番外|尾聲|尾声|後記|后记|終章|终章)/.test(t)) continue;
+      let u; try { u = new URL(x.getAttribute("href").trim(), tocUrl); } catch (e) { continue; }
+      if (u.hostname !== host || seen.has(u.href)) continue;
+      seen.add(u.href);
+      try { out.push({ t, u: normalize(u.href) }); } catch (e) { /* 不支援的網址 */ }
+    }
+    return out;
+  }
+  async function getToc(ch, refresh) {
+    const em = ch.url.match(/^epub:\/\/([0-9a-f]{12})\//);
+    if (em) {
+      const lib = await idbGet("epubs", em[1]);
+      return lib ? toTrad(lib.chapters.map((c) => c.title)).map((t, i) => ({ t, u: `epub://${em[1]}/${i + 1}` })) : [];
+    }
+    const key = "toc:" + bookId(ch.url);
+    if (!refresh) {
+      const c = await idbGet("chapters", key);
+      // 連載中的書：目前這章不在舊目錄裡就重抓
+      if (c && c.list.some((x) => x.u === ch.url)) return c.list;
+    }
+    const u = new URL(ch.url);
+    let list, m;
+    if ((m = u.hostname.endsWith("czbooks.net") && u.pathname.match(/^\/n\/([^/]+)/))) {
+      list = parseTocCzbooks(await fetchHTML("https://czbooks.net/n/" + m[1]), m[1]);
+    } else if ((m = u.hostname.endsWith("xbanxia.cc") && u.pathname.match(/^\/books\/(\d+)\//))) {
+      const book = `https://${u.hostname}/books/${m[1]}.html`;
+      list = parseTocBanxia(await fetchHTML(book), book, m[1]);
+    } else {
+      list = await tocGeneric(ch.url);
+    }
+    if (!list.length) throw new Error("找不到章節列表(網站格式可能變了)");
+    const trad = toTrad(list.map((x) => x.t));
+    list = list.map((x, i) => ({ t: trad[i] || x.t, u: x.u }));
+    await idbPut("chapters", key, { list, at: Date.now() });
+    return list;
+  }
+
+  const TOC_H = `<h2 style="font-family:var(--sans);font-size:20px">目錄</h2>`;
+  async function showToc(refresh) {
+    if (!chap) return;
+    const ch = chap;
+    openSheet(TOC_H + `<p class="sub">讀取中…</p>`);
+    let list;
+    try { list = await getToc(ch, refresh); }
+    catch (e) { if (chap === ch && $("sheet").classList.contains("open")) openSheet(TOC_H + errHtml(e.message || String(e))); return; }
+    if (chap !== ch || !$("sheet").classList.contains("open")) return;
+    const read = new Set(store.get("bc:" + bookId(ch.url), []));
+    const cur = list.findIndex((x) => x.u === ch.url);
+    openSheet(`<div class="toc-top">
+      <div class="toc-h">${TOC_H}<span class="sub" style="margin:0">共 ${list.length} 章${cur >= 0 ? ` · 正在讀第 ${cur + 1} 章` : ""}</span></div>
+      <div class="add toc-tools">
+        <input id="tocQ" type="search" autocomplete="off" placeholder="搜尋章名，或輸入章數跳過去">
+        ${ch.url.startsWith("epub") ? "" : `<button type="button" class="clip" id="tocRf" aria-label="重新抓目錄">↻</button>`}
+      </div>
+      <div class="toc-jump">
+        <button type="button" data-tocjump="0">第一章</button>
+        ${cur >= 0 ? `<button type="button" data-tocjump="${cur}">目前章節</button>` : ""}
+        <button type="button" data-tocjump="${list.length - 1}">最新章</button>
+      </div></div>
+      <ol class="toc" id="tocList">${list.map((x, i) => `
+        <li data-go="${esc(x.u)}" data-i="${i}" class="${i === cur ? "cur" : read.has(x.u) ? "read" : ""}"><span class="n">${i + 1}</span><span class="t">${esc(x.t)}</span></li>`).join("")}</ol>`);
+    const items = [...$("tocList").children];
+    if (cur >= 0) tocJump(cur);
+    $("tocQ").oninput = (e) => {
+      const q = toTrad([e.target.value.trim()])[0];
+      if (/^\d+$/.test(q)) { items.forEach((el) => (el.hidden = false)); tocJump(+q - 1); return; }
+      items.forEach((el) => (el.hidden = !!q && !el.textContent.includes(q)));
+    };
+    if ($("tocRf")) $("tocRf").onclick = () => showToc(true);
+  }
+  function tocJump(i) {
+    const items = $("tocList") ? $("tocList").children : [];
+    const el = items[Math.max(0, Math.min(items.length - 1, i))], sh = $("sheet");
+    if (el) sh.scrollTop = el.offsetTop - sh.clientHeight / 2 + el.offsetHeight;
+  }
+
   // ---------- EPUB 匯入(全部在手機上處理，不上傳) ----------
   async function importEpub(file) {
     const buf = await file.arrayBuffer();
@@ -628,6 +733,7 @@
     }).join("");
     const nav = `<div class="seg" style="margin-top:28px">
       <button data-go="${esc(chap.prev || "")}" ${chap.prev ? "" : "disabled"}>‹ 上一章</button>
+      <button data-toc="1">目錄</button>
       <button data-go="${esc(chap.next || "")}" ${chap.next ? "" : "disabled"}>下一章 ›</button></div>`;
     const src = chap.url.startsWith("epub")
       ? `<div class="src">EPUB · 僅供個人學習</div>`
@@ -660,8 +766,12 @@
       <div class="kv"><span>原文</span>${esc(w.zh)}</div>
       <div class="kv"><span>等級</span>${esc(levelText(c))}</div>
       <div class="kv"><span>本章</span>出現 ${w.count} 次</div>
-      ${others.length ? `<div class="kv"><span>同義</span><span>${others.map((x) =>
-        `<span class="col" data-say="${esc(x.en)}">${esc(x.en)}</span> <small>Lv${x.level}</small>`).join("、")}</span></div>` : ""}
+      ${c.co && c.co.length ? `<div class="mini-h">常用搭配</div>
+      <table class="mini">${c.co.map(([e, z]) =>
+        `<tr><td class="col" data-say="${esc(e)}">${esc(e)}</td><td>${esc(z)}</td></tr>`).join("")}</table>` : ""}
+      ${others.length ? `<div class="mini-h">同義字</div>
+      <table class="mini">${others.map((x) =>
+        `<tr><td class="col" data-say="${esc(x.en)}">${esc(x.en)}</td><td>${esc(x.gloss)}</td><td class="lv">Lv${x.level}</td></tr>`).join("")}</table>` : ""}
       <div class="btns">
         <button data-say="${esc(c.en)}">🔊 再聽一次</button>
         <button class="primary" data-known="${esc(c.en)}">✓ 已熟，不再換</button>
@@ -764,6 +874,7 @@
   $("slider").value = level;
   $("slider").addEventListener("input", (e) => { level = +e.target.value; store.set("level", level); render(); });
   $("btnWords").onclick = showWordbook;
+  $("btnToc").onclick = () => showToc();
   $("btnAa").onclick = showSettings;
   $("scrim").onclick = closeSheet;
   $("chapTitle").onclick = () => showHome();
@@ -787,11 +898,16 @@
     if (open) { load(open.dataset.open); return; }
     const go = e.target.closest("[data-go]");
     if (go && go.dataset.go) { load(go.dataset.go); return; }
+    if (e.target.closest("[data-toc]")) { showToc(); return; }
     const w = e.target.closest(".w");
     if (w) { w.classList.add("on"); showWord(chap.words.find((x) => x.zh === w.dataset.zh), w.dataset.en); }
   });
 
   $("sheet").addEventListener("click", (e) => {
+    const go = e.target.closest("[data-go]");
+    if (go) { closeSheet(); load(go.dataset.go); return; }
+    const tj = e.target.closest("[data-tocjump]");
+    if (tj) { tocJump(+tj.dataset.tocjump); return; }
     const t = e.target.closest("[data-say],[data-known],[data-toggle],[data-set]");
     if (!t) return;
     if (t.dataset.say) speak(t.dataset.say);
