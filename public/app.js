@@ -22,10 +22,10 @@
 
   // ---------- IndexedDB:章節快取、EPUB ----------
   const dbp = new Promise((resolve, reject) => {
-    const req = indexedDB.open("eread", 1);
+    const req = indexedDB.open("eread", 2);
     req.onupgradeneeded = () => {
-      req.result.createObjectStore("chapters");
-      req.result.createObjectStore("epubs");
+      // v2 加 covers(自訂書封)
+      for (const s of ["chapters", "epubs", "covers"]) if (!req.result.objectStoreNames.contains(s)) req.result.createObjectStore(s);
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
@@ -41,6 +41,7 @@
   }
   const idbGet = (s, k) => idb(s, "readonly", (o) => o.get(k));
   const idbPut = (s, k, v) => idb(s, "readwrite", (o) => o.put(v, k));
+  const idbDel = (s, k) => idb(s, "readwrite", (o) => o.delete(k));
 
   // ---------- 單字表 ----------
   let VOCAB = null;
@@ -456,6 +457,165 @@
     };
   }
 
+  // ---------- 整本書(TXT、免費書庫)存成跟 EPUB 一樣的格式，放上書架但先不打開 ----------
+  async function hashId(s) {
+    const h = await crypto.subtle.digest("SHA-1", new TextEncoder().encode(s));
+    return [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 12);
+  }
+  async function saveBook(id, book, chapters, meta) {
+    await idbPut("epubs", id, { book, file: meta.file || "", chapters });
+    await vocab();
+    const all = new Set();
+    for (const c of chapters) for (const en of wordsIn(toTrad(c.lines))) all.add(en);
+    store.set("bw:epub-" + id, [...all]);
+    const s = store.get("shelf", {});
+    s["epub-" + id] = { ...(s["epub-" + id] || {}), book: toTrad([book])[0], title: "", fresh: true, url: `epub://${id}/1`,
+      idx: 0, total: chapters.length, src: meta.src, author: meta.author || "", at: Math.floor(Date.now() / 1000) };
+    store.set("shelf", s);
+    return `epub://${id}/1`;
+  }
+
+  // 純文字切章：認「第X章/回」這類標題；固定寬度斷行的文字(古騰堡)會先接回段落
+  const HEAD_RE = /^\s*(第[\d０-９一二三四五六七八九十百千零〇兩两]+[章回節节卷部集]|序章|序言|楔子|引子|番外|尾聲|尾声|後記|后记)/;
+  function textToChapters(text) {
+    const mode = (arr) => { const f = {}; arr.forEach((x) => (f[x] = (f[x] || 0) + 1)); const t = Object.entries(f).sort((a, b) => b[1] - a[1])[0]; return t ? [+t[0], t[1]] : [0, 0]; };
+    const rows = text.replace(/\r/g, "").split("\n").map((l) => ({
+      t: l.trim(), ind: l.match(/^[ \t\u3000]*/)[0].replace(/\u3000/g, "  ").replace(/\t/g, "    ").length }));
+    const body = rows.filter((r) => r.t.length > 10);
+    const [width, wn] = mode(body.map((r) => r.t.length));
+    const wrapped = width >= 20 && wn > body.length * 0.25;   // 固定寬度斷行：滿寬的行要接下一行
+    const [bodyInd] = mode(body.map((r) => r.ind));
+    // 有些檔案每行之間都空一行(雙倍行距):空一行不算分段，空兩行以上才算
+    let gaps = 0;
+    rows.forEach((r, i) => { if (r.t && rows[i + 1] && !rows[i + 1].t && rows[i + 2] && rows[i + 2].t) gaps++; });
+    const double = gaps > rows.filter((r) => r.t).length * 0.5;
+    const END = /[。，、！？；：」』”’…—）)!?.,]$/;
+    const isHead = (r, pb, nb) => (HEAD_RE.test(r.t) && r.t.length < 40 && !/[，。．；]/.test(r.t)) ||
+      (bodyInd >= 2 && r.ind < bodyInd && r.t.length <= 24 && !END.test(r.t) && pb && nb);  // 縮排比內文少的短行 = 篇名
+    const paras = [];
+    let cur = "", full = false, blanks = 1;
+    // 太長的段落(分段線索不見了)在句尾切開，每段約 250 字內
+    const flush = () => {
+      if (cur.length > 350) {
+        let buf = "";
+        for (const s of cur.match(/[^。．！？]+[。．！？]*[」』”’]?/g) || [cur]) {
+          if (buf && buf.length + s.length > 250) { paras.push(buf); buf = ""; }
+          buf += s;
+        }
+        if (buf) paras.push(buf);
+      } else if (cur) paras.push(cur);
+      cur = ""; full = false;
+    };
+    rows.forEach((r, i) => {
+      if (!r.t) { blanks++; return; }
+      if (/^(Produced by|E-?text prepared|This e-?book)/i.test(r.t) || /^[-=_*~·•.。\s]+$/.test(r.t)) { blanks = 0; return; }
+      if (isHead(r, blanks > 0, !rows[i + 1] || !rows[i + 1].t)) { flush(); paras.push({ h: r.t }); blanks = 0; return; }
+      if (!(cur && full && (blanks === 0 || (double && blanks === 1)))) flush();
+      cur += r.t;
+      // 段首多縮排兩格，算寬度時要加回來(縮排以半形計，全形空白算 2)
+      // 段首行常少兩格；沒以句號結尾、又接近滿寬的行也當成還沒完
+      const len = r.t.length + Math.max(0, r.ind - bodyInd) / 2;
+      full = wrapped && (len >= width - 2 || (len >= width * 0.75 && !/[。．！？」』”’…：:]$/.test(r.t)));
+      if (!wrapped) flush();
+      blanks = 0;
+    });
+    flush();
+    let chapters = [], ch = null;
+    for (const p of paras) {
+      if (p.h) { ch = { title: p.h.replace(/\s+/g, " "), lines: [] }; chapters.push(ch); }
+      else { if (!ch) { ch = { title: "開頭", lines: [] }; chapters.push(ch); } ch.lines.push(p); }
+    }
+    chapters = chapters.filter((c) => c.lines.length);
+    // 第一章前面只有一點點字(版權、標題)就丟掉
+    if (chapters.length > 1 && chapters[0].title === "開頭" && chapters[0].lines.join("").length < 300) chapters.shift();
+    if (chapters.length < 2) {  // 沒有章名：每約 4000 字切一段
+      chapters = [];
+      let lines = [], n = 0;
+      for (const p of paras) {
+        if (p.h) continue;
+        lines.push(p); n += p.length;
+        if (n > 4000) { chapters.push({ title: `第 ${chapters.length + 1} 段`, lines }); lines = []; n = 0; }
+      }
+      if (lines.length) chapters.push({ title: `第 ${chapters.length + 1} 段`, lines });
+    }
+    if (!chapters.length) throw new Error("檔案裡沒有文字");
+    return chapters;
+  }
+
+  // TXT:先試 UTF-8,不是的話在 GBK(簡體)和 Big5(繁體)之間挑常用字比較多的
+  async function importTxt(file) {
+    const buf = await file.arrayBuffer();
+    let text;
+    try { text = new TextDecoder("utf-8", { fatal: true }).decode(buf); }
+    catch (e) {
+      const score = (t) => (t.match(/[的了是不我一他你這这在有說说]/g) || []).length - (t.match(/�/g) || []).length * 5;
+      const g = new TextDecoder("gbk").decode(buf), b = new TextDecoder("big5").decode(buf);
+      text = score(g) >= score(b) ? g : b;
+    }
+    const id = await hashId("txt:" + file.name + ":" + buf.byteLength);
+    return saveBook(id, file.name.replace(/\.txt$/i, ""), textToChapters(text), { src: "TXT", file: file.name });
+  }
+
+  // ---------- 免費書庫：古騰堡計畫(Project Gutenberg)中文公版書，經自己的雲端代抓 ----------
+  const GUTEN = "https://www.gutenberg.org";
+  async function gutenSearch(q, start) {
+    const url = `${GUTEN}/ebooks/search.opds/?query=${encodeURIComponent(("l.zh " + q).trim())}` + (start ? `&start_index=${start}` : "");
+    const xml = new DOMParser().parseFromString(await fetchHTML(url), "application/xml");
+    const books = [...xml.getElementsByTagName("entry")].map((e) => {
+      const m = (e.getElementsByTagName("id")[0] || {}).textContent.match(/ebooks\/(\d+)\.opds/);
+      return m && {
+        id: m[1],
+        title: toTrad([(e.getElementsByTagName("title")[0] || {}).textContent.replace(/\s*\((Chinese|English)\)\s*$/, "").trim()])[0],
+        author: ((e.getElementsByTagName("content")[0] || {}).textContent || "").trim(),
+      };
+    }).filter(Boolean);
+    const next = [...xml.getElementsByTagName("link")].some((l) => l.getAttribute("rel") === "next");
+    return { books, next };
+  }
+  async function gutenAdd(g) {
+    let text = await fetchHTML(`${GUTEN}/cache/epub/${g.id}/pg${g.id}.txt`);
+    const s = text.search(/\*\*\* ?START OF (THE|THIS) PROJECT GUTENBERG[^\n]*\n/), e = text.search(/\*\*\* ?END OF (THE|THIS) PROJECT GUTENBERG/);
+    if (s >= 0) text = text.slice(text.indexOf("\n", s) + 1, e > s ? e : undefined);
+    const id = await hashId("gutenberg:" + g.id);
+    const url = await saveBook(id, g.title, textToChapters(text), { src: "古騰堡", author: g.author });
+    const got = store.get("guten", {}); got[g.id] = url; store.set("guten", got);
+    return url;
+  }
+  function showLibrary() {
+    const got = store.get("guten", {});
+    const row = (b) => `<li><span class="gl-t">${esc(b.title)}<span class="gl-a">${esc(b.author)}</span></span>
+      <button data-gadd='${esc(JSON.stringify(b))}' ${got[b.id] ? "disabled" : ""}>${got[b.id] ? "✓ 已加入" : "加入"}</button></li>`;
+    openSheet(`
+      <h2 style="font-family:var(--sans);font-size:20px">免費書庫</h2>
+      <p class="sub">古騰堡計畫(Project Gutenberg)的中文公版書：免費、合法，整本下載到手機，之後離線也能讀。多是古典小說(紅樓夢、西遊記、魯迅…),現代小說請用網址或 EPUB。</p>
+      <form class="add" id="gForm" style="margin-top:10px"><input id="gQ" type="search" placeholder="搜尋書名或作者" autocomplete="off"><button>搜尋</button></form>
+      <ul class="list" id="gList"><li class="sub">讀取中…</li></ul>`);
+    let q = "", start = 0;
+    const run = async (more) => {
+      const list = $("gList");
+      if (!more) { start = 1; list.innerHTML = `<li class="sub">讀取中…</li>`; }
+      try {
+        const r = await gutenSearch(q, more ? start : 0);
+        if (!$("gList")) return;
+        if (!more) list.innerHTML = "";
+        const old = list.querySelector("[data-gmore]"); if (old) old.closest("li").remove();
+        list.insertAdjacentHTML("beforeend", r.books.map(row).join("") || `<li class="sub">找不到。古騰堡的中文書不多，可以換關鍵字(有些書名是簡體或拼音)。</li>`);
+        start += 25;
+        if (r.next) list.insertAdjacentHTML("beforeend", `<li><button data-gmore="1" style="flex:1;height:40px">載入更多</button></li>`);
+      } catch (e) { list.innerHTML = errHtml(e.message || String(e)); }
+    };
+    $("gForm").onsubmit = (e) => { e.preventDefault(); q = $("gQ").value.trim(); run(false); };
+    $("gList").onclick = async (e) => {
+      if (e.target.closest("[data-gmore]")) { run(true); return; }
+      const b = e.target.closest("[data-gadd]");
+      if (!b || b.disabled) return;
+      b.disabled = true; b.textContent = "下載中…";
+      try { await gutenAdd(JSON.parse(b.dataset.gadd)); b.textContent = "✓ 已加入"; showHome(); }
+      catch (err) { b.disabled = false; b.textContent = "重試"; alert(err.message || String(err)); }
+    };
+    run(false);
+  }
+
   // ---------- 書架與每本書的單字統計(存在這支手機) ----------
   // 一段文字裡出現的所有英文候選(不受每章上限限制),用來算「可學單字」
   function wordsIn(lines) {
@@ -477,7 +637,9 @@
   function shelfRecord(ch) {
     const id = bookId(ch.url);
     const s = store.get("shelf", {});
-    const e = { book: ch.book, title: ch.title, url: ch.url, at: Math.floor(Date.now() / 1000) };
+    const old = s[id] || {};
+    // 保留來源、作者、貼上標記；開始讀了就不再是「還沒開始讀」
+    const e = { src: old.src, author: old.author, paste: old.paste, book: ch.book, title: ch.title, url: ch.url, at: Math.floor(Date.now() / 1000) };
     const m = ch.url.match(/^epub:\/\/[0-9a-f]{12}\/(\d+)$/);
     if (m) { e.idx = +m[1]; e.total = ch.total; }
     s[id] = e;
@@ -495,7 +657,18 @@
 
   function bookStats(id) {
     const ws = store.get("bw:" + id, []);
-    return { words: ws.length, known: ws.filter((w) => known.has(w)).length, read: store.get("bc:" + id, []).length };
+    // 學過 = 讀的時候真的換成英文出現過的字(bs);舊資料沒有 bs,網站書就用遇過的字
+    const bs = store.get("bs:" + id, null) || (id.startsWith("epub-") ? [] : ws);
+    return { words: ws.length, known: ws.filter((w) => known.has(w)).length, read: store.get("bc:" + id, []).length, learned: bs };
+  }
+  // 記下這章實際換成英文的字
+  function recordShown(words) {
+    if (!chap) return;
+    const id = bookId(chap.url), key = "bs:" + id;
+    const bs = new Set(store.get(key, null) || (id.startsWith("epub-") ? [] : store.get("bw:" + id, [])));
+    const n = bs.size;
+    words.forEach((w) => activeCands(w).forEach((c) => bs.add(c.en)));
+    if (bs.size !== n) store.set(key, [...bs]);
   }
 
   // ---------- 發音 ----------
@@ -531,6 +704,7 @@
       return;
     }
     document.body.classList.remove("home");
+    setMeta();
     store.set("lastUrl", url);
     shelfRecord(chap);
     history.replaceState(null, "", "?url=" + encodeURIComponent(url));
@@ -539,54 +713,100 @@
     prefetch(chap.next);
   }
 
+  // ---------- 首頁 ----------
+  const SVG = {
+    search: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>`,
+    clip: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="5" y="4.5" width="14" height="17" rx="2.5"/><rect x="8.5" y="2.5" width="7" height="4" rx="1.2" fill="currentColor"/></svg>`,
+  };
+  // 分類小圖示：色票做的小書
+  const mini = (c, c2, extra) => `<svg width="34" height="34" viewBox="0 0 34 34"><rect x="5" y="3" width="24" height="28" rx="3" fill="${c2}"/>
+    <rect x="7" y="27" width="20" height="2.6" fill="#fbf7ee"/><rect x="8" y="3" width="21" height="23" rx="2.5" fill="${c}"/>${extra || ""}</svg>`;
+  const ICO = {
+    epub: mini("#1E459F", "#15336f", `<text x="18.5" y="18" font-size="7" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial">EPUB</text>`),
+    txt: mini("#CF2A2A", "#9c1d1d", `<rect x="12" y="9" width="13" height="2" rx="1" fill="#fff"/><rect x="12" y="13.5" width="13" height="2" rx="1" fill="#fff"/><rect x="12" y="18" width="8" height="2" rx="1" fill="#fff"/>`),
+    paste: mini("#FABD32", "#d59a14", `<path d="M13 16.5l3.5 3.5 6-7" stroke="#1E459F" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`),
+    lib: `<svg width="34" height="34" viewBox="0 0 34 34"><rect x="4" y="8" width="7" height="22" rx="1.5" fill="#1E459F"/><rect x="12" y="5" width="7" height="25" rx="1.5" fill="#CF2A2A"/>
+      <rect x="20.5" y="9" width="7" height="21" rx="1.5" fill="#FABD32" transform="rotate(-10 24 20)"/><rect x="3" y="29.5" width="28" height="2.5" rx="1" fill="#E1DCCA"/></svg>`,
+    site: mini("#3d6bd1", "#1E459F", `<circle cx="18.5" cy="14.5" r="6" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M12.5 14.5h12M18.5 8.5c-3 4-3 8 0 12c3-4 3-8 0-12" stroke="#fff" stroke-width="1.4" fill="none"/>`),
+  };
+  // 預設書封顏色(色票延伸):[封面, 封底/書背, 字色, 書籤]
+  const COVERS = [
+    ["#1E459F", "#15336f", "#fff", "#FABD32"], ["#CF2A2A", "#9c1d1d", "#fff", "#FABD32"],
+    ["#FABD32", "#d59a14", "#1E459F", "#CF2A2A"], ["#E1DCCA", "#bdb59c", "#1E459F", "#CF2A2A"],
+    ["#3d6bd1", "#1E459F", "#fff", "#FABD32"], ["#a8232f", "#771820", "#FABD32", "#FABD32"],
+  ];
+  function coverOf(s) { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) >>> 0; return COVERS[h % COVERS.length]; }
+
+  function setMeta() {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = getComputedStyle(document.documentElement).getPropertyValue(document.body.classList.contains("home") ? "--h-bg" : "--bg").trim() || "#faf7f0";
+  }
+
+  const isUrl = (v) => /^(https?:)?\/\//i.test(v) || /^epub:\/\//.test(v) || /^[\w-]+(\.[\w-]+)+\//.test(v);
+
   async function showHome(err) {
     chap = null;
     await sites().catch(() => {});
     document.body.classList.add("home");
-    $("bookTitle").textContent = "半沉浸式英語閱讀";
-    $("chapTitle").textContent = "貼上網址或匯入 EPUB";
-    $("lvStat").textContent = "";
-    const last = store.get("lastUrl", "");
+    setMeta();
     const shelf = store.get("shelf", {});
     const ids = Object.keys(shelf);
-    const met = new Set();
-    ids.forEach((id) => store.get("bw:" + id, []).forEach((w) => met.add(w)));
+    const learned = new Set();
+    let chs = 0;
+    ids.forEach((id) => { const st = bookStats(id); st.learned.forEach((w) => learned.add(w)); chs += st.read; });
+    const hr = new Date().getHours();
+    const hi = hr < 5 ? "夜深了，讀一章就睡" : hr < 11 ? "早安，來讀一點吧" : hr < 18 ? "午安，休息一下讀本書" : "晚安，今天讀幾頁？";
+    const shortName = (x) => x.name.split(/\s+/)[0];
+    const czb = SITES.find((x) => x.host === "czbooks.net");
     $("text").innerHTML = `
-      <section class="hero">
-        <h1>半沉浸式英語閱讀</h1>
-        <p>讀你想看的小說，順便把英文單字讀進腦袋。</p>
-        <div class="stats">
-          <div><b>${ids.length}</b><span>本書</span></div>
-          <div><b>${met.size.toLocaleString()}</b><span>遇過的單字</span></div>
-          <div><b>${known.size.toLocaleString()}</b><span>已熟</span></div>
-        </div>
+      <section class="h-top">
+        <img class="h-ava" src="icons/icon-192.png" alt="">
+        <div class="h-hi"><b>${hi}</b><span>已學 ${learned.size.toLocaleString()} 個單字 · 已熟 ${known.size.toLocaleString()}</span></div>
+        <button class="h-round" type="button" data-settings aria-label="閱讀設定">Aa</button>
       </section>
-      ${err ? errHtml(err) : ""}
-      <div class="find">
-        <span>去網站找書 →</span>
-        ${SITES.map((x) =>
-          x.cloudBlocked ? `<a class="site off" href="${esc(x.home || "https://" + x.host + "/")}" target="_blank" rel="noopener">${esc(x.name)} ↗</a>`
-            : `<button type="button" class="site" data-browse="${esc(x.home || "https://" + x.host + "/")}">${esc(x.name)}</button>`).join("")}
-      </div>
-      <p class="hint">點網站會在 App 裡打開，看到喜歡的書按右下角「＋ 加入書庫」。也可以貼網址。${SITES.some((x) => x.cloudBlocked)
-        ? `灰色的網站(${SITES.filter((x) => x.cloudBlocked).map((x) => esc(x.name)).join("、")})擋雲端抓取，請複製章節文字用「✍️ 貼上文字」。` : ""}</p>
-      <form id="urlForm" class="add">
-        <input id="urlIn" type="url" required placeholder="貼上小說網址" value="${last.startsWith("epub") ? "" : esc(last)}">
-        <button type="button" class="clip" id="btnClip" aria-label="從剪貼簿貼上">📋</button>
-        <button>開始讀</button>
+      <form id="urlForm" class="h-search">
+        <div class="pill">
+          <input id="urlIn" type="text" inputmode="url" enterkeyhint="go" autocomplete="off" placeholder="${czb ? "貼上小說網址，或搜尋書名" : "貼上小說網址"}">
+          <button type="button" class="h-clip" id="btnClip" aria-label="從剪貼簿貼上">${SVG.clip}</button>
+        </div>
+        <button class="h-go" aria-label="開始">${SVG.search}</button>
       </form>
-      <div class="row2">
-        <label class="add epub">📖 匯入 EPUB<input id="epubIn" type="file" accept=".epub,application/epub+zip" hidden></label>
-        <button class="add epub" id="btnPaste" type="button">✍️ 貼上文字</button>
+      ${err ? errHtml(err) : ""}
+      <div class="h-cats">
+        <label class="h-cat"><span class="ico">${ICO.epub}</span>EPUB<input id="epubIn" type="file" accept=".epub,application/epub+zip" hidden></label>
+        <label class="h-cat"><span class="ico">${ICO.txt}</span>TXT<input id="txtIn" type="file" accept=".txt,text/plain" hidden></label>
+        <button type="button" class="h-cat" id="btnPaste"><span class="ico">${ICO.paste}</span>貼上文字</button>
+        <button type="button" class="h-cat" data-lib><span class="ico">${ICO.lib}</span>免費書庫</button>
+        ${SITES.map((x) => x.cloudBlocked
+          ? `<a class="h-cat off" href="${esc(x.home || "https://" + x.host + "/")}" target="_blank" rel="noopener"><span class="ico">${ICO.site}</span>${esc(shortName(x))} ↗</a>`
+          : `<button type="button" class="h-cat" data-browse="${esc(x.home || "https://" + x.host + "/")}"><span class="ico">${ICO.site}</span>${esc(shortName(x))}</button>`).join("")}
       </div>
-      <p class="sub" id="epubMsg"></p>`;
-    $("epubIn").onchange = async (e) => {
-      const f = e.target.files[0];
+      <p class="sub" id="epubMsg"></p>
+      ${renderShelf(shelf)}
+      ${ids.length ? `<section class="h-stats">
+        <div><b>${ids.length}</b><span>本書</span></div>
+        <div><b>${chs.toLocaleString()}</b><span>讀過章節</span></div>
+        <div><b>${learned.size.toLocaleString()}</b><span>學過單字</span></div>
+        <div><b>${known.size.toLocaleString()}</b><span>已熟</span></div>
+      </section>` : ""}
+      <p class="foot">網址支援:${SITES.filter((x) => !x.cloudBlocked).map((x) => esc(x.name)).join("、") || "czbooks.net"}${SITES.some((x) => x.cloudBlocked)
+        ? `;${SITES.filter((x) => x.cloudBlocked).map((x) => esc(shortName(x))).join("、")}擋雲端抓取，請複製章節用「貼上文字」` : ""}。EPUB、TXT 和免費書庫的書整本存在這支手機。簡體自動轉繁體；單字從多益/托福/雅思字表對照，不用 AI。</p>`;
+
+    const busy = async (f, fn) => {
       if (!f) return;
       $("epubMsg").textContent = `處理中…(${(f.size / 1048576).toFixed(1)} MB)`;
-      try { load(await importEpub(f)); } catch (err) { $("epubMsg").textContent = err.message || "這不是有效的 EPUB 檔"; }
+      try { await fn(f); } catch (err) { $("epubMsg").textContent = err.message || "檔案讀不了"; }
     };
-    $("urlForm").onsubmit = (e) => { e.preventDefault(); load($("urlIn").value); };
+    $("epubIn").onchange = (e) => busy(e.target.files[0], async (f) => load(await importEpub(f)));
+    $("txtIn").onchange = (e) => busy(e.target.files[0], async (f) => { await importTxt(f); showHome(); });
+    $("urlForm").onsubmit = (e) => {
+      e.preventDefault();
+      const v = $("urlIn").value.trim();
+      if (!v) return;
+      if (isUrl(v)) load(/^[\w-]+(\.[\w-]+)+\//.test(v) ? "https://" + v : v);
+      else if (czb) { browse.stack = []; browse.url = ""; showBrowse("https://czbooks.net/s/" + encodeURIComponent(v)); }
+      else showHome("請貼上完整的小說網址");
+    };
     $("btnPaste").onclick = showPaste;
     $("btnClip").onclick = async () => {
       try {
@@ -595,7 +815,134 @@
         if (m) { $("urlIn").value = m[0]; load(m[0]); } else { $("urlIn").value = t; $("urlIn").focus(); }
       } catch (e) { $("urlIn").focus(); }
     };
-    renderShelf();
+    applyBw();
+    fillShelf();
+  }
+
+  // ---------- 書架：立體書，可左右滑；兩指捏合縮放(放大=一排滑動，縮小=格狀看更多本) ----------
+  function renderShelf(shelf) {
+    const books = Object.entries(shelf).map(([id, b]) => ({ id, ...b })).sort((a, b) => b.at - a.at);
+    if (!books.length) {
+      return `<div class="h-sec"><h2>我的書架</h2></div>
+        <div class="h-empty">書架還是空的。<br>從上面匯入 EPUB / TXT、到免費書庫挑一本，<br>或貼上小說網址開始讀。</div>`;
+    }
+    const siteName = (url) => { try { const s = siteOf(new URL(url).hostname); return s ? s.name.split(/\s+/)[0] : new URL(url).hostname; } catch (e) { return ""; } };
+    return `
+      <div class="h-sec"><h2>我的書架<small>${books.length}</small></h2>
+        <div class="h-tools">
+          <button type="button" data-zoom="-1" aria-label="縮小，看更多本">−</button>
+          <button type="button" data-zoom="1" aria-label="放大">＋</button>
+          <button type="button" class="arr" data-scroll="-1" aria-label="往左">‹</button>
+          <button type="button" class="arr" data-scroll="1" aria-label="往右">›</button>
+        </div></div>
+      <div class="h-shelf" id="shelf">${books.map((b) => {
+        const st = bookStats(b.id);
+        const name = b.book || "未命名";
+        const isEpub = b.url.startsWith("epub");
+        const [c, c2, fc, rib] = coverOf(name);
+        const src = b.author || b.src || (isEpub ? (b.paste ? "貼上文字" : "EPUB") : siteName(b.url));
+        const pct = isEpub && b.total ? (b.fresh ? 0 : Math.round((b.idx / b.total) * 100)) : null;
+        const prog = pct !== null ? `${pct}%` : b.fresh ? "還沒開始" : `第 ${st.read} 章`;
+        return `
+        <article class="h-book" data-open="${esc(b.url)}" data-id="${esc(b.id)}">
+          <div class="b3d" style="--c:${c};--c2:${c2};--fc:${fc};--h-yel:${rib}">
+            <div class="b3d-back"></div><div class="b3d-pages"></div>
+            <div class="b3d-front"><div class="b3d-title">${esc(name)}</div><div class="b3d-sub">${esc(src)}</div></div>
+            <i class="b3d-rib"></i>
+          </div>
+          <div class="h-name">${esc(name)}</div>
+          <div class="h-src">${esc(src)}</div>
+          <div class="h-prog"><div class="bar"><i style="width:${pct || 0}%"></i></div><span>${prog}</span></div>
+          <div class="h-meta">學了 <b>${st.learned.length.toLocaleString()}</b> 字${st.known ? ` · 熟 ${st.known}` : ""}</div>
+          <button type="button" class="h-more" data-menu="${esc(b.id)}" aria-label="更多">⋯</button>
+        </article>`;
+      }).join("")}</div>
+      <p class="h-tip">兩指捏合縮放書架 · 點 ⋯ 換封面</p>`;
+  }
+
+  // 自訂書封、網站書的進度(從存好的目錄算)晚一點補上
+  function fillShelf() {
+    const shelf = store.get("shelf", {});
+    document.querySelectorAll(".h-book[data-id]").forEach((el) => {
+      const id = el.dataset.id, b = shelf[id];
+      idbGet("covers", id).then((url) => {
+        if (url) el.querySelector(".b3d-front").insertAdjacentHTML("afterbegin", `<img src="${url}" alt="">`);
+      }).catch(() => {});
+      if (!b || b.url.startsWith("epub") || b.fresh) return;
+      idbGet("chapters", "toc:" + id).then((t) => {
+        const i = t ? t.list.findIndex((x) => x.u === b.url) : -1;
+        if (i < 0) return;
+        const pct = Math.round(((i + 1) / t.list.length) * 100);
+        el.querySelector(".h-prog i").style.width = pct + "%";
+        el.querySelector(".h-prog span").textContent = `${pct}%`;
+      }).catch(() => {});
+    });
+  }
+
+  let shelfW = store.get("shelfW", 150);
+  const ZOOMS = [72, 92, 110, 150, 190];
+  function applyBw() {
+    const el = $("shelf");
+    if (!el) return;
+    el.style.setProperty("--bw", shelfW + "px");
+    const car = shelfW >= 125;
+    el.classList.toggle("carousel", car);
+    el.classList.toggle("tiny", shelfW < 96);
+    document.querySelectorAll(".h-tools .arr").forEach((b) => (b.hidden = !car));
+  }
+  function setBw(v, save) {
+    shelfW = Math.round(Math.max(64, Math.min(200, v)));
+    applyBw();
+    if (save) store.set("shelfW", shelfW);
+  }
+  const homeOpen = () => document.body.classList.contains("home") && $("shelf") && !$("sheet").classList.contains("open");
+  let pinch = null;
+  const dist = (t) => Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY);
+  document.addEventListener("touchstart", (e) => { if (e.touches.length === 2 && homeOpen()) pinch = { d: dist(e.touches), w: shelfW }; }, { passive: true });
+  document.addEventListener("touchmove", (e) => {
+    if (pinch && e.touches.length === 2) { e.preventDefault(); setBw(pinch.w * dist(e.touches) / pinch.d); }
+  }, { passive: false });
+  document.addEventListener("touchend", (e) => { if (pinch && e.touches.length < 2) { pinch = null; setBw(shelfW, true); } });
+  document.addEventListener("gesturestart", (e) => { if (homeOpen()) e.preventDefault(); });  // iOS:不要放大整頁
+  document.addEventListener("wheel", (e) => {  // 電腦觸控板捏合 = ctrl + 滾輪
+    if (e.ctrlKey && homeOpen()) { e.preventDefault(); setBw(shelfW * (1 - e.deltaY * 0.01), true); }
+  }, { passive: false });
+
+  function showBookMenu(id) {
+    const b = store.get("shelf", {})[id];
+    if (!b) return;
+    idbGet("covers", id).catch(() => null).then((cv) => openSheet(`
+      <h2 style="font-family:var(--sans);font-size:20px">${esc(b.book || "未命名")}</h2>
+      <div class="btns" style="flex-direction:column">
+        <button data-cover="${esc(id)}">🖼️ 換封面(從相簿選圖片)</button>
+        ${cv ? `<button data-uncover="${esc(id)}">還原預設封面</button>` : ""}
+        <button data-del="${esc(id)}" style="color:var(--h-red)">從書架移除</button>
+      </div>`));
+  }
+  // 圖片裁成 3:4、縮到 360×480 存在手機(IndexedDB)
+  $("coverIn").onchange = async (e) => {
+    const f = e.target.files[0], id = e.target.dataset.id;
+    e.target.value = "";
+    if (!f || !id) return;
+    try {
+      const img = await createImageBitmap(f);
+      const W = 360, H = 480, cv = document.createElement("canvas");
+      cv.width = W; cv.height = H;
+      const r = Math.max(W / img.width, H / img.height), w = img.width * r, h = img.height * r;
+      cv.getContext("2d").drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
+      await idbPut("covers", id, cv.toDataURL("image/jpeg", 0.85));
+      closeSheet(); showHome();
+    } catch (err) { alert("這張圖片讀不了"); }
+  };
+  function removeBook(id) {
+    const s = store.get("shelf", {}), b = s[id];
+    delete s[id]; store.set("shelf", s);
+    try { ["bw:", "bc:", "bs:"].forEach((p) => localStorage.removeItem("eread:" + p + id)); } catch (err) { /* ignore */ }
+    idbDel("covers", id).catch(() => {});
+    if (id.startsWith("epub-") && b && !b.paste) idbDel("epubs", id.slice(5)).catch(() => {});
+    const g = store.get("guten", {});
+    for (const k of Object.keys(g)) if (b && g[k] === b.url) delete g[k];
+    store.set("guten", g);
   }
 
   // ---------- 在 App 裡逛小說網站(透過自己的雲端抓原網頁、原樣顯示),右下角浮動按鈕加入書庫 ----------
@@ -674,49 +1021,12 @@
   };
   $("brRead").onclick = () => { const u = browse.url; $("browser").hidden = true; document.body.classList.remove("browsing"); $("brFrame").srcdoc = ""; browse.stack = []; browse.url = ""; load(u); };
 
-  // 書封：用書名第一個字 + 依書名算出的顏色
-  const COVER_COLORS = ["#b4532a", "#2b62b8", "#2f7a3a", "#7a3fb0", "#c23b72", "#a07a1c", "#1f7a7a", "#5b5b8f"];
-  function coverColor(s) { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) >>> 0; return COVER_COLORS[h % COVER_COLORS.length]; }
-
-  function renderShelf() {
-    const books = Object.entries(store.get("shelf", {})).map(([id, b]) => ({ id, ...b })).sort((a, b) => b.at - a.at);
-    const ago = (t) => { const d = (Date.now() / 1000 - t) / 86400; return d < 1 ? "今天" : d < 2 ? "昨天" : `${Math.floor(d)} 天前`; };
-    if (!books.length) {
-      $("text").insertAdjacentHTML("beforeend", `<p class="empty">書架還是空的。從上面的網站挑一本書，或匯入 EPUB、貼上文字開始吧。</p>`);
-      return;
-    }
-    $("text").insertAdjacentHTML("beforeend", `
-      <h2 class="shelf-h">我的書架</h2>
-      <div class="shelf">${books.map((b) => {
-        const st = bookStats(b.id);
-        const name = b.book || "未命名";
-        const isEpub = b.url.startsWith("epub");
-        const pct = isEpub && b.total ? Math.round((b.idx / b.total) * 100) : null;
-        const left = st.words - st.known;
-        return `
-        <article class="bk" data-open="${esc(b.url)}">
-          <div class="cover" style="background:${coverColor(name)}">${esc([...name][0] || "書")}</div>
-          <div class="info">
-            <div class="name">${esc(name)}</div>
-            <div class="where">${b.fresh ? "還沒開始讀" : "讀到 " + esc(b.title)}${isEpub && b.total ? `(${b.idx}/${b.total})` : ""} · ${ago(b.at)}</div>
-            ${pct !== null ? `<div class="bar"><i style="width:${pct}%"></i></div>` : ""}
-            <div class="chips">
-              <span class="chip hot">${isEpub ? "全書可學" : "已遇到可學"}單字 ${left.toLocaleString()}</span>
-              ${st.known ? `<span class="chip">已熟 ${st.known}</span>` : ""}
-              ${!isEpub ? `<span class="chip">讀了 ${st.read} 章</span>` : ""}
-            </div>
-          </div>
-          <button class="more" data-remove="${esc(b.id)}" aria-label="移除">×</button>
-        </article>`;
-      }).join("")}</div>
-      <p class="foot">網址支援:${SITES.filter((x) => !x.cloudBlocked).map((x) => esc(x.name)).join("、") || "czbooks.net"}。其他平台可以匯入 EPUB 或貼上文字(都只存在這支手機)。簡體自動轉繁體；單字從多益/托福/雅思字表對照，不用 AI。</p>`);
-  }
-
   function render() {
     if (!chap) return;
     $("bookTitle").textContent = chap.book;
     $("chapTitle").textContent = chap.title;
     const words = activeWords().sort((a, b) => b.zh.length - a.zh.length);
+    recordShown(words);
     const byZh = new Map(words.map((w) => [w.zh, w]));
     const re = words.length ? new RegExp("(" + words.map((w) => reEsc(w.zh)).join("|") + ")", "g") : null;
     const seen = new Map();
@@ -865,8 +1175,7 @@
       l.href = "https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap";
       document.head.appendChild(l);
     }
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim() || "#faf7f0";
+    setMeta();
   }
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyLook);
 
@@ -892,6 +1201,18 @@
       return;
     }
     if (e.target.closest("[data-home]")) { showHome(); return; }
+    const mn = e.target.closest("[data-menu]");
+    if (mn) { showBookMenu(mn.dataset.menu); return; }
+    if (e.target.closest("[data-lib]")) { showLibrary(); return; }
+    if (e.target.closest("[data-settings]")) { showSettings(); return; }
+    const zm = e.target.closest("[data-zoom]");
+    if (zm) {
+      const up = +zm.dataset.zoom > 0;
+      setBw(up ? ZOOMS.find((z) => z > shelfW + 2) || 200 : [...ZOOMS].reverse().find((z) => z < shelfW - 2) || 64, true);
+      return;
+    }
+    const sc = e.target.closest("[data-scroll]");
+    if (sc) { $("shelf").scrollBy({ left: +sc.dataset.scroll * (shelfW + 20) * 2, behavior: "smooth" }); return; }
     const br = e.target.closest("[data-browse]");
     if (br) { browse.stack = []; browse.url = ""; showBrowse(br.dataset.browse); return; }
     const open = e.target.closest("[data-open]");
@@ -908,6 +1229,15 @@
     if (go) { closeSheet(); load(go.dataset.go); return; }
     const tj = e.target.closest("[data-tocjump]");
     if (tj) { tocJump(+tj.dataset.tocjump); return; }
+    const cv = e.target.closest("[data-cover]");
+    if (cv) { $("coverIn").dataset.id = cv.dataset.cover; $("coverIn").click(); return; }
+    const uc = e.target.closest("[data-uncover]");
+    if (uc) { idbDel("covers", uc.dataset.uncover).then(() => { closeSheet(); showHome(); }); return; }
+    const dl = e.target.closest("[data-del]");
+    if (dl) {
+      if (confirm("從書架移除這本書？(單字統計也會一起清掉)")) { removeBook(dl.dataset.del); closeSheet(); showHome(); }
+      return;
+    }
     const t = e.target.closest("[data-say],[data-known],[data-toggle],[data-set]");
     if (!t) return;
     if (t.dataset.say) speak(t.dataset.say);

@@ -2,7 +2,8 @@
 // 只准抓 public/sites.json 列出的網站(https),避免變成任意代理。抓到的頁面在 Cloudflare 快取 6 小時。
 import SITES from "../public/sites.json";
 
-const ALLOWED = new Set(SITES.map((s) => s.host));
+// 免費書庫(古騰堡計畫)也走這裡：瀏覽器不能直接跨站抓它的書目和全文
+const ALLOWED = new Set([...SITES.map((s) => s.host), "www.gutenberg.org"]);
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36";
 
 async function proxy(request) {
