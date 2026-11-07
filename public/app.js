@@ -754,14 +754,12 @@
     const learned = new Set();
     let chs = 0;
     ids.forEach((id) => { const st = bookStats(id); st.learned.forEach((w) => learned.add(w)); chs += st.read; });
-    const hr = new Date().getHours();
-    const hi = hr < 5 ? "夜深了，讀一章就睡" : hr < 11 ? "早安，來讀一點吧" : hr < 18 ? "午安，休息一下讀本書" : "晚安，今天讀幾頁？";
     const shortName = (x) => x.name.split(/\s+/)[0];
     const czb = SITES.find((x) => x.host === "czbooks.net");
     $("text").innerHTML = `
       <section class="h-top">
         <img class="h-ava" src="icons/icon-192.png" alt="">
-        <div class="h-hi"><b>${hi}</b><span>已學 ${learned.size.toLocaleString()} 個單字 · 已熟 ${known.size.toLocaleString()}</span></div>
+        <div class="h-hi"><b>半沉浸式英語閱讀</b><span>已學 ${learned.size.toLocaleString()} 個單字 · 已熟 ${known.size.toLocaleString()}</span></div>
         <button class="h-round" type="button" data-settings aria-label="閱讀設定">Aa</button>
       </section>
       <form id="urlForm" class="h-search">
