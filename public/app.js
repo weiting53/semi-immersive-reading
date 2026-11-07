@@ -937,7 +937,6 @@
     delete s[id]; store.set("shelf", s);
     try { ["bw:", "bc:", "bs:"].forEach((p) => localStorage.removeItem("eread:" + p + id)); } catch (err) { /* ignore */ }
     idbDel("covers", id).catch(() => {});
-    if (id.startsWith("epub-") && b && !b.paste) idbDel("epubs", id.slice(5)).catch(() => {});
     const g = store.get("guten", {});
     for (const k of Object.keys(g)) if (b && g[k] === b.url) delete g[k];
     store.set("guten", g);
