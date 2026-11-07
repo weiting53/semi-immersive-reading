@@ -758,8 +758,7 @@
     const czb = SITES.find((x) => x.host === "czbooks.net");
     $("text").innerHTML = `
       <section class="h-top">
-        <img class="h-ava" src="icons/icon-192.png" alt="">
-        <div class="h-hi"><b>半沉浸式英語閱讀</b><span>已學 ${learned.size.toLocaleString()} 個單字 · 已熟 ${known.size.toLocaleString()}</span></div>
+        <div class="h-hi"><span>已學 ${learned.size.toLocaleString()} 個單字 · 已熟 ${known.size.toLocaleString()}</span></div>
         <button class="h-round" type="button" data-settings aria-label="閱讀設定">Aa</button>
       </section>
       <form id="urlForm" class="h-search">
