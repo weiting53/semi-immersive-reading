@@ -706,11 +706,11 @@
   function savePos() {
     const a = readPara();
     if (!a) return;
-    const all = store.get("pos", {});
-    delete all[chap.url];
+    // 每本書只留最後打開那一章的位置(書架記的就是那一章)
+    const keep = new Set(Object.values(store.get("shelf", {})).map((b) => b.url));
+    const all = {};
+    for (const [u, v] of Object.entries(store.get("pos", {}))) if (keep.has(u)) all[u] = v;
     all[chap.url] = a;
-    const ks = Object.keys(all);
-    if (ks.length > 300) ks.slice(0, ks.length - 300).forEach((k) => delete all[k]);
     store.set("pos", all);
   }
   function goPara(a) {
