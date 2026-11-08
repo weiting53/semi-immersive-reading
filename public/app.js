@@ -690,9 +690,43 @@
   const activeCands = (w) => w.cands.filter((c) => c.level <= level && !known.has(c.en)).sort((a, b) => b.level - a.level);
   const activeWords = () => (level === 0 ? [] : chap.words.filter((w) => activeCands(w).length));
 
+  // ---------- 記住每一章讀到哪(以段落為錨點，換字級/字體也不會跑掉) ----------
+  let loading = false;
+  const headH = () => (document.querySelector("header") || {}).offsetHeight || 0;
+  const paras = () => $("text").querySelectorAll(":scope > p");
+  function readPara() {
+    if (!chap || loading || document.body.classList.contains("home")) return null;
+    const ps = paras(), top = headH();
+    for (let i = 0; i < ps.length; i++) {
+      const r = ps[i].getBoundingClientRect();
+      if (r.bottom > top + 1) return { p: i, f: Math.max(0, Math.min(1, (top - r.top) / (r.height || 1))) };
+    }
+    return null;
+  }
+  function savePos() {
+    const a = readPara();
+    if (!a) return;
+    const all = store.get("pos", {});
+    delete all[chap.url];
+    all[chap.url] = a;
+    const ks = Object.keys(all);
+    if (ks.length > 300) ks.slice(0, ks.length - 300).forEach((k) => delete all[k]);
+    store.set("pos", all);
+  }
+  function goPara(a) {
+    const el = a && paras()[a.p];
+    if (!el) { window.scrollTo(0, 0); return; }
+    const r = el.getBoundingClientRect();
+    window.scrollTo(0, Math.max(0, window.scrollY + r.top + a.f * r.height - headH()));
+  }
+  let posT;
+  window.addEventListener("scroll", () => { clearTimeout(posT); posT = setTimeout(savePos, 300); }, { passive: true });
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") savePos(); });
+  window.addEventListener("pagehide", savePos);
+
   async function load(url) {
     const first = !chap || chap.url !== url;
-    if (first) $("text").innerHTML = `<p class="sub" style="text-align:center">讀取中…</p>`;
+    if (first) { savePos(); loading = true; $("text").innerHTML = `<p class="sub" style="text-align:center">讀取中…</p>`; }
     try {
       await sites();
       url = await resolveBook(normalize(url));
@@ -700,6 +734,7 @@
       ch.words = localVocab(ch.lines);
       chap = ch;
     } catch (e) {
+      loading = false;
       showHome(e.message || String(e));
       return;
     }
@@ -708,8 +743,14 @@
     store.set("lastUrl", url);
     shelfRecord(chap);
     history.replaceState(null, "", "?url=" + encodeURIComponent(url));
-    render();
-    if (first) window.scrollTo(0, 0);
+    loading = false;
+    render(!first);
+    if (first) {
+      const saved = store.get("pos", {})[chap.url];
+      goPara(saved);
+      // 字型載完版面可能會變，再對一次
+      if (saved && document.fonts) document.fonts.ready.then(() => goPara(saved));
+    }
     prefetch(chap.next);
   }
 
@@ -745,6 +786,7 @@
   const isUrl = (v) => /^(https?:)?\/\//i.test(v) || /^epub:\/\//.test(v) || /^[\w-]+(\.[\w-]+)+\//.test(v);
 
   async function showHome(err) {
+    savePos();
     chap = null;
     await sites().catch(() => {});
     document.body.classList.add("home");
@@ -1017,8 +1059,9 @@
   };
   $("brRead").onclick = () => { const u = browse.url; $("browser").hidden = true; document.body.classList.remove("browsing"); $("brFrame").srcdoc = ""; browse.stack = []; browse.url = ""; load(u); };
 
-  function render() {
+  function render(keep = true) {
     if (!chap) return;
+    const anchor = keep ? readPara() : null;
     $("bookTitle").textContent = chap.book;
     $("chapTitle").textContent = chap.title;
     const words = activeWords().sort((a, b) => b.zh.length - a.zh.length);
@@ -1045,6 +1088,7 @@
       ? `<div class="src">EPUB · 僅供個人學習</div>`
       : `<div class="src">原文出處:<a href="${esc(chap.url)}" target="_blank" rel="noopener">${esc(chap.url)}</a><br>僅供個人學習</div>`;
     $("text").innerHTML = html + nav + src;
+    if (anchor) goPara(anchor);
     const occ = words.reduce((n, w) => n + w.count, 0);
     $("lvName").textContent = LV_NAMES[level];
     $("lvStat").textContent = level === 0 ? "不換字" : `${words.length} 字 · 出現 ${occ} 次`;
