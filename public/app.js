@@ -669,6 +669,33 @@
     const n = bs.size;
     words.forEach((w) => activeCands(w).forEach((c) => bs.add(c.en)));
     if (bs.size !== n) store.set(key, [...bs]);
+    logDay(chap.book, bs.size - n);
+  }
+  // 借書卡：每天一列 {日期: {b: 最後讀的書, n: 當天新學字數}},留最近 60 天
+  function today() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  }
+  function logDay(book, added) {
+    const log = store.get("log", {}), d = today(), e = log[d] || { b: "", n: 0 };
+    if (e.b === book && !added) return;
+    log[d] = { b: book || e.b, n: e.n + Math.max(0, added) };
+    const keys = Object.keys(log).sort();
+    keys.slice(0, Math.max(0, keys.length - 60)).forEach((k) => delete log[k]);
+    store.set("log", log);
+  }
+  const MON = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+  function loanCard(books, chs) {
+    const log = store.get("log", {}), d = today();
+    const rows = Object.keys(log).sort().reverse().slice(0, 6).map((k) =>
+      `<tr><td><span class="dstamp${k === d ? " r" : ""}">${MON[+k.slice(5, 7) - 1]} ${k.slice(8)}</span></td>
+        <td class="lbk">${esc(log[k].b || "")}</td><td>${log[k].n ? "+" + log[k].n : "·"}</td></tr>`);
+    while (rows.length < 3) rows.push(`<tr><td></td><td class="lbk"></td><td></td></tr>`);
+    return `<section class="lcard">
+      <div class="hd"><b>借書卡</b><span>No. ${d.slice(0, 7)}</span></div>
+      <table><tr><th style="width:32%">DATE</th><th>書名</th><th style="width:16%">新字</th></tr>${rows.join("")}</table>
+      <div class="ft">${books} 本 · ${chs.toLocaleString()} 章 · 已熟 ${known.size.toLocaleString()}</div>
+    </section>`;
   }
 
   // ---------- 發音 ----------
@@ -770,11 +797,11 @@
       <rect x="20.5" y="9" width="7" height="21" rx="1.5" fill="#FABD32" transform="rotate(-10 24 20)"/><rect x="3" y="29.5" width="28" height="2.5" rx="1" fill="#E1DCCA"/></svg>`,
     site: mini("#3d6bd1", "#1E459F", `<circle cx="18.5" cy="14.5" r="6" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M12.5 14.5h12M18.5 8.5c-3 4-3 8 0 12c3-4 3-8 0-12" stroke="#fff" stroke-width="1.4" fill="none"/>`),
   };
-  // 預設書封顏色(色票延伸):[封面, 封底/書背, 字色, 書籤]
+  // 預設書封顏色(昭和喫茶色票):[封面, 封底, 字色, 書籤]
   const COVERS = [
-    ["#1E459F", "#15336f", "#fff", "#FABD32"], ["#CF2A2A", "#9c1d1d", "#fff", "#FABD32"],
-    ["#FABD32", "#d59a14", "#1E459F", "#CF2A2A"], ["#E1DCCA", "#bdb59c", "#1E459F", "#CF2A2A"],
-    ["#3d6bd1", "#1E459F", "#fff", "#FABD32"], ["#a8232f", "#771820", "#FABD32", "#FABD32"],
+    ["#2F4A3A", "#1f3328", "#F4E4C1", "#A8402E"], ["#A8402E", "#7d2e20", "#F4E4C1", "#2F4A3A"],
+    ["#8B5E3C", "#6B4429", "#F4E4C1", "#A8402E"], ["#3B4F6B", "#2a3a50", "#F4E4C1", "#C9A24A"],
+    ["#C9A24A", "#a3812f", "#3B2A1E", "#A8402E"], ["#5B3A4A", "#40283a", "#F4E4C1", "#C9A24A"],
   ];
   function coverOf(s) { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) >>> 0; return COVERS[h % COVERS.length]; }
 
@@ -800,7 +827,11 @@
     const czb = SITES.find((x) => x.host === "czbooks.net");
     $("text").innerHTML = `
       <section class="h-top">
-        <div class="h-hi"><span>已學 ${learned.size.toLocaleString()} 個單字 · 已熟 ${known.size.toLocaleString()}</span></div>
+        <div class="pm" aria-label="已學 ${learned.size} 個單字，已熟 ${known.size}">
+          <div class="pm-ring"><span>已學</span><b>${learned.size.toLocaleString()}</b><span>WORDS</span><span>${today().slice(5).replace("-", ".")}</span></div>
+          <svg viewBox="0 0 70 34" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 5q6-5 12 0t12 0 12 0 12 0 12 0 12 0"/><path d="M0 17q6-5 12 0t12 0 12 0 12 0 12 0 12 0"/><path d="M0 29q6-5 12 0t12 0 12 0 12 0 12 0 12 0"/></svg>
+          <span class="pm-k">已熟 ${known.size.toLocaleString()}</span>
+        </div>
         <button class="h-round" type="button" data-settings aria-label="閱讀設定">Aa</button>
       </section>
       <form id="urlForm" class="h-search">
@@ -822,12 +853,7 @@
       </div>
       <p class="sub" id="epubMsg"></p>
       ${renderShelf(shelf)}
-      ${ids.length ? `<section class="h-stats">
-        <div><b>${ids.length}</b><span>本書</span></div>
-        <div><b>${chs.toLocaleString()}</b><span>讀過章節</span></div>
-        <div><b>${learned.size.toLocaleString()}</b><span>學過單字</span></div>
-        <div><b>${known.size.toLocaleString()}</b><span>已熟</span></div>
-      </section>` : ""}
+      ${ids.length ? loanCard(ids.length, chs) : ""}
       <p class="foot">網址支援:${SITES.filter((x) => !x.cloudBlocked).map((x) => esc(x.name)).join("、") || "czbooks.net"}${SITES.some((x) => x.cloudBlocked)
         ? `;${SITES.filter((x) => x.cloudBlocked).map((x) => esc(shortName(x))).join("、")}擋雲端抓取，請複製章節用「貼上文字」` : ""}。EPUB、TXT 和免費書庫的書整本存在這支手機。簡體自動轉繁體；單字從多益/托福/雅思字表對照，不用 AI。</p>`;
 
@@ -878,17 +904,17 @@
         const st = bookStats(b.id);
         const name = b.book || "未命名";
         const isEpub = b.url.startsWith("epub");
-        const [c, c2, fc, rib] = coverOf(name);
+        const [c, , fc] = coverOf(name);
+        const vert = /^[\u3400-\u9fff，、。！？：·\s]+$/.test(name) && name.length <= 10;  // 中文短書名直排
         const src = b.author || b.src || (isEpub ? (b.paste ? "貼上文字" : "EPUB") : siteName(b.url));
         const pct = isEpub && b.total ? (b.fresh ? 0 : Math.round((b.idx / b.total) * 100)) : null;
         const prog = pct !== null ? `${pct}%` : b.fresh ? "還沒開始" : `第 ${st.read} 章`;
         return `
         <article class="h-book" data-open="${esc(b.url)}" data-id="${esc(b.id)}">
-          <div class="b3d" style="--c:${c};--c2:${c2};--fc:${fc};--h-yel:${rib}">
-            <div class="b3d-back"></div><div class="b3d-pages"></div>
-            <div class="b3d-front"><div class="b3d-title">${esc(name)}</div><div class="b3d-sub">${esc(src)}</div></div>
-            <i class="b3d-rib"></i>
-          </div>
+          <div class="stw"><div class="b3d" style="--c:${c};--fc:${fc}">
+            <div class="b3d-front${vert ? " v" : ""}"><div class="b3d-title${/[a-z]/i.test(name) && !/[\u3400-\u9fff]/.test(name) ? " en" : ""}">${esc(name)}</div></div>
+            <i class="exlib">EX LIBRIS</i>
+          </div><i class="plank"></i></div>
           <div class="h-name">${esc(name)}</div>
           <div class="h-src">${esc(src)}</div>
           <div class="h-prog"><div class="bar"><i style="width:${pct || 0}%"></i></div><span>${prog}</span></div>
@@ -1158,13 +1184,14 @@
     kai: ["文楷", '"LXGW WenKai TC", "Kaiti TC", "STKaiti", var(--serif)'],
   };
   const EN_FONTS = {
+    type: ["打字機", '"Courier Prime", "Courier New", monospace', "normal", 700],
     serif: ["襯線斜體", 'Georgia, "Times New Roman", serif', "italic"],
     serifUp: ["襯線正體", 'Georgia, "Times New Roman", serif', "normal"],
     sans: ["無襯線", '-apple-system, "Helvetica Neue", Arial, sans-serif', "normal"],
   };
   let wordColor = store.get("wordColor", "theme");
   let bodyFont = store.get("bodyFont", "serif");
-  let enFont = store.get("enFont", "serif");
+  let enFont = store.get("enFont", "type");
   let lh = store.get("lh", 1.9);
 
   function showSettings() {
@@ -1178,8 +1205,8 @@
       <p class="sub">行距</p>
       ${seg("lh", lh, [[1.6, "緊"], [1.9, "中"], [2.2, "鬆"]])}
       <p class="sub">背景主題</p>
-      ${seg("theme", t, [["auto", "自動"], ["light", "白"], ["sepia", "米黃"], ["green", "護眼綠"]])}
-      ${seg("theme", t, [["dark", "夜間"], ["black", "純黑"]])}
+      ${seg("theme", t, [["auto", "自動"], ["light", "喫茶"], ["sepia", "米黃"], ["green", "護眼綠"]])}
+      ${seg("theme", t, [["dark", "夜間墨綠"], ["black", "純黑"]])}
       <p class="sub">英文字顏色</p>
       <div class="seg">${Object.entries(WORD_COLORS).map(([k, [label, light]]) =>
         `<button data-set="wordColor" data-val="${k}" class="${k === wordColor ? "on" : ""}" style="${light ? `color:${light};font-weight:600` : ""}">${label}</button>`).join("")}</div>
@@ -1206,9 +1233,10 @@
     const wc = WORD_COLORS[wordColor] || WORD_COLORS.theme;
     if (wc[1]) root.setProperty("--word", isDark() ? wc[2] : wc[1]); else root.removeProperty("--word");
     root.setProperty("--body-font", (BODY_FONTS[bodyFont] || BODY_FONTS.serif)[1]);
-    const ef = EN_FONTS[enFont] || EN_FONTS.serif;
+    const ef = EN_FONTS[enFont] || EN_FONTS.type;
     root.setProperty("--en-font", ef[1]);
     root.setProperty("--en-style", ef[2]);
+    root.setProperty("--en-w", ef[3] || 400);
     if (bodyFont === "kai" && !document.getElementById("kaiFont")) {  // 文楷：用到才從 Google Fonts 載入
       const l = document.createElement("link");
       l.id = "kaiFont"; l.rel = "stylesheet";
