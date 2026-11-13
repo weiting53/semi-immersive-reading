@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>送進英讀書庫</title>
+<style>
+  :root { --bg: #F4E4C1; --fg: #3B2A1E; --muted: #7a6650; --line: #d9c49b; --card: #fbf2dc; --accent: #A8402E; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #16140f; --fg: #e4ddd0; --muted: #8f8676; --line: #2e2a22; --card: #211e18; --accent: #f0956a; } }
+  :root[data-theme="dark"] { --bg: #16140f; --fg: #e4ddd0; --muted: #8f8676; --line: #2e2a22; --card: #211e18; --accent: #f0956a; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.7 -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  .sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+  ol { padding-left: 22px; } li { margin-bottom: 10px; }
+  textarea { width: 100%; box-sizing: border-box; height: 120px; font: 12px/1.4 ui-monospace, Menlo, monospace; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--fg); padding: 10px; }
+  button { width: 100%; height: 46px; margin-top: 10px; border: 0; border-radius: 10px; background: var(--accent); color: #fff; font-size: 16px; font-weight: 600; }
+  .note { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-size: 14px; color: var(--muted); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>送進英讀書庫</h1>
+  <p class="sub">在 Safari 讀網路小說時，按一下書籤就把這一章複製下來，回到英讀書庫加入書架。只讀你已經打開的頁面，不會自動去抓網站。</p>
+
+  <h2 style="font-size:17px">安裝(只要一次)</h2>
+  <ol>
+    <li>按下面的按鈕複製書籤程式碼。</li>
+    <li>在 Safari 隨便把一個網頁加入書籤(分享 → 加入書籤)，名稱改成「送進英讀書庫」。</li>
+    <li>打開書籤列表 → 編輯 → 點這個書籤，把網址整個刪掉，貼上剛剛複製的程式碼，存檔。</li>
+  </ol>
+  <textarea id="code" readonly></textarea>
+  <button id="copy">複製書籤程式碼</button>
+
+  <h2 style="font-size:17px;margin-top:26px">每一章怎麼用</h2>
+  <ol>
+    <li>在 Safari 打開小說章節，等內文出現。</li>
+    <li>網址列 → 書籤 → 點「送進英讀書庫」，看到「已複製」。</li>
+    <li>回英讀書庫 → 匯入「貼上文字」→「從剪貼簿加入章節」。</li>
+    <li>讀完這章，按「到原網站開下一章 ↗」，回到第 1 步。</li>
+  </ol>
+  <p class="note">同一本書會自動接成下一章；同一章按兩次只會留一份。如果內文夾到廣告或少了段落，把那一章的網址告訴維護者。</p>
+  <p><a href="./">← 回英讀書庫</a></p>
+</main>
+<script>
+// 書籤本體：在小說網站頁面上執行。只讀目前頁面，挑出內文、去掉廣告，複製成 "EREAD1:" + JSON。
+function ereadClip() {
+  var AD = /(^|[-_\s])(ad|ads|adv|advert|advertisement|adsbygoogle|banner|sponsor|gg|promo|recommend|share|comment)s?([-_\s]|$)/i;
+  var JUNK = /^(上一[章頁页]|下一[章頁页]|上章|下章|目[錄录]|返回|加入書[籤签]|加入书签|投[票推]|推薦|推荐|書架|书架|章節報錯|章节报错|設置|设置|字[體体]|首頁|首页)/;
+  var tag = function (el) { return (el.id || "") + " " + (typeof el.className === "string" ? el.className : ""); };
+  var visible = function (el) { var s = getComputedStyle(el); return s.display !== "none" && s.visibility !== "hidden" && el.getClientRects().length > 0; };
+  var meta = function (k) { var m = document.querySelector('meta[property="' + k + '"],meta[name="' + k + '"]'); return m ? m.content.trim() : ""; };
+
+  var best = null, bestScore = 0;
+  document.querySelectorAll("div,article,section,td,main").forEach(function (el) {
+    if (AD.test(tag(el)) || !visible(el)) return;
+    var own = 0, kids = 0;
+    el.childNodes.forEach(function (n) {
+      if (n.nodeType === 3) own += n.textContent.trim().length;
+      else if (n.nodeName === "BR") kids++;
+      else if (n.nodeName === "P" && visible(n)) { own += n.textContent.trim().length; kids++; }
+    });
+    var score = own + kids * 20;
+    if (score > bestScore) { best = el; bestScore = score; }
+  });
+  if (!best || bestScore < 200) { alert("找不到章節內文。請等內文完全載入再按一次。"); return; }
+
+  var hidden = [];
+  best.querySelectorAll("script,style,iframe,ins,aside,nav,form,button,a,h1,h2,h3,[class],[id]").forEach(function (el) {
+    if (/^(SCRIPT|STYLE|IFRAME|INS|ASIDE|NAV|FORM|BUTTON|A|H1|H2|H3)$/.test(el.nodeName) || AD.test(tag(el))) {
+      hidden.push([el, el.style.display]); el.style.display = "none";
+    }
+  });
+  var text = best.innerText;
+  hidden.forEach(function (x) { x[0].style.display = x[1]; });
+
+  var h = document.querySelector("h1") || document.querySelector("h2");
+  var title = h && visible(h) ? h.innerText.trim() : document.title.split(/\s*[-_|]\s*/)[0].trim();
+  var site = location.hostname.replace(/^www\./, "");
+  var lines = text.split("\n").map(function (l) { return l.trim(); }).filter(function (l) {
+    return l && l !== title && !JUNK.test(l) && !/^(top|返回頂部|返回顶部|回到頂部|回到顶部)$/i.test(l) && !/https?:\/\/|www\.|\.com|\.net|廣告|广告|請收藏|请收藏/i.test(l) && !(site && l.indexOf(site) >= 0);
+  });
+  var book = meta("og:novel:book_name") || meta("og:title");
+  if (!book || book === title) {
+    book = document.title.split(/\s*[-_|]\s*/).map(function (x) { return x.replace(title, "").trim(); })
+      .filter(function (x) { return x && !(site && x.indexOf(site) >= 0); })[0] || site || "網路小說";
+  }
+  var bm = title.match(/^《(.+?)》\s*(.+)$/);
+  if (bm) { book = bm[1]; title = bm[2]; }
+  var next = null;
+  document.querySelectorAll("a[href]").forEach(function (a) {
+    if (next) return;
+    var t = a.innerText.trim(), href = a.getAttribute("href");
+    if ((a.rel === "next" || /^(下一[章頁页]|下章)/.test(t)) && href && href.indexOf("javascript") !== 0 && href !== "#") next = a.href;
+  });
+
+  var payload = "EREAD1:" + JSON.stringify({ b: book, t: title, l: lines, n: next, u: location.href });
+  var ta = document.createElement("textarea");
+  ta.value = payload; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.top = "0"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, payload.length);
+  var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+  document.body.removeChild(ta);
+  var done = function () { alert("已複製《" + book + "》" + title + "(" + lines.length + " 段)。\n回英讀書庫 → 貼上文字 →「從剪貼簿加入章節」。"); };
+  if (ok) done();
+  else if (navigator.clipboard) navigator.clipboard.writeText(payload).then(done, function () { alert("複製失敗，請再按一次書籤。"); });
+  else alert("複製失敗，請再按一次書籤。");
+}
+var code = "javascript:(" + ereadClip.toString().replace(/\n\s*/g, " ") + ")();void 0";
+document.getElementById("code").value = code;
+document.getElementById("copy").onclick = function () {
+  var ta = document.getElementById("code");
+  ta.focus(); ta.select(); ta.setSelectionRange(0, code.length);
+  var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+  if (!ok && navigator.clipboard) navigator.clipboard.writeText(code);
+  this.textContent = "已複製，照上面的步驟貼進書籤";
+};
+</script>
+</body>
+</html>

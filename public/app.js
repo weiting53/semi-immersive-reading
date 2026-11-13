@@ -257,7 +257,10 @@
       const k = +n, chs = lib.chapters;
       if (k < 1 || k > chs.length) throw new Error("這本 EPUB 沒有這一章");
       const mk = (j) => (j >= 1 && j <= chs.length ? `epub://${id}/${j}` : null);
-      return { ...chapterObj(url, lib.book, chs[k - 1].title, chs[k - 1].lines, mk(k - 1), mk(k + 1)), total: chs.length };
+      const c = chs[k - 1];
+      // 書籤加入的書：最後一章的「下一章」要回原網站打開，再按一次書籤
+      return { ...chapterObj(url, lib.book, c.title, c.lines, mk(k - 1), mk(k + 1)), total: chs.length,
+        src: c.src || null, srcNext: k === chs.length ? c.next || null : null };
     }
     const cached = await idbGet("chapters", url);
     if (cached && cached.next) return cached;
@@ -437,20 +440,39 @@
   }
 
   // ---------- 貼上文字：任何平台都能用。同一個書名會接成下一章 ----------
-  async function addPaste(book, title, text) {
+  // 書籤小工具(clip.html)複製的章節:"EREAD1:" + JSON {b 書名, t 章名, l 段落, n 下一章網址, u 原網址}
+  function parseClip(text) {
+    const s = (text || "").trim();
+    if (!s.startsWith("EREAD1:")) return null;
+    try {
+      const d = JSON.parse(s.slice(7));
+      return Array.isArray(d.l) && d.l.length ? d : null;
+    } catch (e) { return null; }
+  }
+
+  async function addPaste(book, title, text, meta = {}) {
     book = book.trim() || "貼上的文字";
-    const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    const lines = meta.lines || text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
     if (!lines.length) throw new Error("沒有貼上任何文字");
     const hash = await crypto.subtle.digest("SHA-1", new TextEncoder().encode("paste:" + book));
     const id = [...new Uint8Array(hash)].map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 12);
     const lib = (await idbGet("epubs", id)) || { book, file: "", chapters: [] };
-    lib.chapters.push({ title: title.trim() || `第 ${lib.chapters.length + 1} 段`, lines });
+    const c = { title: title.trim() || `第 ${lib.chapters.length + 1} 段`, lines };
+    if (meta.src) { c.src = meta.src; c.next = meta.next || null; }
+    // 同一章按了兩次書籤：蓋掉舊的，不重複加
+    let i = meta.src ? lib.chapters.findIndex((x) => x.src === meta.src) : -1;
+    if (i >= 0) lib.chapters[i] = c; else { lib.chapters.push(c); i = lib.chapters.length - 1; }
     await idbPut("epubs", id, lib);
     await vocab();
     const all = new Set(store.get("bw:epub-" + id, []));
     for (const en of wordsIn(toTrad(lines))) all.add(en);
     store.set("bw:epub-" + id, [...all]);
-    return `epub://${id}/${lib.chapters.length}`;
+    return `epub://${id}/${i + 1}`;
+  }
+  async function addClip(d) {
+    const url = await addPaste(d.b || "", d.t || "", "", { lines: d.l, src: d.u, next: d.n });
+    await load(url);
+    const id = bookId(url); const s2 = store.get("shelf", {}); if (s2[id]) { s2[id].paste = true; store.set("shelf", s2); }
   }
 
   function showPaste() {
@@ -463,9 +485,22 @@
       <input id="pTitle" class="field" placeholder="章名(可留空)">
       <textarea id="pText" class="field" rows="8" placeholder="把章節文字貼在這裡"></textarea>
       <p class="sub" id="pMsg"></p>
-      <div class="btns"><button class="primary" id="pGo">開始讀</button></div>`);
+      <div class="btns"><button class="primary" id="pGo">開始讀</button></div>
+      <h2 style="font-family:var(--sans);font-size:17px;margin-top:22px">從網站書籤加入</h2>
+      <p class="sub">在 Safari 打開章節、按「送進英讀書庫」書籤，再回來按這裡。<a href="clip.html" target="_blank" rel="noopener">怎麼裝書籤</a></p>
+      <div class="btns"><button id="pClip">從剪貼簿加入章節</button></div>`);
+    $("pClip").onclick = async () => {
+      let t = "";
+      try { t = await navigator.clipboard.readText(); }
+      catch (e) { $("pMsg").textContent = "讀不到剪貼簿。請把剪貼簿內容貼進上面的大框框，再按「開始讀」。"; return; }
+      const d = parseClip(t);
+      if (!d) { $("pMsg").textContent = "剪貼簿裡不是書籤複製的章節。請先在 Safari 的章節頁按書籤。"; return; }
+      try { closeSheet(); await addClip(d); } catch (err) { alert(err.message); }
+    };
     $("pGo").onclick = async () => {
       try {
+        const d = parseClip($("pText").value);
+        if (d) { closeSheet(); await addClip(d); return; }
         const url = await addPaste($("pBook").value, $("pTitle").value, $("pText").value);
         closeSheet();
         await load(url);
@@ -1126,9 +1161,13 @@
     const nav = `<div class="seg" style="margin-top:28px">
       <button data-go="${esc(chap.prev || "")}" ${chap.prev ? "" : "disabled"}>‹ 上一章</button>
       <button data-toc="1">目錄</button>
-      <button data-go="${esc(chap.next || "")}" ${chap.next ? "" : "disabled"}>下一章 ›</button></div>`;
+      ${!chap.next && chap.srcNext
+        ? `<a class="srcnext" href="${esc(chap.srcNext)}" target="_blank" rel="noopener">到原網站開下一章 ↗</a>`
+        : `<button data-go="${esc(chap.next || "")}" ${chap.next ? "" : "disabled"}>下一章 ›</button>`}</div>`;
     const src = chap.url.startsWith("epub")
-      ? `<div class="src">EPUB · 僅供個人學習</div>`
+      ? chap.src
+        ? `<div class="src">原文出處:<a href="${esc(chap.src)}" target="_blank" rel="noopener">${esc(chap.src)}</a><br>僅供個人學習</div>`
+        : `<div class="src">EPUB · 僅供個人學習</div>`
       : `<div class="src">原文出處:<a href="${esc(chap.url)}" target="_blank" rel="noopener">${esc(chap.url)}</a><br>僅供個人學習</div>`;
     $("text").innerHTML = html + nav + src;
     if (anchor) goPara(anchor);
