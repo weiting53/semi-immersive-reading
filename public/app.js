@@ -117,8 +117,10 @@
   }
 
   // ---------- 抓章節 ----------
-  async function fetchHTML(url) {
-    const r = await fetch("api/fetch?url=" + encodeURIComponent(url), { headers: { "X-Key": store.get("key", "") } });
+  // fresh:跳過 Worker 和瀏覽器的快取(兩邊都會留 6 小時),用在可能有新章節的時候
+  async function fetchHTML(url, fresh) {
+    const r = await fetch("api/fetch?url=" + encodeURIComponent(url) + (fresh ? "&fresh=1" : ""),
+      { headers: { "X-Key": store.get("key", "") }, cache: fresh ? "no-store" : "default" });
     if (r.status === 401) throw new Error("這個網站需要存取金鑰才能抓小說。請在下面貼上金鑰(EPUB 和貼上文字不需要金鑰)。");
     const site = siteOf(new URL(url).hostname);
     if (r.status === 403 && site && site.cloudBlocked) {
@@ -258,10 +260,17 @@
       return { ...chapterObj(url, lib.book, chs[k - 1].title, chs[k - 1].lines, mk(k - 1), mk(k + 1)), total: chs.length };
     }
     const cached = await idbGet("chapters", url);
-    if (cached) return cached;
-    const page = await fetchHTML(url);
-    const parser = (siteOf(new URL(url).hostname) || {}).parser;
-    const ch = parser === "banxia" ? parseBanxia(url, page) : parser === "czbooks" ? parseCzbooks(url, page) : parseGeneric(url, page);
+    if (cached && cached.next) return cached;
+    // 沒有下一章的章節(讀到最新一章)不能一直用快取，否則網站出了新章也不會出現「下一章」
+    const parse = async (fresh) => {
+      const page = await fetchHTML(url, fresh);
+      const parser = (siteOf(new URL(url).hostname) || {}).parser;
+      return parser === "banxia" ? parseBanxia(url, page) : parser === "czbooks" ? parseCzbooks(url, page) : parseGeneric(url, page);
+    };
+    let ch;
+    if (cached) {
+      try { ch = await parse(true); } catch (e) { return cached; }
+    } else ch = await parse(false);
     await idbPut("chapters", url, ch);
     return ch;
   }
@@ -291,12 +300,12 @@
     return out;
   }
   // 通用：章節頁找「目錄」連結，再把目錄頁上同網站、像章名的連結依序列出
-  async function tocGeneric(url) {
+  async function tocGeneric(url, fresh) {
     const doc = new DOMParser().parseFromString(await fetchHTML(url), "text/html");
     const a = [...doc.querySelectorAll("a[href]")].find((x) => /^(目錄|目录|章節目錄|章节目录|章節列表|章节列表|返回目錄|返回目录)$/.test(x.textContent.trim()));
     if (!a) throw new Error("這個網站找不到目錄頁");
     const tocUrl = normalize(new URL(a.getAttribute("href").trim(), url).href);
-    const d2 = new DOMParser().parseFromString(await fetchHTML(tocUrl), "text/html");
+    const d2 = new DOMParser().parseFromString(await fetchHTML(tocUrl, fresh), "text/html");
     const host = new URL(url).hostname, seen = new Set(), out = [];
     for (const x of d2.querySelectorAll("a[href]")) {
       const t = x.textContent.trim();
@@ -315,20 +324,28 @@
       return lib ? toTrad(lib.chapters.map((c) => c.title)).map((t, i) => ({ t, u: `epub://${em[1]}/${i + 1}` })) : [];
     }
     const key = "toc:" + bookId(ch.url);
-    if (!refresh) {
-      const c = await idbGet("chapters", key);
-      // 連載中的書：目前這章不在舊目錄裡就重抓
-      if (c && c.list.some((x) => x.u === ch.url)) return c.list;
+    const c = await idbGet("chapters", key);
+    let fresh = !!refresh;
+    if (!refresh && c) {
+      // 連載中的書：目前這章不在舊目錄裡就重抓；正在讀目錄最後一章時也跳過快取重抓，才看得到新章
+      const i = c.list.findIndex((x) => x.u === ch.url);
+      if (i >= 0 && i < c.list.length - 1) return c.list;
+      fresh = i >= 0;
     }
     const u = new URL(ch.url);
     let list, m;
-    if ((m = u.hostname.endsWith("czbooks.net") && u.pathname.match(/^\/n\/([^/]+)/))) {
-      list = parseTocCzbooks(await fetchHTML("https://czbooks.net/n/" + m[1]), m[1]);
-    } else if ((m = u.hostname.endsWith("xbanxia.cc") && u.pathname.match(/^\/books\/(\d+)\//))) {
-      const book = `https://${u.hostname}/books/${m[1]}.html`;
-      list = parseTocBanxia(await fetchHTML(book), book, m[1]);
-    } else {
-      list = await tocGeneric(ch.url);
+    try {
+      if ((m = u.hostname.endsWith("czbooks.net") && u.pathname.match(/^\/n\/([^/]+)/))) {
+        list = parseTocCzbooks(await fetchHTML("https://czbooks.net/n/" + m[1], fresh), m[1]);
+      } else if ((m = u.hostname.endsWith("xbanxia.cc") && u.pathname.match(/^\/books\/(\d+)\//))) {
+        const book = `https://${u.hostname}/books/${m[1]}.html`;
+        list = parseTocBanxia(await fetchHTML(book, fresh), book, m[1]);
+      } else {
+        list = await tocGeneric(ch.url, fresh);
+      }
+    } catch (e) {
+      if (c && !refresh) return c.list; // 重抓失敗(離線等)就先用舊目錄
+      throw e;
     }
     if (!list.length) throw new Error("找不到章節列表(網站格式可能變了)");
     const trad = toTrad(list.map((x) => x.t));

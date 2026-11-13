@@ -7,14 +7,17 @@ const ALLOWED = new Set([...SITES.map((s) => s.host), "www.gutenberg.org"]);
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36";
 
 async function proxy(request) {
-  const target = new URL(request.url).searchParams.get("url") || "";
+  const params = new URL(request.url).searchParams;
+  const target = params.get("url") || "";
+  // fresh=1:跳過快取直接抓(最新一章找下一章、重抓目錄時用),抓到的仍會存進快取
+  const fresh = params.get("fresh") === "1";
   let u;
   try { u = new URL(target); } catch { return new Response("bad url", { status: 400 }); }
   if (u.protocol !== "https:" || !ALLOWED.has(u.hostname)) return new Response("host not allowed", { status: 403 });
 
   const cache = caches.default;
   const key = new Request("https://eread-cache/" + encodeURIComponent(u.href));
-  const hit = await cache.match(key);
+  const hit = !fresh && (await cache.match(key));
   if (hit) return hit;
 
   // 轉址只跟到白名單內的網站，避免被轉去別的地方而變成任意代理
